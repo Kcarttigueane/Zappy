@@ -33,8 +33,10 @@
 
 // ! MY INCLUDES:
 
-#include "signals.h"
+#include "command.h"
 #include "lib.h"
+#include "signals.h"
+#include "command.h"
 
 enum ErrorCodes { SUCCESS = 0, FAILURE = -1, ERROR = 84 };
 
@@ -49,6 +51,20 @@ enum ErrorCodes { SUCCESS = 0, FAILURE = -1, ERROR = 84 };
 
 // ! STRUCTURES:
 
+typedef struct server_data {
+    int PORT;
+    int socket_fd;
+    fd_set readfds;
+} server_data_t;
+
 // ! SERVER Functions:
 
 bool are_program_args_valid(int argc, char const* argv[]);
+
+int bind_and_listen_socket(server_data_t* s);
+int initialize_server(server_data_t* s);
+
+
+// ! Extern Variables:
+
+extern volatile sig_atomic_t stop_server;

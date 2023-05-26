@@ -8,6 +8,10 @@
     "colors.h": "c",
     "unistd.h": "c",
     "in.h": "c",
-    "signal.h": "c"
-  }
+    "signal.h": "c",
+    "queue.h": "c",
+    "utils.h": "c",
+    "command.h": "c"
+  },
+  "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools"
 }

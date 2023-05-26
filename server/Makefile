@@ -12,6 +12,33 @@ NAME = ../zappy_server
 
 SRCS  = ./src/are_program_args_valid.c	\
 		./src/signals/signal_handler.c	\
+		./src/initialize_server.c	\
+		./src/server_loop.c	\
+		./src/commands/commands_data.c	\
+		./src/commands/msz.c	\
+		./src/commands/bct.c	\
+		./src/commands/tna.c	\
+		./src/commands/pnw.c	\
+		./src/commands/ppo.c	\
+		./src/commands/plv.c	\
+		./src/commands/pin.c	\
+		./src/commands/pex.c	\
+		./src/commands/pbc.c	\
+		./src/commands/pic.c	\
+		./src/commands/pie.c	\
+		./src/commands/pfk.c	\
+		./src/commands/pdr.c	\
+		./src/commands/pgt.c	\
+		./src/commands/pdi.c	\
+		./src/commands/enw.c	\
+		./src/commands/ebo.c	\
+		./src/commands/edi.c	\
+		./src/commands/sgt.c	\
+		./src/commands/sst.c	\
+		./src/commands/seg.c	\
+		./src/commands/smg.c	\
+		./src/commands/suc.c	\
+		./src/commands/sbp.c	\
 		./lib/debug/debug_word_array.c	\
 		./lib/regex/regex_match.c	\
 		./lib/free_word_array.c	\
