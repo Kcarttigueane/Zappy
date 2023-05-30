@@ -1,0 +1,58 @@
+#!/usr/bin/env python3
+
+import curses
+
+
+def c_print(text, win):
+    win.addstr(text + "\n")
+    win.refresh()
+
+
+def main(stdscr):
+    stdscr.clear()
+
+    curses.curs_set(0)
+
+    height, width = stdscr.getmaxyx()
+
+    input_win = curses.newwin(1, width, height - 1, 0)
+    input_win.addstr(0, 0, "Enter text: ")
+    input_win.refresh()
+
+    text_win = curses.newwin(height - 1, width, 0, 0)
+    text_win.scrollok(True)
+    text_win.idlok(True)
+
+    c_print("This is line 1", text_win)
+    c_print("This is line 2", text_win)
+    c_print("This is line 3", text_win)
+
+    while True:
+        query: str = ""
+        input_char = input_win.getch()
+        while (input_char != 10):
+            if input_char == curses.KEY_BACKSPACE:
+                query = query[:-1]
+            else:
+                query += chr(input_char)
+            input_win.clear()
+            input_win.addstr(0, 0, "Enter text: " + query)
+            input_win.refresh()
+            input_char = input_win.getch()
+        if query == "exit":
+            curses.endwin()
+            exit(0)
+        if query.strip() == "":
+            query = ""
+            continue
+        c_print(query, text_win)
+        query = ""
+        input_win.clear()
+        input_win.addstr(0, 0, "Enter text: " + query)
+        input_win.refresh()
+        input_char = input_win.getch()
+
+
+# Run the main function
+if __name__ == "__main__":
+    curses.wrapper(main)
