@@ -51,11 +51,22 @@ enum ErrorCodes { SUCCESS = 0, FAILURE = -1, ERROR = 84 };
 
 // ! STRUCTURES:
 
+
+
 typedef struct server_data {
     int PORT;
     int socket_fd;
     fd_set readfds;
+    fd_set writefds;
 } server_data_t;
+
+typedef struct game_infos {
+    int width;
+    int height;
+    int clientsNb;
+    int freq;
+    char** teams;
+} game_infos_t;
 
 // ! SERVER Functions:
 

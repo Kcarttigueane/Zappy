@@ -13,5 +13,6 @@
     "utils.h": "c",
     "command.h": "c"
   },
-  "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools"
+  "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
+  "editor.formatOnSave": true
 }

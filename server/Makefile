@@ -10,47 +10,46 @@ RM = rm -f
 
 NAME = ../zappy_server
 
-SRCS  = ./src/are_program_args_valid.c	\
-		./src/signals/signal_handler.c	\
-		./src/initialize_server.c	\
-		./src/server_loop.c	\
-		./src/commands/commands_data.c	\
-		./src/commands/msz.c	\
-		./src/commands/bct.c	\
-		./src/commands/tna.c	\
-		./src/commands/pnw.c	\
-		./src/commands/ppo.c	\
-		./src/commands/plv.c	\
-		./src/commands/pin.c	\
-		./src/commands/pex.c	\
-		./src/commands/pbc.c	\
-		./src/commands/pic.c	\
-		./src/commands/pie.c	\
-		./src/commands/pfk.c	\
-		./src/commands/pdr.c	\
-		./src/commands/pgt.c	\
-		./src/commands/pdi.c	\
-		./src/commands/enw.c	\
-		./src/commands/ebo.c	\
-		./src/commands/edi.c	\
-		./src/commands/sgt.c	\
-		./src/commands/sst.c	\
-		./src/commands/seg.c	\
-		./src/commands/smg.c	\
-		./src/commands/suc.c	\
-		./src/commands/sbp.c	\
-		./lib/debug/debug_word_array.c	\
-		./lib/regex/regex_match.c	\
+SRCS  = ./lib/debug/debug_word_array.c	\
 		./lib/free_word_array.c	\
 		./lib/get_size_word_array.c	\
+		./lib/my_strcat.c	\
 		./lib/open_file.c	\
 		./lib/read_file_contents.c	\
+		./lib/regex/regex_match.c	\
 		./lib/return_error.c	\
 		./lib/split_str.c	\
 		./lib/timestamp.c	\
-		./lib/my_strcat.c	\
+		./src/are_program_args_valid.c	\
+		./src/signals/signal_handler.c	\
+		./src/commands/bct.c	\
+		./src/commands/commands_data.c	\
+		./src/commands/ebo.c	\
+		./src/commands/edi.c	\
+		./src/commands/enw.c	\
+		./src/commands/msz.c	\
+		./src/commands/pbc.c	\
+		./src/commands/pdi.c	\
+		./src/commands/pdr.c	\
+		./src/commands/pex.c	\
+		./src/commands/pfk.c	\
+		./src/commands/pgt.c	\
+		./src/commands/pic.c	\
+		./src/commands/pie.c	\
+		./src/commands/pin.c	\
+		./src/commands/plv.c	\
+		./src/commands/pnw.c	\
+		./src/commands/ppo.c	\
+		./src/commands/sbp.c	\
+		./src/commands/seg.c	\
+		./src/commands/sgt.c	\
+		./src/commands/smg.c	\
+		./src/commands/sst.c	\
+		./src/commands/suc.c	\
+		./src/commands/tna.c	\
+		./src/initialize_server.c	\
+		./src/server_loop.c	\
 		./main.c	\
-
 
 OBJS = $(SRCS:.c=.o)
 DEPS = $(OBJS:.o=.d)
