@@ -1,58 +1,110 @@
 #!/usr/bin/env python3
 
 import curses
+import re
+import socket
+
+def ip_and_port(text):
+    pattern = r'^(?:\d{1,3}\.){3}\d{1,3}:\d+$'
+    return re.match(pattern, text)
 
 
-def c_print(text, win):
-    win.addstr(text + "\n")
-    win.refresh()
+class SocketManager:
+    def __init__(self, ot) -> None:
+        self.sockets = {}
+        self.set = False
+        self.socketAF = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.Out = ot
+
+    def connect(self):
+        try:
+            self.socketAF.connect((self.sockets["ip"], int(self.sockets["port"])))
+            self.Out.refresh_query(f"Connected to {self.sockets['ip']} on port {self.sockets['port']}")
+        except Exception as e:
+            self.Out.refresh_query(f"Could not connect to {self.sockets['ip']} on port {self.sockets['port']}")
+            self.Out.refresh_query(str(e))
+            self.set = False
+            self.sockets = {}
+
+
+class OutWin:
+    def __init__(self, stdscr) -> None:
+        height, width = stdscr.getmaxyx()
+        self.text_win = curses.newwin(height - 1, width, 0, 0)
+        self.text_win.scrollok(True)
+        self.text_win.idlok(True)
+        self.com = SocketManager(self)
+
+    def refresh_query(self, query):
+        if not self.com.set and ip_and_port(query):
+            self.com.sockets["ip"] = query.split(":")[0]
+            self.com.sockets["port"] = query.split(":")[1]
+            self.com.set = True
+            self.text_win.addstr(f"Set IP to {self.com.sockets['ip']} and port to {self.com.sockets['port']}\n")
+            self.text_win.refresh()
+            return
+        if not self.com.set and query.isdigit():
+            self.com.sockets["ip"] = "127.0.0.1"
+            self.com.sockets["port"] = query
+            self.com.set = True
+            self.text_win.addstr(f"Set IP to {self.com.sockets['ip']} and port to {self.com.sockets['port']}\n")
+            self.text_win.refresh()
+            return
+        if not self.com.set:
+            self.text_win.addstr("Please input a port number in the text box below.\n")
+            self.text_win.refresh()
+            return
+        if query == "connect":
+            self.com.connect()
+            return
+        self.text_win.addstr(query + "\n")
+        self.text_win.refresh()
+
+
+class InWin:
+    def __init__(self, stdscr) -> None:
+        height, width = stdscr.getmaxyx()
+        self.input_win = curses.newwin(1, width, height - 1, 0)
+        self.input_win.addstr(0, 0, "Enter text: ")
+        self.out = OutWin(stdscr)
+
+    def refresh_query(self, query):
+        self.input_win.clear()
+        self.input_win.addstr(0, 0, "Enter text: " + query)
+        self.input_win.refresh()
+
+    def get_char(self):
+        return self.input_win.getch()
+
+    def print(self, text):
+        self.out.refresh_query(text)
 
 
 def main(stdscr):
     stdscr.clear()
-
     curses.curs_set(0)
-
-    height, width = stdscr.getmaxyx()
-
-    input_win = curses.newwin(1, width, height - 1, 0)
-    input_win.addstr(0, 0, "Enter text: ")
-    input_win.refresh()
-
-    text_win = curses.newwin(height - 1, width, 0, 0)
-    text_win.scrollok(True)
-    text_win.idlok(True)
-
-    c_print("This is line 1", text_win)
-    c_print("This is line 2", text_win)
-    c_print("This is line 3", text_win)
+    inWin = InWin(stdscr)
 
     while True:
         query: str = ""
-        input_char = input_win.getch()
-        while (input_char != 10):
+        inWin.refresh_query(query)
+        input_char = inWin.get_char()
+        while input_char != 10:
             if input_char == curses.KEY_BACKSPACE:
                 query = query[:-1]
             else:
                 query += chr(input_char)
-            input_win.clear()
-            input_win.addstr(0, 0, "Enter text: " + query)
-            input_win.refresh()
-            input_char = input_win.getch()
+            inWin.refresh_query(query)
+            input_char = inWin.get_char()
         if query == "exit":
             curses.endwin()
             exit(0)
         if query.strip() == "":
             query = ""
             continue
-        c_print(query, text_win)
+        inWin.print(query)
         query = ""
-        input_win.clear()
-        input_win.addstr(0, 0, "Enter text: " + query)
-        input_win.refresh()
-        input_char = input_win.getch()
 
 
-# Run the main function
 if __name__ == "__main__":
     curses.wrapper(main)
