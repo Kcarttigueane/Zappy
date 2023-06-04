@@ -155,4 +155,5 @@ def main(stdscr):
 
 
 if __name__ == "__main__":
+    # fetch 
     curses.wrapper(main)
