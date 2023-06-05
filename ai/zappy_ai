@@ -29,6 +29,8 @@ class SocketManager:
 
     def send(self, data):
         try:
+            if data[-1] != "\n":
+                data += "\n"
             self.socket.send(data.encode())
         except Exception as exc:
             print(f"Could not send data to {self.host} on port {self.port}")
@@ -40,6 +42,8 @@ class SocketManager:
             data_r = self.socket.recv(1024)
             if data_r:
                 return data_r.decode()
+        except socket.timeout:
+            pass
         except Exception as exc:
             print(f"Error while listening to {self.host} on port {self.port}")
             print(str(exc))
@@ -71,6 +75,7 @@ def main(stdscr, connected_socket: SocketManager):
     receive_thread_elem = threading.Thread(target=receive_thread, args=(connected_socket, outputW))
     receive_thread_elem.start()
 
+    connected_socket.send(connected_socket.name)
     while connected_socket.is_connected():
         query = ""
         while True:
