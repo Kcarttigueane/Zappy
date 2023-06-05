@@ -23,12 +23,13 @@ SRCS = 	$(wildcard $(SRCDIR)/methods/*.cpp) \
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(OBJS:.o=.d)
 
+SFMLFLAGS = -lsfml-system -lsfml-window -lsfml-graphics -lsfml-audio
 CXXFLAGS += -std=c++20 -Wall -Wextra -I ./include -g3
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
+	$(CXX) $(SFMLFLAGS) $(CXXFLAGS) -o $(NAME) $(OBJS)
 
 -include $(DEPS)
 
