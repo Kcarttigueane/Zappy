@@ -56,3 +56,5 @@ dkms.conf
 .zappy_gui
 .DS_Store
 .vscode/
+
+zappy_server
