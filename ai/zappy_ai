@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import time
 
 from tools.parsing import parser as p
 import socket
@@ -60,7 +61,7 @@ class SocketManager:
 def receive_handler(connected_socket: SocketManager, mask):
     data = connected_socket.receive()
     if data:
-        print(f"Received: {data}")
+        print(data)
 
 
 def main(connected_socket: SocketManager):
@@ -68,6 +69,8 @@ def main(connected_socket: SocketManager):
     sel.register(connected_socket.socket, selectors.EVENT_READ, receive_handler)
     receive_handler(connected_socket, None)
     connected_socket.send(connected_socket.name)
+    time.sleep(0.2)
+    receive_handler(connected_socket, None)
 
     while connected_socket.is_connected():
         connected_socket.query = input("Enter command: ")
