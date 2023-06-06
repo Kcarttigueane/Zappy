@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import sys
 import time
 
 from tools.parsing import parser as p
@@ -31,8 +32,7 @@ class SocketManager:
         try:
             if data[-1] != "\n":
                 data += "\n"
-            self.socket.send(data.encode())
-            time.sleep(0.2)
+            self.socket.send(data.capitalize().encode())
         except Exception as exc:
             print(f"Could not send data to {self.host} on port {self.port}")
             print(str(exc))
@@ -59,31 +59,32 @@ class SocketManager:
         return self.connected
 
 
-def receive_handler(connected_socket: SocketManager, mask):
+def receive_handler(connected_socket: SocketManager, mask, XF=False):
     data = connected_socket.receive()
     if data:
-        print(data)
+        print(f"\nReceived: {data}") if not XF else print(f"{data}")
+
+
+def input_handler(connected_socket: SocketManager, mask):
+    connected_socket.query = sys.stdin.readline().strip()
+    if "exit" in connected_socket.query or "quit" in connected_socket.query:
+        connected_socket.run = False
+        connected_socket.close()
+        print("Exiting...")
+    elif connected_socket.query.strip() != "":
+        connected_socket.send(connected_socket.query)
 
 
 def main(connected_socket: SocketManager):
     sel = selectors.DefaultSelector()
     sel.register(connected_socket.socket, selectors.EVENT_READ, receive_handler)
-    receive_handler(connected_socket, None)
+    sel.register(sys.stdin, selectors.EVENT_READ, input_handler)
+    receive_handler(connected_socket, None, True)
     connected_socket.send(connected_socket.name)
     time.sleep(0.2)
-    receive_handler(connected_socket, None)
+    receive_handler(connected_socket, None, True)
 
     while connected_socket.is_connected():
-        connected_socket.query = input("Enter command: ")
-        if "exit" in connected_socket.query or "quit" in connected_socket.query:
-            connected_socket.run = False
-            connected_socket.close()
-            print("Exiting...")
-            break
-
-        if connected_socket.query.strip() != "":
-            connected_socket.send(connected_socket.query)
-
         events = sel.select(timeout=0)
         for key, mask in events:
             callback = key.data
