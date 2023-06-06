@@ -7,9 +7,34 @@
 
 #include <cstdlib>
 #include "include/gui.hpp"
+#include "include/client.hpp"
+
+void handle_client(Client client)
+{
+    if (client.connectToServer()) {
+        std::string response = client.receiveData();
+        if (!response.empty())
+            std::cout << "Server response: " << response << std::endl;
+        std::string message = "GRAPHIC\n";
+        if (client.sendData(message)) {
+            std::string response = client.receiveData();
+            if (!response.empty()) {
+                std::cout << "Server response: " << response << std::endl;
+            }
+        }
+    }
+}
 
 int main(int argc, char* argv[])
 {
+    if (argc != 3) {
+        std::cout << "Usage: ./client <server_ip> <server_port>" << std::endl;
+        return 1;
+    }
+    std::string serverIP = argv[1];
+    int serverPort = std::stoi(argv[2]);
+    Client client(serverIP, serverPort);
+    handle_client(client);
     Display display(1920, 1080, "Zappy");
 
     Entity player(display._playerTexture, PLAYER_TYPE);
