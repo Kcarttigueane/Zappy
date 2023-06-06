@@ -32,6 +32,7 @@ class SocketManager:
             if data[-1] != "\n":
                 data += "\n"
             self.socket.send(data.encode())
+            time.sleep(0.2)
         except Exception as exc:
             print(f"Could not send data to {self.host} on port {self.port}")
             print(str(exc))
@@ -79,6 +80,9 @@ def main(connected_socket: SocketManager):
             connected_socket.close()
             print("Exiting...")
             break
+
+        if connected_socket.query.strip() != "":
+            connected_socket.send(connected_socket.query)
 
         events = sel.select(timeout=0)
         for key, mask in events:
