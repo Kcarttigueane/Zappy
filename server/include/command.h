@@ -5,7 +5,8 @@
 ** command.h
 */
 
-#pragma once
+#ifndef COMMANDS_H_
+#define COMMANDS_H_
 
 #define MAX_ARGS 5
 
@@ -61,3 +62,5 @@ void set();
 void incantation();
 void hatch();
 void fake_end();
+
+#endif /* !COMMANDS_H_ */

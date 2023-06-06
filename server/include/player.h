@@ -5,7 +5,8 @@
 ** player.h
 */
 
-#pragma once
+#ifndef PLAYER_H_
+#define PLAYER_H_
 
 #include "server.h"
 
@@ -19,6 +20,24 @@
     q6 thystame
 */
 
+#define MAX_NB_RESOURCES 7
+
+typedef enum orientation_s {
+    UP_CENTER = 1,
+    UP_LEFT,
+    CENTER_LEFT,
+    DOWN_LEFT,
+    DOWN_CENTER,
+    DOWN_RIGHT,
+    CENTER_RIGHT,
+    UP_RIGHT
+} orientation_t;
+
+typedef struct coord_s {
+    int x;
+    int y;
+} coord_t;
+
 typedef struct player_s {
     size_t id;
     coord_t pos;
@@ -30,3 +49,5 @@ typedef struct player_s {
     time_t last_eat_time;
     TAILQ_ENTRY(client) entries;
 } player_t;
+
+#endif /* !PLAYER_H_ */
