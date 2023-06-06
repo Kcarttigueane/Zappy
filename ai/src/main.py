@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import time
 
 from tools.parsing import parser as p
 import socket
@@ -31,6 +32,7 @@ class SocketManager:
             if data[-1] != "\n":
                 data += "\n"
             self.socket.send(data.encode())
+            time.sleep(0.2)
         except Exception as exc:
             print(f"Could not send data to {self.host} on port {self.port}")
             print(str(exc))
@@ -60,7 +62,7 @@ class SocketManager:
 def receive_handler(connected_socket: SocketManager, mask):
     data = connected_socket.receive()
     if data:
-        print(f"Received: {data}")
+        print(data)
 
 
 def main(connected_socket: SocketManager):
@@ -68,6 +70,8 @@ def main(connected_socket: SocketManager):
     sel.register(connected_socket.socket, selectors.EVENT_READ, receive_handler)
     receive_handler(connected_socket, None)
     connected_socket.send(connected_socket.name)
+    time.sleep(0.2)
+    receive_handler(connected_socket, None)
 
     while connected_socket.is_connected():
         connected_socket.query = input("Enter command: ")
@@ -76,6 +80,9 @@ def main(connected_socket: SocketManager):
             connected_socket.close()
             print("Exiting...")
             break
+
+        if connected_socket.query.strip() != "":
+            connected_socket.send(connected_socket.query)
 
         events = sel.select(timeout=0)
         for key, mask in events:
