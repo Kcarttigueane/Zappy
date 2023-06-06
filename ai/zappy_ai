@@ -5,7 +5,7 @@ from tools.interface import InputWindow as Iw
 from tools.interface import OutputWindow as Ow
 import socket
 import curses
-import threading
+import selectors
 
 
 class SocketManager:
@@ -16,6 +16,7 @@ class SocketManager:
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.connected = False
         self.run = False
+        self.reader, self.writer = None, None
 
     def connect(self):
         try:
@@ -25,7 +26,7 @@ class SocketManager:
         except Exception as ext:
             print(f"Could not connect to {self.host} on port {self.port}")
             print(str(ext))
-            return
+            exit(84)
 
     def send(self, data):
         try:
@@ -39,6 +40,7 @@ class SocketManager:
 
     def receive(self):
         try:
+            self.socket.settimeout(6)
             data_r = self.socket.recv(1024)
             if data_r:
                 return data_r.decode()
@@ -57,25 +59,24 @@ class SocketManager:
         return self.connected
 
 
-def receive_thread(connected_socket: SocketManager, outputW: Ow):
-    while connected_socket.run:
-        connected_socket.socket.settimeout(6.0)
-        data = connected_socket.receive()
-        if data:
-            outputW.add_output(data)
-
-    exit(0)
+def receive_handler(connected_socket: SocketManager, mask):
+    data = connected_socket.receive()
+    if data:
+        outputW.add_output(data)
 
 
 def main(stdscr, connected_socket: SocketManager):
     stdscr.clear()
     curses.curs_set(0)
     inputW = Iw(stdscr)
+    global outputW
     outputW = Ow(stdscr)
-    receive_thread_elem = threading.Thread(target=receive_thread, args=(connected_socket, outputW))
-    receive_thread_elem.start()
+
+    sel = selectors.DefaultSelector()
+    sel.register(connected_socket.socket, selectors.EVENT_READ, receive_handler)
 
     connected_socket.send(connected_socket.name)
+
     while connected_socket.is_connected():
         query = ""
         while True:
@@ -89,19 +90,26 @@ def main(stdscr, connected_socket: SocketManager):
             else:
                 query += c
             inputW.extend_query(query)
+
         if query == "exit" or query == "quit" or query == "exit\n" or query == "quit\n":
             connected_socket.run = False
             connected_socket.close()
-            outputW.add_output("Disconnected from server - closing thread withing 6 seconds")
-            receive_thread_elem.join()
-            outputW.add_output("Successfully closed the thread, press enter to exit")
+            outputW.add_output("Disconnected from server - closing loop withing 6 seconds")
             break
+
         if query.strip():
             inputW.add_history(query)
             outputW.add_output(f"{connected_socket.name}: '{query}'")
             query += "\n"
             connected_socket.send(query)
+
         inputW.clear()
+
+        events = sel.select(timeout=0)
+        for key, mask in events:
+            callback = key.data
+            callback(connected_socket, mask)
+
     outputW.clear()
     curses.endwin()
 
@@ -113,7 +121,6 @@ if __name__ == '__main__':
     try:
         s.connect()
     except Exception as e:
-        print(f"Could not connect to {args.host} on port {args.port}")
         print(str(e))
         exit(84)
     print(f"Connected to {args.host} on port {args.port}")
