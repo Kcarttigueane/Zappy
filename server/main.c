@@ -24,5 +24,7 @@ int main(int argc, char const* argv[])
     if (initialize_server(&server_data) == ERROR)
         return handle_error("Server initialization failed");
 
+    // server_loop(&server_data);
+
     return 0;
 }

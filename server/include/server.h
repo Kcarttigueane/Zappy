@@ -29,14 +29,16 @@
 #include <uuid/uuid.h>
 #include "unistd.h"
 
+#include <sys/queue.h>
+
 #include <time.h>
 
 // ! MY INCLUDES:
 
 #include "command.h"
 #include "lib.h"
+#include "player.h"
 #include "signals.h"
-#include "command.h"
 
 enum ErrorCodes { SUCCESS = 0, FAILURE = -1, ERROR = 84 };
 
@@ -51,22 +53,51 @@ enum ErrorCodes { SUCCESS = 0, FAILURE = -1, ERROR = 84 };
 
 // ! STRUCTURES:
 
+#define MAX_NB_RESOURCES 7
 
+typedef struct {
+    size_t quantity[MAX_NB_RESOURCES];
+} Tile;
 
 typedef struct server_data {
+    int time_unit;
+    game_t game;
     int PORT;
     int socket_fd;
     fd_set readfds;
     fd_set writefds;
 } server_data_t;
 
-typedef struct game_infos {
-    int width;
-    int height;
-    int clientsNb;
-    int freq;
-    char** teams;
-} game_infos_t;
+// typedef struct {
+//     int egg_num;
+//     Player* player;  // the player who laid the egg
+//     int x, y;        // position of the egg on the map
+// } Egg;
+
+typedef struct game_s {
+    Tile** map;
+    size_t width, height;
+    player_t* players;
+    int nb_players;
+    Egg* eggs;  // a dynamically-allocated array of Egg structs
+    int nb_eggs;
+} game_t;
+
+typedef enum orientation_s {
+    UP_CENTER = 1,
+    UP_LEFT,
+    CENTER_LEFT,
+    DOWN_LEFT,
+    DOWN_CENTER,
+    DOWN_RIGHT,
+    CENTER_RIGHT,
+    UP_RIGHT
+} orientation_t;
+
+typedef struct coord_s {
+    int x;
+    int y;
+} coord_t;
 
 // ! SERVER Functions:
 
@@ -75,6 +106,7 @@ bool are_program_args_valid(int argc, char const* argv[]);
 int bind_and_listen_socket(server_data_t* s);
 int initialize_server(server_data_t* s);
 
+int server_loop(server_data_t* s);
 
 // ! Extern Variables:
 

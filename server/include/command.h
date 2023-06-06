@@ -18,7 +18,7 @@ typedef struct command_s {
     int expected_arg_count;
 } command_t;
 
-// ! Function Prototypes:
+// ! Function Prototypes (GUI):
 
 void msz();
 void bct();
@@ -44,3 +44,20 @@ void seg();
 void smg();
 void suc();
 void sbp();
+
+// ! Function Prototypes (Player):
+
+void forward();
+void right();
+void left();
+void look();
+void inventory();
+void broadcast();
+void connect_nbr();
+void fork_player();
+void eject();
+void take();
+void set();
+void incantation();
+void hatch();
+void fake_end();

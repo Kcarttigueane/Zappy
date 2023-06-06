@@ -10,7 +10,7 @@
 volatile sig_atomic_t stop_server = false;
 
 static void add_client_socket_to_set(/* clients_t* clients, */
-server_data_t* s)
+                                     server_data_t* s)
 {
     // for (size_t i = 0; i < MAX_CLIENTS; i++) {
     //     int sd = clients[i].socket_fd;
@@ -19,7 +19,8 @@ server_data_t* s)
     // }
 }
 
-static int get_max_socket_descriptor(/* clients_t* clients, */ int server_socket)
+static int get_max_socket_descriptor(
+    /* clients_t* clients, */ int server_socket)
 {
     // int max_socket_descriptor = server_socket;
 
@@ -32,7 +33,21 @@ static int get_max_socket_descriptor(/* clients_t* clients, */ int server_socket
     // return (max_socket_descriptor + 1);
 }
 
-int server_loop(server_data_t* s/* , database_t* db */)
+void reset_set()
+{
+    // je sais pas liste chainée en utilisant sys/queue.h ou normal
+
+    // FD_ZERO(set);
+    // FD_SET(net->sockfd, set);
+    // while (tmp) {
+    //     if (tmp->client.fd >= 0) {
+    //         FD_SET(tmp->client.fd, set);
+    //     }
+    //     tmp = tmp->next;
+    // }
+}
+
+int server_loop(server_data_t* s /* , database_t* db */)
 {
     // clients_t *clients = calloc(MAX_CLIENTS, sizeof(clients_t));
     // initialize_clients(clients);
@@ -47,9 +62,10 @@ int server_loop(server_data_t* s/* , database_t* db */)
         //     &s->readfds, NULL, NULL, &tv) == FAILURE) && (errno != EINTR)) {
         //     handle_error("Select failed");
         // }
-        if (stop_server) break;
-        if (FD_ISSET(s->socket_fd, &s->readfds)){}
-            // accept_new_connection(s->socket_fd, clients);
+        if (stop_server)
+            break;
+        if (FD_ISSET(s->socket_fd, &s->readfds)) {}
+        // accept_new_connection(s->socket_fd, clients);
         // handle_client_activity(clients, s, db);
     }
     // free_clients(clients);
