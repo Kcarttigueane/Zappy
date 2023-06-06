@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 
 from tools.parsing import parser as p
-from tools.interface import InputWindow as Iw
-from tools.interface import OutputWindow as Ow
 import socket
-import curses
 import selectors
 
 
@@ -17,6 +14,7 @@ class SocketManager:
         self.connected = False
         self.run = False
         self.reader, self.writer = None, None
+        self.query = ""
 
     def connect(self):
         try:
@@ -62,56 +60,27 @@ class SocketManager:
 def receive_handler(connected_socket: SocketManager, mask):
     data = connected_socket.receive()
     if data:
-        outputW.add_output(data)
+        print(f"Received: {data}")
 
 
-def main(stdscr, connected_socket: SocketManager):
-    stdscr.clear()
-    curses.curs_set(0)
-    inputW = Iw(stdscr)
-    global outputW
-    outputW = Ow(stdscr)
-
+def main(connected_socket: SocketManager):
     sel = selectors.DefaultSelector()
     sel.register(connected_socket.socket, selectors.EVENT_READ, receive_handler)
-
+    receive_handler(connected_socket, None)
     connected_socket.send(connected_socket.name)
 
     while connected_socket.is_connected():
-        query = ""
-        while True:
-            c = inputW.get_char()
-            if c == "\n":
-                break
-            elif c == "\x7f":
-                query = query[:-1]
-            elif c == "\x1b":
-                query = ""
-            else:
-                query += c
-            inputW.extend_query(query)
-
-        if query == "exit" or query == "quit" or query == "exit\n" or query == "quit\n":
+        connected_socket.query = input("Enter command: ")
+        if "exit" in connected_socket.query or "quit" in connected_socket.query:
             connected_socket.run = False
             connected_socket.close()
-            outputW.add_output("Disconnected from server - closing loop withing 6 seconds")
+            print("Exiting...")
             break
-
-        if query.strip():
-            inputW.add_history(query)
-            outputW.add_output(f"{connected_socket.name}: '{query}'")
-            query += "\n"
-            connected_socket.send(query)
-
-        inputW.clear()
 
         events = sel.select(timeout=0)
         for key, mask in events:
             callback = key.data
             callback(connected_socket, mask)
-
-    outputW.clear()
-    curses.endwin()
 
 
 if __name__ == '__main__':
@@ -124,6 +93,6 @@ if __name__ == '__main__':
         print(str(e))
         exit(84)
     print(f"Connected to {args.host} on port {args.port}")
-    curses.wrapper(main, s)
+    main(s)
     print(f"Disconnected from {args.host} on port {args.port}")
     exit(0)
