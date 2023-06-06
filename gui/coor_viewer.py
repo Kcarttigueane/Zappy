@@ -1,5 +1,4 @@
-from PIL import Image
-from PIL import ImageTk
+from PIL import Image, ImageTk
 import tkinter as tk
 
 def show_image_with_coordinates(file_path):
@@ -9,6 +8,10 @@ def show_image_with_coordinates(file_path):
     # Create a Tkinter window
     window = tk.Tk()
     window.title("Image Viewer")
+
+    # Adjust the window size to match the image dimensions
+    print(f"{image.width}  {image.height}")
+    window.geometry(f"{image.width}x{image.height}")
 
     # Create a canvas to display the image
     canvas = tk.Canvas(window, width=image.width, height=image.height)
