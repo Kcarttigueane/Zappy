@@ -6,3 +6,4 @@
 zappy_server.bin
 *.pyc
 zappy_ai
+__pycache__/
