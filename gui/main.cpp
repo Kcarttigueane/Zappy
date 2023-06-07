@@ -9,20 +9,21 @@
 #include "include/gui.hpp"
 #include "include/client.hpp"
 
-void handle_client(Client client)
+std::string handle_client(Client client)
 {
     if (client.connectToServer()) {
         std::string response = client.receiveData();
         if (!response.empty())
-            std::cout << "Server response: " << response << std::endl;
+            std::cout << response << std::endl;
         std::string message = "GRAPHIC\n";
         if (client.sendData(message)) {
             std::string response = client.receiveData();
             if (!response.empty()) {
-                std::cout << "Server response: " << response << std::endl;
+                return response;
             }
         }
     }
+    return nullptr;
 }
 
 int main(int argc, char* argv[])
@@ -31,12 +32,15 @@ int main(int argc, char* argv[])
         std::cout << "Usage: ./client <server_ip> <server_port>" << std::endl;
         return 1;
     }
+    // Handle Client
     std::string serverIP = argv[1];
     int serverPort = std::stoi(argv[2]);
     Client client(serverIP, serverPort);
-    handle_client(client);
-    Display display(1920, 1080, "Zappy");
+    std::string response = handle_client(client);
 
+    //set up display
+    Display display(1920, 1080, "Zappy");
+    display.setupGame(response);
     Entity player(display._playerTexture, PLAYER_TYPE);
     sf::IntRect rect;
     rect.left = 757;
@@ -47,13 +51,14 @@ int main(int argc, char* argv[])
     player.setPosition(0, 0);
     display._entities.push_back(player);
 
+    // display loop
     while (display._displayLoop) {
-        display.deltaTime = display.clock.restart();
+        display._deltaTime = display._clock.restart();
         display.handleEvents();
         display.draw();
-        sf::Time elapsedTime = display.clock.getElapsedTime();
-        if (elapsedTime < display.frameTime)
-            sf::sleep(display.frameTime - elapsedTime);
+        sf::Time elapsedTime = display._clock.getElapsedTime();
+        if (elapsedTime < display._frameTime)
+            sf::sleep(display._frameTime - elapsedTime);
     }
     return EXIT_SUCCESS;
 }

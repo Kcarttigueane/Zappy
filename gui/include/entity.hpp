@@ -12,7 +12,9 @@
 #include <SFML/System/String.hpp>
 #include <iostream>
 #include <string>
+#include <cstdio>
 #include <algorithm>
+#include <sstream>
 
 #define PLAYER_TYPE 0
 #define ROCK_TYPE 1

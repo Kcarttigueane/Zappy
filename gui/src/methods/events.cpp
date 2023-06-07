@@ -14,6 +14,7 @@ void Display::handleEvents()
     sf::Vector2i currentMousePosition;
     sf::Vector2f playerPos = _entities[0].getPosition();
 
+    getMousePosition();
     while (_window->pollEvent(*_event)) {
         if (_event->type == sf::Event::KeyPressed) {
             if (_event->key.code == sf::Keyboard::Escape || _event->key.code == sf::Keyboard::Q)
@@ -51,9 +52,17 @@ void Display::handleEvents()
             }
         } else if (_event->type == sf::Event::MouseButtonPressed) {
             if (_event->mouseButton.button == sf::Mouse::Left) {
+                _tileClicked = false;
+                _uiAnimationPoint = 0;
                 isDragging = true;
                 dragStartPosition = sf::Mouse::getPosition(*_window);
                 currentMousePosition = dragStartPosition;
+                if (_mouseGridCoords.x >= 0 && _mouseGridCoords.x < _mapWidth && _mouseGridCoords.y >= 0 && _mouseGridCoords.y < _mapHeight) {
+                    _lastClickedCoords = _mouseGridCoords;
+                    _tileClicked = true;
+                    _uiAnimationPoint = 1;
+                    debugTile(_tiles[int(_mouseGridCoords.y) * _mapWidth + int(_mouseGridCoords.x)]);
+                }
             }
         } else if (_event->type == sf::Event::MouseMoved) {
             if (isDragging) {
@@ -69,7 +78,6 @@ void Display::handleEvents()
                 isDragging = false;
         }
     }
-    getMousePosition();
     _entities[0].setPosition(playerPos);
 }
 

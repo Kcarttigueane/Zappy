@@ -12,8 +12,9 @@ void Display::draw()
 {
     sf::Color skyColor(135, 206, 235, 255);
     _window->clear(skyColor);
-    drawTileMap(15, 15);
+    drawTileMap(_mapWidth, _mapHeight);
     drawEntities();
+    drawUI();
     _window->display();
 }
 
@@ -101,4 +102,29 @@ void Display::createIsometricCube(float x, float y, float scale, sf::Texture *te
     _sprite->setPosition(pos);
     _sprite->setScale(sf::Vector2f(scale, scale));
     _sprite->setTextureRect(rect);
+}
+
+void Display::drawUI()
+{
+    sf::Vector2u size = _uiTexture->getSize();
+    _sprite->setTexture(*_uiTexture);
+    _sprite->setTextureRect(sf::IntRect(0, 0, size.x, size.y));
+    _sprite->setScale(0.773, 1);
+    _sprite->setPosition(_uiPosition);
+    if (_uiAnimationPoint && _uiPosition.y > 800)
+        _uiPosition.y -= 10;
+    if (!_uiAnimationPoint && _uiPosition.y < 1080)
+        _uiPosition.y += 10;;
+    _window->draw(*_sprite);
+
+    char buffer[100];
+    Tile tile = _tiles[int(_lastClickedCoords.y) * _mapWidth + int(_lastClickedCoords.x)];
+    std::sprintf(buffer, "    %d     %d     %d     %d     %d     %d     %d", tile.food, tile.linemate, tile.deraumere, tile.sibur, tile.mendiane, tile.phiras, tile.thystame);
+    sf::Text text;
+    text.setFont(*_font);
+    text.setString(buffer);
+    text.setFillColor(sf::Color::Black);
+    text.setCharacterSize(40);
+    text.setPosition(sf::Vector2f(_uiPosition.x, _uiPosition.y + 70));
+    _window->draw(text);
 }
