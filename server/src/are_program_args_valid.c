@@ -17,89 +17,49 @@ bool are_program_args_valid(int argc, char** argv)
     return true;
 }
 
-static int add_team(server_data_t* s, char* team_name)
+static int parse_teams_names(int argc, char** argv, int i, server_data_t* s)
 {
-    char** tmp =
-        realloc(s->game.team_names, sizeof(char*) * (s->game.team_count + 1));
+    i++;
 
-    if (tmp == NULL)
-        return FAILURE;
+    while (i < argc && argv[i][0] != '-') {
+        s->game.team_names = realloc(s->game.team_names,
+                                     (s->game.team_count + 1) * sizeof(char*));
+        s->game.team_names[s->game.team_count] = argv[i];
+        s->game.team_count++;
+        i++;
+    }
 
-    s->game.team_names = tmp;
-    s->game.team_names[s->game.team_count++] = strdup(team_name);
-    return SUCCESS;
+    return i - 1;
 }
-
-// int parse_arguments(int argc, char** argv, server_data_t* s)
-// {
-//     int option;
-
-//     while ((option = getopt(argc, argv, "p:x:y:n:c:f:")) != FAILURE) {
-//         switch (option) {
-//             case 'p':
-//                 s->PORT = atoi(optarg);
-//                 printf("Port: %d\n", s->PORT);
-//                 break;
-//             case 'x':
-//                 printf("Width: %d\n", atoi(optarg));
-//                 s->game.width = atoi(optarg);
-//                 break;
-//             case 'y':
-//                 printf("Height: %d\n", atoi(optarg));
-//                 s->game.height = atoi(optarg);
-//                 break;
-//             case 'n':
-//                 printf("Team name: %s\n", optarg);
-//                 if (add_team(s, optarg) != 0) {
-//                     return FAILURE;
-//                 }
-//                 break;
-//             case 'c':
-//                 printf("Clients per team: %d\n", atoi(optarg));
-//                 s->game.clients_nb = atoi(optarg);
-//                 break;
-//             case 'f':
-//                 printf("Frequency: %d\n", atoi(optarg));
-//                 s->game.freq = atoi(optarg);
-//                 break;
-//             default:
-//                 return FAILURE;
-//         }
-//     }
-
-//     return SUCCESS;
-// }
 
 int parse_arguments(int argc, char** argv, server_data_t* s)
 {
-    if (s == NULL) {
-        printf("Failed to allocate memory for parameters.\n");
-        exit(EXIT_FAILURE);
-    }
+    if (!s)
+        return handle_failure("Failed to allocate memory for parameters.\n");
 
     for (int i = 1; i < argc; ++i) {
         if (strcmp(argv[i], "-p") == 0 && i + 1 < argc) {
             s->PORT = atoi(argv[++i]);
         } else if (strcmp(argv[i], "-x") == 0 && i + 1 < argc) {
-            s->width = atoi(argv[++i]);
+            s->game.width = atoi(argv[++i]);
         } else if (strcmp(argv[i], "-y") == 0 && i + 1 < argc) {
-            s->height = atoi(argv[++i]);
+            s->game.height = atoi(argv[++i]);
         } else if (strcmp(argv[i], "-n") == 0) {
-            i++;
-            while (i < argc && argv[i][0] != '-') {
-                s->teams =
-                    realloc(s->teams, (s->team_count + 1) * sizeof(char*));
-                s->teams[s->team_count] = argv[i];
-                s->team_count++;
-                i++;
-            }
-            i--;  // roll back one argument to handle next option correctly
+            i = parse_teams_names(argc, argv, i, s);
         } else if (strcmp(argv[i], "-c") == 0 && i + 1 < argc) {
-            s->clients_nb = atoi(argv[++i]);
+            s->game.clients_nb = atoi(argv[++i]);
         } else if (strcmp(argv[i], "-f") == 0 && i + 1 < argc) {
-            s->freq = atoi(argv[++i]);
+            s->game.freq = atoi(argv[++i]);
         }
     }
 
-    return s;
+    return SUCCESS;
+}
+
+void free_teams_names(server_data_t* s)
+{
+    if (s->game.team_names != NULL)
+        free(s->game.team_names);
+
+    free(s);
 }

@@ -100,6 +100,7 @@ typedef struct server_data {
 
 bool are_program_args_valid(int argc, char** argv);
 int parse_arguments(int argc, char** argv, server_data_t* s);
+void free_teams_names(server_data_t* s);
 
 int bind_and_listen_socket(server_data_t* s);
 int initialize_server(server_data_t* s);
