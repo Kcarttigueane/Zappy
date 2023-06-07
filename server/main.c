@@ -26,6 +26,11 @@ int main(int argc, char** argv)
     if (setup_signal_handler() == ERROR)
         return ERROR;
 
+    data->game.map = init_map(data->game.width, data->game.height);
+
+    print_resources_location(data->game.map, data->game.height,
+                             data->game.width);
+
     //     if (initialize_server(&server_data) == ERROR)
     //         return handle_error("Server initialization failed");
 

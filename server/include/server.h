@@ -107,7 +107,14 @@ int initialize_server(server_data_t* s);
 
 int server_loop(server_data_t* s);
 
+// ! MAP Functions:
+
 void print_resources_location(Tile** map, size_t height, size_t width);
+void calc_total_resources(int total_tiles, int* total_resources);
+Tile** init_map(size_t width, size_t height);
+void shuffle(int* array, size_t n);
+void distribute_resources(Tile** map, int total_resources[], size_t height,
+                          size_t width);
 
 // ! Extern Variables:
 

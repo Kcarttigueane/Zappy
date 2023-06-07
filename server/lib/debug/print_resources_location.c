@@ -10,10 +10,10 @@
 
 void print_resources_location(Tile** map, size_t height, size_t width)
 {
-    for (int i = 0; i < width; i++) {
-        for (int j = 0; j < height; j++) {
+    for (size_t i = 0; i < width; i++) {
+        for (size_t j = 0; j < height; j++) {
             printf("Tile pos [");
-            printf(WHITE "%d, %d" RESET, i, j);
+            printf(WHITE "%zu, %zu" RESET, i, j);
             printf("]  ");
             for (int k = 0; k < MAX_NB_RESOURCES; k++) {
                 printf("%sq%d: %s%zu%s  ", colors[k], k, colors[k],

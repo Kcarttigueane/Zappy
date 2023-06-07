@@ -30,9 +30,9 @@ Tile** init_map(size_t width, size_t height)
 {
     Tile** map = malloc(width * sizeof(Tile*));
 
-    for (int i = 0; i < width; i++) {
+    for (size_t i = 0; i < width; i++) {
         map[i] = malloc(height * sizeof(Tile));
-        for (int j = 0; j < height; j++) {
+        for (size_t j = 0; j < height; j++) {
             for (int k = 0; k < MAX_NB_RESOURCES; k++) {
                 map[i][j].quantity[k] = 0;
             }
@@ -61,7 +61,7 @@ void distribute_resources(Tile** map, int total_resources[], size_t height,
     size_t total_tiles = width * height;
     int* tiles = malloc(total_tiles * sizeof(int));
 
-    for (int i = 0; i < total_tiles; i++) {
+    for (size_t i = 0; i < total_tiles; i++) {
         tiles[i] = i;
     }
 
