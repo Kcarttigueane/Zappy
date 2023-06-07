@@ -38,6 +38,13 @@ typedef struct coord_s {
     int y;
 } coord_t;
 
+typedef enum state_s {
+    NONE,
+    EGG,
+    ACTIVE,
+    DEAD,
+} state_t;
+
 typedef struct player_s {
     size_t id;
     coord_t pos;
@@ -47,6 +54,9 @@ typedef struct player_s {
     size_t inventory[MAX_NB_RESOURCES];
     size_t life_units;
     time_t last_eat_time;
+    state_t state;
+    char* write_buf;
+    char** command_queue;
     TAILQ_ENTRY(client) entries;
 } player_t;
 

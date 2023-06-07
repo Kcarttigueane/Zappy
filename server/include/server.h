@@ -40,6 +40,7 @@
 #include "lib.h"
 #include "player.h"
 #include "signals.h"
+#include "teams.h"
 
 enum ErrorCodes { SUCCESS = 0, FAILURE = -1, ERROR = 84 };
 
@@ -71,10 +72,8 @@ typedef struct {
 typedef struct game_s {
     Tile** map;
     size_t width, height;
-    player_t* players;
     size_t nb_players;
-    // Egg* eggs;  // a dynamically-allocated array of Egg structs
-    size_t nb_eggs;
+    team_t** teams;
     char** team_names;
     size_t team_count;
     size_t clients_nb;
@@ -89,12 +88,6 @@ typedef struct server_data {
     fd_set readfds;
     fd_set writefds;
 } server_data_t;
-
-// typedef struct {
-//     int egg_num;
-//     Player* player;  // the player who laid the egg
-//     int x, y;        // position of the egg on the map
-// } Egg;
 
 // ! SERVER Functions:
 
