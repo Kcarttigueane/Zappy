@@ -45,7 +45,7 @@ void Display::handleEvents()
                 if (_event->mouseWheelScroll.delta > 0 && _scale < 1.0) {
                     _scale += 0.05;
                     _scale = std::min(1.0, _scale);
-                } else if (_event->mouseWheelScroll.delta < 0 && _scale > 0.00) {
+                } else if (_event->mouseWheelScroll.delta < 0 && _scale >= 0.15) {
                     _scale -= 0.05;
                     _scale = std::max(0.01, _scale);
                 }
