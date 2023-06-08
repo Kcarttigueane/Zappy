@@ -40,7 +40,8 @@ int main(int argc, char* argv[])
 
     //set up display
     Display display(1920, 1080, "Zappy");
-    display.setupGame(response);
+    display.setupServerInfo(response);
+    display.setupTiles();
     Entity player(display._playerTexture, PLAYER_TYPE);
     sf::IntRect rect;
     rect.left = 757;
@@ -59,6 +60,10 @@ int main(int argc, char* argv[])
         sf::Time elapsedTime = display._clock.getElapsedTime();
         if (elapsedTime < display._frameTime)
             sf::sleep(display._frameTime - elapsedTime);
+        // std::string response = client.receiveData();
+        // if (!response.empty()) {
+        //     printf("%s\n", response.c_str());
+        // }
     }
     return EXIT_SUCCESS;
 }

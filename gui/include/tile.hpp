@@ -7,6 +7,9 @@
 
 #pragma once
 
+#define UP 1
+#define DOWN 0
+
 struct Tile {
     int food;
     int linemate;
@@ -15,6 +18,8 @@ struct Tile {
     int mendiane;
     int phiras;
     int thystame;
+    int direction;
+    float offset;
 };
 
 void debugTile(Tile tile);

@@ -12,6 +12,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <sys/select.h>
 
 class Client {
 private:
@@ -54,7 +55,6 @@ public:
     std::string receiveData() {
         char buffer[4096] = {0};
         if (recv(clientSocket, buffer, sizeof(buffer), 0) < 0) {
-            std::cerr << "Receive failed" << std::endl;
             return "";
         }
         return std::string(buffer);

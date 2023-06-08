@@ -15,6 +15,7 @@
 #define SCALE 0.2
 #define ISOMETRIC_X_OFFSET 930.0
 #define ISOMETRIC_Y_OFFSET 400.0
+#define EXTRA_TILES 50
 class Display {
     public:
         Display(int width_res, int height_res, std::string title) {
@@ -28,7 +29,7 @@ class Display {
             _font = new sf::Font;
             _event = new sf::Event;
             _playerTexture->loadFromFile("./assets/player_inv.png");
-            _cubeTexture->loadFromFile("./assets/inv_cube.png");
+            _cubeTexture->loadFromFile("./assets/white_inv_cube.png");
             _uiTexture->loadFromFile("./assets/custompanel.png");
             _uiPosition = sf::Vector2f(100, 1080);
             _font->loadFromFile("./assets/font.ttf");
@@ -42,14 +43,16 @@ class Display {
             delete _font;
         }
 
-        void createIsometricCube(float x, float y, float scale, sf::Texture *texture, sf::IntRect rect);
+        void createIsometricCube(float x, float y, float scale, sf::Texture *texture, sf::IntRect rect, bool isCenterCube);
         void drawTileMap(int w, int h);
         void drawEntities();
         void drawUI();
         void animateEntity(Entity *entity);
         void handleEvents();
+        bool isMapCube(int x, int y);
         void getMousePosition();
-        void setupGame(std::string response);
+        void setupTiles();
+        void setupServerInfo(std::string response);
         void draw();
 
         sf::RenderWindow *_window;
@@ -79,6 +82,7 @@ class Display {
         sf::Time _deltaTime;
         sf::Time _frameTime = sf::seconds(1.0f / 60.0f);
         std::vector<Tile> _tiles;
+        std::vector<Tile> _tileMovement;
 };
 
 

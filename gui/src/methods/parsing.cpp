@@ -8,7 +8,7 @@
 #include "../../include/display.hpp"
 
 
-void Display::setupGame(std::string response)
+void Display::setupServerInfo(std::string response)
 {
     printf("%s\n", response.c_str());
     std::istringstream iss(response);

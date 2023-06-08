@@ -10,8 +10,8 @@
 
 void Display::draw()
 {
-    sf::Color skyColor(135, 206, 235, 255);
-    _window->clear(skyColor);
+    // sf::Color skyColor(135, 206, 235, 255);
+    _window->clear(sf::Color(12, 79, 106));
     drawTileMap(_mapWidth, _mapHeight);
     drawEntities();
     drawUI();
@@ -26,12 +26,17 @@ void Display::drawTileMap(int width, int height)
     rect.height = ASSET_HEIGHT;
     rect.width = ASSET_WIDHT;
 
-    for (int i = 0; i < width; i++) {
-        for (int j = 0; j < height; j++) {
-            createIsometricCube(i, j, _scale, _cubeTexture, rect);
+    for (int i = -EXTRA_TILES; i < EXTRA_TILES; i++) {
+        for (int j = -EXTRA_TILES; j < EXTRA_TILES; j++) {
+            createIsometricCube(i, j, _scale, _cubeTexture, rect, isMapCube(i, j));
             _window->draw(*_sprite);
         }
     }
+}
+
+bool Display::isMapCube(int x, int y)
+{
+    return x >= 0 && x < _mapWidth && y >= 0 && y < _mapHeight;
 }
 
 void Display::animateEntity(Entity *entity)
@@ -87,16 +92,32 @@ void Display::drawEntities()
     }
 }
 
-void Display::createIsometricCube(float x, float y, float scale, sf::Texture *texture, sf::IntRect rect)
+void Display::createIsometricCube(float x, float y, float scale, sf::Texture *texture, sf::IntRect rect, bool isCenterCube)
 {
     sf::Vector2f pos = getIsometricPos(x, y, scale, rect, _x_offset, _y_offset);
-    int type = (int(x) + int(y)) % 2;
-    sf::Color colors[2] = {sf::Color(124, 252, 0, 255), sf::Color(50, 205, 0, 255)};
+    int oddeven = (int(std::abs(x)) + int(std::abs(y))) % 2;
+    sf::Color colors[2][2] = {{sf::Color(0, 105, 148), sf::Color(0, 84, 118)}, {sf::Color(124, 252, 0, 255), sf::Color(50, 205, 0, 255)}};
     
-    _sprite->setColor(colors[type]);
-    if (int(x) == int(_mouseGridCoords.x) && int(y) == int(_mouseGridCoords.y)) {
+    _sprite->setColor(colors[int(isCenterCube)][oddeven]);
+    if (int(x) == int(_mouseGridCoords.x) && int(y) == int(_mouseGridCoords.y) && isCenterCube) {
         pos.y -= 30 * _scale;
         _sprite->setColor(sf::Color::Yellow);
+    }
+    if (!isCenterCube) {
+        Tile tile = _tileMovement[(int(y) + EXTRA_TILES) * (EXTRA_TILES * 2 + 1) + (int(x) + EXTRA_TILES)];
+        if (tile.direction == UP) {
+            if (tile.offset >= 500)
+                tile.direction = DOWN;
+            else
+                tile.offset += 20;
+        } else {
+            if (tile.offset <= -200)
+                tile.direction = UP;
+            else
+                tile.offset -= 20;
+        }
+        _tileMovement[(int(y) + EXTRA_TILES) * (EXTRA_TILES * 2 + 1) + (int(x) + EXTRA_TILES)] = tile;
+        pos.y += tile.offset * _scale;
     }
     _sprite->setTexture(*texture);
     _sprite->setPosition(pos);
