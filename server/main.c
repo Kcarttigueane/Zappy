@@ -28,8 +28,10 @@ int main(int argc, char** argv)
 
     data->game.map = init_map(data->game.width, data->game.height);
 
-    print_resources_location(data->game.map, data->game.height,
-                             data->game.width);
+    LIST_INIT(&data->game.client_list);
+
+    // print_resources_location(data->game.map, data->game.height,
+    //                          data->game.width);
 
     if (initialize_server(data) == ERROR)
         return handle_error("Server initialization failed");
@@ -37,6 +39,6 @@ int main(int argc, char** argv)
     server_loop(data);
 
     free_teams_names(data);
-
+    free_map(data->game.map, data->game.width);
     return SUCCESS;
 }

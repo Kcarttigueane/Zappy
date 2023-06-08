@@ -13,9 +13,8 @@
 typedef struct team_s {
     char* name;
     size_t max_players;
-    size_t nb_players;
+    size_t nb_players_connected;
     size_t nb_eggs;
-    player_t** players;
 } team_t;
 
 #endif /* !TEAMS_H_ */

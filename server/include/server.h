@@ -61,9 +61,21 @@ enum ErrorCodes { SUCCESS = 0, FAILURE = -1, ERROR = 84 };
             (total_tiles)*0.05                                        \
     }
 
+#ifndef LIST_FOREACH_SAFE
+#    define LIST_FOREACH_SAFE(var, head, field, tvar) \
+        for ((var) = LIST_FIRST((head));              \
+             (var) && ((tvar) = LIST_NEXT((var), field), 1); (var) = (tvar))
+#endif
+
 // ! STRUCTURES:
 
-#define MAX_NB_RESOURCES 7
+enum MAX_VALUES {
+    MAX_NB_RESOURCES = 7,
+    MAX_NB_PLAYERS = 6,
+    MAX_BUFFER = 1024,
+    MAX_COMMANDS_LENGTH = 256,
+    MAX_COMMANDS_PER_CLIENT = 10,
+};
 
 typedef struct {
     size_t quantity[MAX_NB_RESOURCES];
@@ -73,11 +85,12 @@ typedef struct game_s {
     Tile** map;
     size_t width, height;
     size_t nb_players;
-    team_t** teams;
     char** team_names;
     size_t team_count;
     size_t clients_nb;
     size_t freq;
+    client_t* clients;
+    LIST_HEAD(client_head, client_s) client_list;
 } game_t;
 
 typedef struct server_data {
@@ -100,6 +113,8 @@ int initialize_server(server_data_t* s);
 
 int server_loop(server_data_t* s);
 
+void accept_new_connection(server_data_t* s);
+
 // ! MAP Functions:
 
 void print_resources_location(Tile** map, size_t height, size_t width);
@@ -108,9 +123,20 @@ Tile** init_map(size_t width, size_t height);
 void shuffle(int* array, size_t n);
 void distribute_resources(Tile** map, int total_resources[], size_t height,
                           size_t width);
+void free_map(Tile** map, size_t width);
+
+// ! CLIENT Functions:
+
+void add_client(game_t* game, client_t* client);
+void free_client_list(game_t* game);
+void remove_client_by_fd(game_t* game, int fd);
 
 // ! Extern Variables:
 
 extern volatile sig_atomic_t stop_server;
+
+int init_players(server_data_t* s, client_t* client);
+
+void print_all_clients(game_t* game);
 
 #endif /* !SERVER_H_ */

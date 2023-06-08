@@ -82,3 +82,5 @@ int is_command_queue_full(client_t* client);
 void enqueue_command(client_t* client, const char* command);
 void dequeue_command(client_t* client);
 void print_command_queue(client_t* client);
+
+void print_client_info(client_t* client);
