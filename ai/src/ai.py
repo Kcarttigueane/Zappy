@@ -1,4 +1,6 @@
-
+from pathfinding.core.grid import Grid
+from pathfinding.finder.a_star import AStarFinder
+from pathfinding.core.diagonal_movement import DiagonalMovement
 
 
 class AI:
@@ -51,7 +53,7 @@ class AI:
                     min_priority = priority
                 elif count > 0 and priority == min_priority:
                     rarest_minerals.append(mineral)
-        return str(rarest_minerals) if rarest_minerals else None
+        return str(rarest_minerals[0]) if rarest_minerals else None
 
     def fill_map(self, look_input: str) -> None:
         lines = look_input.split(",")
@@ -67,3 +69,36 @@ class AI:
                 self.map[row][col] = line.replace("[", "").replace("]", "").replace("\n", "")
         return self.map
 
+    def find_path_to_stone(self, stone: str) -> str:
+        target_row, target_col = 0, 0
+        start_row, start_col = 0, 7
+        for row in range(len(self.map)):
+            for col in range(len(self.map[row])):
+                for item in self.map[row][col].split(" "):
+                    if item == stone:
+                        target_row, target_col = row, col
+                        break
+        if target_row == 0 and target_col == 0:
+            return None
+        matrix = [[0 if self.map[r][c] == 'O' else 1
+                   for c in range(len(self.map[r]))] for r in range(len(self.map))]
+        grid = Grid(matrix=matrix)
+        start_node = grid.node(start_col, start_row)
+        target_node = grid.node(target_col, target_row)
+        finder = AStarFinder(diagonal_movement=DiagonalMovement.never)
+        path, _ = finder.find_path(start_node, target_node, grid)
+        if len(path) == 0:
+            return "Path is empty"
+        move_list = []
+        prev_col, prev_row = start_col, start_row
+        for col, row in path[1:]:
+            col_diff = col - prev_col
+            row_diff = row - prev_row
+            if col_diff == 1:
+                move_list.append("Right")
+            elif col_diff == -1:
+                move_list.append("Left")
+            elif row_diff == 1:
+                move_list.append("Forward")
+            prev_col, prev_row = col, row
+        return move_list

@@ -3,6 +3,7 @@ import sys
 import time
 
 from tools.parsing import parser as p
+from tools.parsing import got_numbers
 from src.ai import AI
 import socket
 import selectors
@@ -65,12 +66,18 @@ def receive_handler(connected_socket: SocketManager, mask, XF=False):
     ai = AI()
     if data:
         print(f"\nReceived: {data}") if not XF else print(f"{data}")
-        if data != "ok" and data != "ko" and data != "dead" and data != [] and data != None:
+        if data != "ok" and data != "ko" and data != "dead" and data != [] and data != None and got_numbers(data) == False:
             rare_stones = ai.parse_look(data)
             if rare_stones:
                 print(rare_stones)
                 ai.fill_map(data)
-                print(ai.map)
+                moves = ai.find_path_to_stone(rare_stones)
+                for move in moves:
+                    connected_socket.send(move)
+                connected_socket.send("Take " + rare_stones)
+
+
+
 
 def input_handler(connected_socket: SocketManager, mask):
     connected_socket.query = sys.stdin.readline().strip()
