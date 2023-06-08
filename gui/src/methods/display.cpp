@@ -106,15 +106,15 @@ void Display::createIsometricCube(float x, float y, float scale, sf::Texture *te
     if (!isCenterCube) {
         Tile tile = _tileMovement[(int(y) + EXTRA_TILES) * (EXTRA_TILES * 2 + 1) + (int(x) + EXTRA_TILES)];
         if (tile.direction == UP) {
-            if (tile.offset >= 500)
+            if (tile.offset >= 300)
                 tile.direction = DOWN;
             else
-                tile.offset += 20;
+                tile.offset += 12;
         } else {
-            if (tile.offset <= -200)
+            if (tile.offset <= -50)
                 tile.direction = UP;
             else
-                tile.offset -= 20;
+                tile.offset -= 12;
         }
         _tileMovement[(int(y) + EXTRA_TILES) * (EXTRA_TILES * 2 + 1) + (int(x) + EXTRA_TILES)] = tile;
         pos.y += tile.offset * _scale;
