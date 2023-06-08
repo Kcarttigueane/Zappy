@@ -23,7 +23,14 @@ class AI:
             "thystame": 0
         }
         self.level = 1
-        self.map = []
+        self.map = [['O', 'O', 'O', 'O', 'O', 'O', 'O', 'X', 'O', 'O', 'O', 'O', 'O', 'O', 'O'],
+                    ['O', 'O', 'O', 'O', 'O', 'O', 'X', 'X', 'X', 'O', 'O', 'O', 'O', 'O', 'O'],
+                    ['O', 'O', 'O', 'O', 'O', 'X', 'X', 'X', 'X', 'X', 'O', 'O', 'O', 'O', 'O'],
+                    ['O', 'O', 'O', 'O', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'O', 'O', 'O', 'O'],
+                    ['O', 'O', 'O', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'O', 'O', 'O'],
+                    ['O', 'O', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'O', 'O'],
+                    ['O', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'O'],
+                    ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X']]
 
     def parse_look(self, look_input: str) -> None:
         stones = {}
@@ -44,28 +51,19 @@ class AI:
                     min_priority = priority
                 elif count > 0 and priority == min_priority:
                     rarest_minerals.append(mineral)
-        return rarest_minerals if rarest_minerals else None
-    
-    def create_map(self) -> None:
-        rows = 8
-        width_max = 15
-        width = 1
-        for _ in range(rows):
-            if width <= width_max:
-                self.map.append(["X"] * width)
-                width += 2
-        return self.map
+        return str(rarest_minerals) if rarest_minerals else None
 
     def fill_map(self, look_input: str) -> None:
-        self.map = self.create_map()
         lines = look_input.split(",")
         if lines:
             row = 0
             col = 0
             for line in lines:
-                if col >= len(self.map[row]):
-                    row += 1
-                    col = 0
-                self.map[row][col] = line
-                col += 1
+                while (self.map[row][col] != 'X'):
+                    col += 1
+                    if col >= len(self.map[row]):
+                        row += 1
+                        col = 0
+                self.map[row][col] = line.replace("[", "").replace("]", "").replace("\n", "")
+        return self.map
 
