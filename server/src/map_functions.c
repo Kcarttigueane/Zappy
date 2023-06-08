@@ -77,3 +77,11 @@ void distribute_resources(Tile** map, int total_resources[], size_t height,
 
     free(tiles);
 }
+
+void free_map(Tile** map, size_t width)
+{
+    for (size_t i = 0; i < width; i++) {
+        free(map[i]);
+    }
+    free(map);
+}

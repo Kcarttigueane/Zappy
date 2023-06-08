@@ -23,7 +23,7 @@ int bind_and_listen_socket(server_data_t* s)
     if (listen(s->socket_fd, 3) < 0)
         return handle_error("Listen failed");
 
-    return 0;
+    return SUCCESS;
 }
 
 int initialize_server(server_data_t* s)
@@ -32,11 +32,12 @@ int initialize_server(server_data_t* s)
         return handle_error("Socket creation failed");
 
     size_t opt = 1;
+
     if (setsockopt(s->socket_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)))
         return handle_error("setsockopt failed");
 
     if (bind_and_listen_socket(s) == ERROR)
         return handle_error("Bind and listen failed");
 
-    return 0;
+    return SUCCESS;
 }

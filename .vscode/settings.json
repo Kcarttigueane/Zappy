@@ -17,7 +17,13 @@
     "regex.h": "c",
     "array": "c",
     "string_view": "c",
-    "initializer_list": "c"
+    "initializer_list": "c",
+    "inet.h": "c",
+    "player.h": "c",
+    "deque": "c",
+    "vector": "c",
+    "netdb.h": "c",
+    "teams.h": "c"
   },
   "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
   "editor.formatOnSave": true,
