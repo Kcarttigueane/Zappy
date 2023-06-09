@@ -78,6 +78,16 @@ void distribute_resources(Tile** map, int total_resources[], size_t height,
     free(tiles);
 }
 
+void spawning_resources(server_data_t* data, int* total_resources)
+{
+    printf("Spawning resources\n");
+
+    distribute_resources(data->game.map, total_resources, data->game.width,
+                         data->game.height);
+
+    print_total_resources(data->game.map, data->game.height, data->game.width);
+}
+
 void free_map(Tile** map, size_t width)
 {
     for (size_t i = 0; i < width; i++) {
