@@ -70,7 +70,17 @@ void handle_client_activity(server_data_t* s)
 
 int server_loop(server_data_t* s)
 {
+    int total_tiles = s->game.width * s->game.height;
+    int total_resources[MAX_NB_RESOURCES] = CALC_TOTAL_RESOURCES(total_tiles);
+
+    time_t start, current;
+
+    //     // Get the current time as the start time
+    time(&start);
+
     while (!stop_server) {
+        time(&current);  // Get the current time
+
         reset_set(s, &s->readfds);
         reset_set(s, &s->writefds);
 
@@ -84,8 +94,16 @@ int server_loop(server_data_t* s)
         if (FD_ISSET(s->socket_fd, &s->readfds)) {
             accept_new_connection(s);
         }
-        // print_all_clients(&s->game); //** DEBUG
+        // print_all_clients(&s->game); // DEBUG
         handle_client_activity(s);
+
+        int elapsed_time = difftime(current, start);
+
+        if (elapsed_time >= TIMER_INTERVAL) {
+            spawning_resources(s, total_resources);
+            print_total_resources(s->game.map, s->game.height, s->game.width);
+            time(&start);
+        }
     }
 
     free_client_list(&s->game);

@@ -5,4 +5,4 @@
 ** ebo.c
 */
 
-void ebo() {}
+void ebo(void) {}

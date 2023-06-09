@@ -5,4 +5,4 @@
 ** pdi.c
 */
 
-void pdi() {}
+void pdi(void) {}

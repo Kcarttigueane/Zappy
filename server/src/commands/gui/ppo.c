@@ -5,4 +5,4 @@
 ** ppo.c
 */
 
-void ppo() {}
+void ppo(void) {}

@@ -5,4 +5,4 @@
 ** edi.c
 */
 
-void edi() {}
+void edi(void) {}

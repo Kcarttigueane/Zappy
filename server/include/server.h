@@ -70,6 +70,8 @@ enum ErrorCodes { SUCCESS = 0, FAILURE = -1, ERROR = 84 };
              (var) && ((tvar) = LIST_NEXT((var), field), 1); (var) = (tvar))
 #endif
 
+#define TIMER_INTERVAL 20
+
 // ! STRUCTURES:
 
 enum MAX_VALUES {
@@ -129,12 +131,15 @@ void parse_client_input(list_args_t* args, char* input_buffer);
 // ! MAP Functions:
 
 void print_resources_location(Tile** map, size_t height, size_t width);
+void print_total_resources(Tile** map, size_t height, size_t width);
 void calc_total_resources(int total_tiles, int* total_resources);
 Tile** init_map(size_t width, size_t height);
 void shuffle(int* array, size_t n);
 void distribute_resources(Tile** map, int total_resources[], size_t height,
                           size_t width);
 void free_map(Tile** map, size_t width);
+
+void spawning_resources(server_data_t* data, int* total_resources);
 
 // ! CLIENT Functions:
 

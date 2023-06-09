@@ -5,4 +5,4 @@
 ** pic.c
 */
 
-void pic() {}
+void pic(void) {}

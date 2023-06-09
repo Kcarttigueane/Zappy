@@ -5,4 +5,4 @@
 ** pie.c
 */
 
-void pie() {}
+void pie(void) {}

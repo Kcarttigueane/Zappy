@@ -5,4 +5,4 @@
 ** enw.c
 */
 
-void enw() {}
+void enw(void) {}

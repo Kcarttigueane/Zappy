@@ -5,4 +5,4 @@
 ** suc.c
 */
 
-void suc() {}
+void suc(void) {}

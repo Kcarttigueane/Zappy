@@ -5,4 +5,4 @@
 ** pex.c
 */
 
-void pex() {}
+void pex(void) {}

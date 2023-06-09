@@ -5,4 +5,4 @@
 ** bct.c
 */
 
-void bct() {}
+void bct(void) {}
