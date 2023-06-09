@@ -96,8 +96,12 @@ class AI:
             row_diff = row - prev_row
             if col_diff == 1:
                 move_list.append("Right")
+                move_list.append("Forward")
+                move_list.append("Left")
             elif col_diff == -1:
                 move_list.append("Left")
+                move_list.append("Forward")
+                move_list.append("Right")
             elif row_diff == 1:
                 move_list.append("Forward")
             prev_col, prev_row = col, row
