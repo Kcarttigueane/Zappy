@@ -5,4 +5,4 @@
 ** sgt.c
 */
 
-void sgt() {}
+void sgt(void) {}

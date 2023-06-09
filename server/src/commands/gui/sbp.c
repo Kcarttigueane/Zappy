@@ -5,4 +5,4 @@
 ** sbp.c
 */
 
-void sbp() {}
+void sbp(void) {}

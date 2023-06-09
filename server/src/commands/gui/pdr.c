@@ -5,4 +5,4 @@
 ** pdr.c
 */
 
-void pdr() {}
+void pdr(void) {}

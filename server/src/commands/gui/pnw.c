@@ -5,4 +5,4 @@
 ** pnw.c
 */
 
-void pnw() {}
+void pnw(void) {}

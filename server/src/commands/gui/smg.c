@@ -5,4 +5,4 @@
 ** smg.c
 */
 
-void smg() {}
+void smg(void) {}

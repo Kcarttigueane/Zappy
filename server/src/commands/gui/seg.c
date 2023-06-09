@@ -5,4 +5,4 @@
 ** seg.c
 */
 
-void seg() {}
+void seg(void) {}

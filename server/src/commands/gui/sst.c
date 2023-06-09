@@ -5,4 +5,4 @@
 ** sst.c
 */
 
-void sst() {}
+void sst(void) {}

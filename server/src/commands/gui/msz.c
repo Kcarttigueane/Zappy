@@ -5,4 +5,4 @@
 ** msz.c
 */
 
-void msz() {}
+void msz(void) {}

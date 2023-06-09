@@ -5,4 +5,4 @@
 ** plv.c
 */
 
-void plv() {}
+void plv(void) {}

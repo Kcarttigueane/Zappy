@@ -5,4 +5,4 @@
 ** tna.c
 */
 
-void tna() {}
+void tna(void) {}

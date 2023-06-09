@@ -5,4 +5,4 @@
 ** pin.c
 */
 
-void pin() {}
+void pin(void) {}

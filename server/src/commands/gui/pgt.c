@@ -5,4 +5,4 @@
 ** pgt.c
 */
 
-void pgt() {}
+void pgt(void) {}

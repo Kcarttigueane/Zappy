@@ -5,4 +5,4 @@
 ** pbc.c
 */
 
-void pbc() {}
+void pbc(void) {}

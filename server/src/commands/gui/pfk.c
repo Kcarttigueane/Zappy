@@ -5,4 +5,4 @@
 ** pfk.c
 */
 
-void pfk() {}
+void pfk(void) {}
