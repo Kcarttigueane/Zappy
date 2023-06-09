@@ -58,8 +58,8 @@ int parse_arguments(int argc, char** argv, server_data_t* s)
 
 void free_teams_names(server_data_t* s)
 {
-    if (s->game.team_names != NULL)
-        free(s->game.team_names);
+    if (!s->game.team_names)
+        return;
 
-    free(s);
+    free(s->game.team_names);
 }

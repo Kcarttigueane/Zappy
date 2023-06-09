@@ -8,6 +8,9 @@
 #ifndef SERVER_H_
 #define SERVER_H_
 
+typedef struct client_s client_t;
+typedef struct game_s game_t;
+
 #include <stdbool.h>
 #include <stdio.h>
 
@@ -102,6 +105,12 @@ typedef struct server_data {
     fd_set writefds;
 } server_data_t;
 
+typedef struct list_args {
+    server_data_t* server_data;
+    char** split_command;
+    client_t* client;
+} list_args_t;
+
 // ! SERVER Functions:
 
 bool are_program_args_valid(int argc, char** argv);
@@ -114,6 +123,8 @@ int initialize_server(server_data_t* s);
 int server_loop(server_data_t* s);
 
 void accept_new_connection(server_data_t* s);
+
+void parse_client_input(list_args_t* args, char* input_buffer);
 
 // ! MAP Functions:
 

@@ -15,6 +15,8 @@ int init_players(server_data_t* s, client_t* client)
         return handle_failure("Failed to allocate memory for new player");
     }
 
+    printf("New client connected with id %i\n", client->fd);
+
     client->player->id = client->fd;
     client->player->pos.x = rand() % s->game.width;
     client->player->pos.y = rand() % s->game.height;
@@ -26,6 +28,8 @@ int init_players(server_data_t* s, client_t* client)
     // client->player->last_eat_time; // TODO : set this to current time I guess
     client->player->state = NONE;
     init_command_queue(client);
+
+    return 0;
 }
 
 void accept_new_connection(server_data_t* s)

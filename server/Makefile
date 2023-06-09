@@ -16,7 +16,6 @@ OBJS = $(SRCS:.c=.o)
 DEPS = $(OBJS:.o=.d)
 
 CFLAGS += -Wall -Wextra -I ./include -g3
-LDFLAGS += -luuid
 
 # ! Add color to output
 COLOR_RESET   = \033[0m

@@ -7,6 +7,10 @@
 
 #pragma once
 
+typedef struct client_s client_t;
+typedef struct team_s team_t;
+typedef struct player_s player_t;
+
 #include "./server.h"
 #include "teams.h"
 
