@@ -1,0 +1,38 @@
+{
+  "files.associations": {
+    "stdio.h": "c",
+    "lib.h": "c",
+    "string.h": "c",
+    "server.h": "c",
+    "stdbool.h": "c",
+    "colors.h": "c",
+    "unistd.h": "c",
+    "in.h": "c",
+    "signal.h": "c",
+    "queue.h": "c",
+    "utils.h": "c",
+    "command.h": "c",
+    "uuid.h": "c",
+    "time.h": "c",
+    "regex.h": "c",
+    "array": "c",
+    "string_view": "c",
+    "initializer_list": "c",
+    "inet.h": "c",
+    "player.h": "c",
+    "deque": "c",
+    "vector": "c",
+    "netdb.h": "c",
+    "teams.h": "c"
+  },
+  "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
+  "editor.formatOnSave": true,
+  "cSpell.words": [
+    "deraumere",
+    "linemate",
+    "mendiane",
+    "phiras",
+    "Repositery",
+    "thystame"
+  ]
+}

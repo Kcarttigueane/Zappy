@@ -6,8 +6,8 @@
 */
 
 #include <cstdlib>
-#include "include/gui.hpp"
 #include "include/client.hpp"
+#include "include/gui.hpp"
 
 void handle_client(Client client)
 {
