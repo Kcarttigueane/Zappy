@@ -1,6 +1,7 @@
 from pathfinding.core.grid import Grid
 from pathfinding.finder.a_star import AStarFinder
 from pathfinding.core.diagonal_movement import DiagonalMovement
+from tools.parsing import got_numbers
 
 
 class AI:
@@ -106,3 +107,22 @@ class AI:
                 move_list.append("Forward")
             prev_col, prev_row = col, row
         return move_list
+
+    def updateInventory(self, message):
+        message = message.replace("[", "").replace("]", "").replace("\n", "")
+        for i in message.split(","):
+            if i.split(" ")[1] in self.inventory:
+                self.inventory[i.split(" ")[1]] = int(i.split(" ")[2])
+
+
+    def loop(self, data, connected_socket):
+        if data != "ok" and data != "ko" and data != "dead" and data != [] and data != None and got_numbers(data) == False:
+            rare_stones = self.parse_look(data)
+            if rare_stones:
+                print(rare_stones)
+                self.fill_map(data)
+                moves = self.find_path_to_stone(rare_stones)
+                for move in moves:
+                    connected_socket.send(move)
+                connected_socket.send("Take " + rare_stones)
+                connected_socket.send("Inventory")

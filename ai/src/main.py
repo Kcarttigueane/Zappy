@@ -60,24 +60,12 @@ class SocketManager:
     def is_connected(self):
         return self.connected
 
-
 def receive_handler(connected_socket: SocketManager, mask, XF=False):
     data = connected_socket.receive()
     ai = AI()
     if data:
         print(f"\nReceived: {data}") if not XF else print(f"{data}")
-        if data != "ok" and data != "ko" and data != "dead" and data != [] and data != None and got_numbers(data) == False:
-            rare_stones = ai.parse_look(data)
-            if rare_stones:
-                print(rare_stones)
-                ai.fill_map(data)
-                moves = ai.find_path_to_stone(rare_stones)
-                for move in moves:
-                    connected_socket.send(move)
-                connected_socket.send("Take " + rare_stones)
-
-
-
+        ai.loop(data, connected_socket)
 
 def input_handler(connected_socket: SocketManager, mask):
     connected_socket.query = sys.stdin.readline().strip()
