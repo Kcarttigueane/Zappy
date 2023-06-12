@@ -48,6 +48,40 @@ void Display::setupServerInfo(std::string response)
 
 }
 
+
+void Display::parseServerInfo(std::string res)
+{
+    std::istringstream iss(res);
+    std::string command;
+    iss >> command;
+    if (command == "pnw") {
+        int playerNumber, x, y, orientation, lvl;
+        std::string teamName;
+        if (iss >> playerNumber >> x >> y >> orientation >> lvl >> teamName) {
+            sf::IntRect rect;
+            rect.left = 809;
+            rect.width = 168;
+            rect.height = 207;
+            rect.top = 271 + 291;
+            Entity player(_playerTexture, playerNumber, x, _mapHeight - y, orientation, lvl, teamName);
+            player.setRect(rect);
+            _entities.push_back(player);
+        }
+    } else if (command == "ppo") {
+        int playerNumber, x, y, dir;
+        if (iss >> playerNumber >> x >> y >> dir) {
+            for (size_t i = 0; i < _entities.size(); i++) {
+                if (_entities[i]._playerNumber == playerNumber) {
+                    _entities[i]._move = 1;
+                    _entities[i]._objX = float(x);
+                    _entities[i]._objY = float(_mapHeight) - float(y);
+                    _entities[i]._direction = dir;
+                }
+            }
+        }
+    }
+}
+
 void debugTile(Tile tile)
 {
     std::cout << "Tile Content:" << std::endl;

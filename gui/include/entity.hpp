@@ -15,20 +15,36 @@
 #include <cstdio>
 #include <algorithm>
 #include <sstream>
+#include <thread>
+#include <cmath>
+#include <mutex>
+#include <cstring>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <sys/select.h>
+#include <fcntl.h>
 
 #define PLAYER_TYPE 0
 #define ROCK_TYPE 1
 #define DIR_STOP 0
-#define DIR_LEFT 1
-#define DIR_RIGHT 2
-#define DIR_UP 3
-#define DIR_DOWN 4
+#define DIR_NORTH 1
+#define DIR_EAST 2
+#define DIR_SOUTH 3
+#define DIR_WEST 4
 
 class Entity {
     public:
-        Entity(sf::Texture *texture, int entityType) {
+        Entity(sf::Texture *texture, int playerNumber, int x, int y, int direction, int lvl, std::string teamName) {
             _texture = texture;
-            _entityType = entityType;
+            _playerNumber = playerNumber;
+            _x = float(x);
+            _y = float(y);
+            _objX = _x;
+            _objY = _y;
+            _direction = direction;
+            _lvl = lvl;
+            _teamName = teamName;
         }
         void setPosition(float x, float y) {
             _x = x;
@@ -56,18 +72,18 @@ class Entity {
             return _texture;
         }
 
-        int getEntityType() {
-            return _entityType;
-        }
-
         int _direction = DIR_STOP;
         int _animationPoint = 0;
         int _inverseScale = 1;
-    
-    protected:
         float _x;
         float _y;
+        float _objX;
+        float _objY;
+        int _playerNumber;
+        int _lvl;
+        int _move = 0;
+        std::string _teamName;
         sf::Texture *_texture;
         sf::IntRect _rect;
-        int _entityType;
 };
+

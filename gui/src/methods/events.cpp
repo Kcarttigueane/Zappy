@@ -12,7 +12,6 @@ void Display::handleEvents()
     static bool isDragging = false;
     static sf::Vector2i dragStartPosition;
     sf::Vector2i currentMousePosition;
-    sf::Vector2f playerPos = _entities[0].getPosition();
 
     getMousePosition();
     while (_window->pollEvent(*_event)) {
@@ -23,22 +22,8 @@ void Display::handleEvents()
                 _x_offset = ISOMETRIC_X_OFFSET;
                 _y_offset = ISOMETRIC_Y_OFFSET;
                 _scale = SCALE;
-            } if (_event->key.code == sf::Keyboard::Left) {\
-                playerPos.x -= 0.4;
-                _entities[0]._direction = DIR_LEFT;
-            } else if (_event->key.code == sf::Keyboard::Right) {
-                playerPos.x += 0.4;
-                _entities[0]._direction = DIR_RIGHT;
-            } else if (_event->key.code == sf::Keyboard::Up) {
-                playerPos.y -= 0.4;
-                _entities[0]._direction = DIR_UP;
-            } else if (_event->key.code == sf::Keyboard::Down) {
-                playerPos.y += 0.4;
-                _entities[0]._direction = DIR_DOWN;
             }
-        } else {
-            _entities[0]._direction = DIR_STOP;
-        } if (_event->type == sf::Event::Closed) {
+        } else if (_event->type == sf::Event::Closed) {
             _displayLoop = 0;
         } else if (_event->type == sf::Event::MouseWheelScrolled) {
             if (_event->mouseWheelScroll.wheel == sf::Mouse::VerticalWheel) {
@@ -78,7 +63,6 @@ void Display::handleEvents()
                 isDragging = false;
         }
     }
-    _entities[0].setPosition(playerPos);
 }
 
 

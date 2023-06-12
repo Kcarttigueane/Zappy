@@ -6,12 +6,13 @@
 */
 
 #include "../../include/display.hpp"
+#include <cmath>
 
 #define MOD_NUMB 5
 
-
 void Display::setupTiles()
 {
+
     Tile tile = {0, 0, 0, 0, 0, 0 ,0 ,0, 0};
     int oddeven = 1;
     for (int i = -EXTRA_TILES; i < EXTRA_TILES; i++) {
@@ -27,3 +28,12 @@ void Display::setupTiles()
         }
     }
 }
+
+
+
+// table = [[x,y] | (x,y) in your grid]
+// for i
+//     for j
+//         table = [[np.sin(i + w*t), np.cos(j + w*t)]]
+
+// 2pi / omega = 1 period

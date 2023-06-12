@@ -28,7 +28,7 @@ class Display {
             _sprite = new sf::Sprite;
             _font = new sf::Font;
             _event = new sf::Event;
-            _playerTexture->loadFromFile("./assets/player_inv.png");
+            _playerTexture->loadFromFile("./assets/players_scaled.png");
             _cubeTexture->loadFromFile("./assets/white_inv_cube.png");
             _uiTexture->loadFromFile("./assets/custompanel.png");
             _uiPosition = sf::Vector2f(100, 1080);
@@ -43,17 +43,34 @@ class Display {
             delete _font;
         }
 
+        // Game
         void createIsometricCube(float x, float y, float scale, sf::Texture *texture, sf::IntRect rect, bool isCenterCube);
-        void drawTileMap(int w, int h);
+        void drawTileMap();
         void drawEntities();
         void drawUI();
         void animateEntity(Entity *entity);
+        void moveEntity(Entity *entity);
+        void entitySelect(Entity *entity, sf::Vector2f *pos);
         void handleEvents();
         bool isMapCube(int x, int y);
         void getMousePosition();
         void setupTiles();
         void setupServerInfo(std::string response);
         void draw();
+        void parseServerInfo(std::string response);
+
+        //Thread
+        void startClientThread();
+        void stopClientThread();
+        void setData(std::string newData);
+        std::string getData();
+
+
+        //Client
+        bool connectToServer();
+        bool sendData(const std::string &data);
+        std::string receiveData();
+        void threadRecieveData();
 
         sf::RenderWindow *_window;
         sf::Texture *_cubeTexture;
@@ -81,10 +98,20 @@ class Display {
         sf::Clock _clock;
         sf::Time _deltaTime;
         sf::Time _frameTime = sf::seconds(1.0f / 60.0f);
+        sf::Time _animationTime = sf::seconds(0.5f);
         std::vector<Tile> _tiles;
         std::vector<Tile> _tileMovement;
+        std::string _data = "";
+        std::mutex _mtx;
+        int _nb_calls = 0;
+        std::thread _clientThread;
+        int clientSocket;
+        std::string serverIP;
+        int serverPort;
+        long _frame = 0;
 };
 
 
 sf::Vector2f getGridCoordinates(float x, float y, double scale, double x_offset, double y_offset);
 sf::Vector2f getIsometricPos(float x, float y, float scale, sf::IntRect rect, double x_offset, double y_offset);
+void setupDisplay(Display *display, std::string response);
