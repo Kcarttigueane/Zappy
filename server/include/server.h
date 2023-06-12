@@ -56,7 +56,7 @@ typedef struct client_s {
 // ! STRUCTURES:
 
 typedef struct game_s {
-    Tile** map;
+    tile_t** map;
     size_t width, height;
     size_t nb_players;
     char** team_names;

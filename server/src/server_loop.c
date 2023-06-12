@@ -67,13 +67,6 @@ void handle_client_activity(server_data_t* s)
     }
 }
 
-void executed_commands(server_data_t* s)
-{
-    client_t *client, *temp;
-
-    LIST_FOREACH_SAFE(client, &s->game.client_list, entries, temp) {}
-}
-
 size_t find_player_command_index(char* command_name)
 {
     for (size_t i = 0; i < PLAYER_COMMANDS_SIZE; i++) {
@@ -92,18 +85,18 @@ void execute_commands(server_data_t* s)
     {
         if (!is_command_queue_empty(client)) {
 
-                size_t index = find_player_command_index(
-                    client->player->command_queue
-                        .commands[client->player->command_queue.front]);
+            size_t index = find_player_command_index(
+                client->player->command_queue
+                    .commands[client->player->command_queue.front]);
 
-                if (index == (size_t)FAILURE) {
-                    printf("Player : Command not found\n");
-                    dequeue_command(client);
-                    continue;
-                }
-
-                PLAYER_COMMANDS[index].function();
+            if (index == (size_t)FAILURE) {
+                printf("Player : Command not found\n");
                 dequeue_command(client);
+                continue;
+            }
+
+            PLAYER_COMMANDS[index].function();
+            dequeue_command(client);
         }
         if (!client->player->is_graphical) {
             //
