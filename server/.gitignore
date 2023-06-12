@@ -1,4 +1,6 @@
 
+# ! C LANGUAGE
+
 # Prerequisites
 *.d
 
@@ -51,6 +53,3 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
-
-# Binary files
-zappy_server

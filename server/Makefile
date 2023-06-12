@@ -10,26 +10,12 @@ RM = rm -f
 
 NAME = ../zappy_server
 
-SRCS  = ./src/are_program_args_valid.c	\
-		./src/signals/signal_handler.c	\
-		./lib/debug/debug_word_array.c	\
-		./lib/regex/regex_match.c	\
-		./lib/free_word_array.c	\
-		./lib/get_size_word_array.c	\
-		./lib/open_file.c	\
-		./lib/read_file_contents.c	\
-		./lib/return_error.c	\
-		./lib/split_str.c	\
-		./lib/timestamp.c	\
-		./lib/my_strcat.c	\
-		./main.c	\
-
+SRCS  =	$(shell find . -type f -name "*.c")
 
 OBJS = $(SRCS:.c=.o)
 DEPS = $(OBJS:.o=.d)
 
 CFLAGS += -Wall -Wextra -I ./include -g3
-LDFLAGS += -luuid
 
 # ! Add color to output
 COLOR_RESET   = \033[0m

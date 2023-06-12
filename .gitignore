@@ -1,9 +1,10 @@
-*.d
-*.o
-*.a
+# ! Development
 .vscode
 .idea
+
+# ! Binary files
+
+zappy_server
 zappy_server.bin
-*.pyc
 zappy_ai
-__pycache__/
+zappy_gui
