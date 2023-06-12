@@ -57,13 +57,56 @@ void handle_client_activity(server_data_t* s)
             printf("Client %d sent a message\n", sd);
             list_args_t args = {
                 .server_data = s,
-                .split_command = NULL,
                 .client = client,
             };
 
             int bytes_read = read(sd, buffer, MAX_BUFFER);
             (bytes_read == 0) ? handle_client_disconnected(s, client)
                               : handle_received_data(&args, buffer);
+        }
+    }
+}
+
+void executed_commands(server_data_t* s)
+{
+    client_t *client, *temp;
+
+    LIST_FOREACH_SAFE(client, &s->game.client_list, entries, temp) {}
+}
+
+size_t find_player_command_index(char* command_name)
+{
+    for (size_t i = 0; i < PLAYER_COMMANDS_SIZE; i++) {
+        if (strcmp(command_name, PLAYER_COMMANDS[i].name) == 0) {
+            return i;
+        }
+    }
+    return FAILURE;
+}
+
+void execute_commands(server_data_t* s)
+{
+    client_t *client, *temp;
+
+    LIST_FOREACH_SAFE(client, &s->game.client_list, entries, temp)
+    {
+        if (!is_command_queue_empty(client)) {
+
+                size_t index = find_player_command_index(
+                    client->player->command_queue
+                        .commands[client->player->command_queue.front]);
+
+                if (index == (size_t)FAILURE) {
+                    printf("Player : Command not found\n");
+                    dequeue_command(client);
+                    continue;
+                }
+
+                PLAYER_COMMANDS[index].function();
+                dequeue_command(client);
+        }
+        if (!client->player->is_graphical) {
+            //
         }
     }
 }
@@ -104,6 +147,8 @@ int server_loop(server_data_t* s)
             print_total_resources(s->game.map, s->game.height, s->game.width);
             time(&start);
         }
+        execute_commands(s);
+        // send responses to the available clients
     }
 
     free_client_list(&s->game);

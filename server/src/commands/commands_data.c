@@ -8,7 +8,7 @@
 #include "../../include/server.h"
 #include "../../include/utils.h"
 
-const command_t COMMANDS_DATA[] = {
+const command_t GRAPHICAL_COMMANDS[] = {
     {"msz", msz, "Define the map size.", 2},
     {"bct", bct, "Provide the content of a tile.", 9},
     {"tna", tna, "Name all the teams.", 1},
@@ -35,7 +35,7 @@ const command_t COMMANDS_DATA[] = {
     {"suc", suc, "Handle an unknown command.", 0},
     {"sbp", sbp, "Handle a command with a bad parameter.", 0}};
 
-static command_t PLAYER_COMMANDS[] = {
+const command_t PLAYER_COMMANDS[] = {
     {"Forward", forward, "Move forward", 0},
     {"Right", right, "Turn right", 0},
     {"Left", left, "Turn left", 0},
@@ -52,4 +52,5 @@ static command_t PLAYER_COMMANDS[] = {
     {"fake_end", fake_end, "fake_end", 0},
     {NULL, NULL, NULL, 0}};
 
-const size_t COMMANDS_DATA_SIZE = ARRAY_SIZE(COMMANDS_DATA);
+const size_t GRAPHICAL_COMMANDS_SIZE = ARRAY_SIZE(GRAPHICAL_COMMANDS);
+const size_t PLAYER_COMMANDS_SIZE = ARRAY_SIZE(PLAYER_COMMANDS);

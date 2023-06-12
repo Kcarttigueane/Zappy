@@ -8,39 +8,17 @@
 #ifndef SERVER_H_
 #define SERVER_H_
 
-typedef struct client_s client_t;
-typedef struct game_s game_t;
-
-#include <stdbool.h>
-#include <stdio.h>
-
-#include <arpa/inet.h>
-#include <dirent.h>
-#include <errno.h>
-#include <libgen.h>
-#include <limits.h>
-#include <netdb.h>
-#include <netinet/in.h>
-#include <signal.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/queue.h>
-#include <sys/select.h>
-#include <sys/socket.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <sys/un.h>
-#include <uuid/uuid.h>
-#include "unistd.h"
-
-#include <sys/queue.h>
-
-#include <time.h>
-
 // ! MY INCLUDES:
 
+typedef struct client_s client_t;
+typedef struct game_s game_t;
+typedef struct server_data server_data_t;
+typedef struct list_args list_args_t;
+
 #include "command.h"
+#include "common.h"
 #include "lib.h"
+#include "map.h"
 #include "player.h"
 #include "signals.h"
 #include "teams.h"
@@ -64,27 +42,18 @@ enum ErrorCodes { SUCCESS = 0, FAILURE = -1, ERROR = 84 };
             (total_tiles)*0.05                                        \
     }
 
-#ifndef LIST_FOREACH_SAFE
-#    define LIST_FOREACH_SAFE(var, head, field, tvar) \
-        for ((var) = LIST_FIRST((head));              \
-             (var) && ((tvar) = LIST_NEXT((var), field), 1); (var) = (tvar))
-#endif
-
 #define TIMER_INTERVAL 20
 
+typedef struct client_s {
+    int fd;
+    struct sockaddr_in address;
+    player_t* player;
+    char write_buf[MAX_BUFFER];
+    char read_buf[MAX_BUFFER];
+    LIST_ENTRY(client_s) entries;
+} client_t;
+
 // ! STRUCTURES:
-
-enum MAX_VALUES {
-    MAX_NB_RESOURCES = 7,
-    MAX_NB_PLAYERS = 6,
-    MAX_BUFFER = 1024,
-    MAX_COMMANDS_LENGTH = 256,
-    MAX_COMMANDS_PER_CLIENT = 10,
-};
-
-typedef struct {
-    size_t quantity[MAX_NB_RESOURCES];
-} Tile;
 
 typedef struct game_s {
     Tile** map;
@@ -109,7 +78,6 @@ typedef struct server_data {
 
 typedef struct list_args {
     server_data_t* server_data;
-    char** split_command;
     client_t* client;
 } list_args_t;
 
@@ -128,19 +96,6 @@ void accept_new_connection(server_data_t* s);
 
 void parse_client_input(list_args_t* args, char* input_buffer);
 
-// ! MAP Functions:
-
-void print_resources_location(Tile** map, size_t height, size_t width);
-void print_total_resources(Tile** map, size_t height, size_t width);
-void calc_total_resources(int total_tiles, int* total_resources);
-Tile** init_map(size_t width, size_t height);
-void shuffle(int* array, size_t n);
-void distribute_resources(Tile** map, int total_resources[], size_t height,
-                          size_t width);
-void free_map(Tile** map, size_t width);
-
-void spawning_resources(server_data_t* data, int* total_resources);
-
 // ! CLIENT Functions:
 
 void add_client(game_t* game, client_t* client);
@@ -150,6 +105,11 @@ void remove_client_by_fd(game_t* game, int fd);
 // ! Extern Variables:
 
 extern volatile sig_atomic_t stop_server;
+extern const command_t GRAPHICAL_COMMANDS[];
+extern const size_t GRAPHICAL_COMMANDS_SIZE;
+
+extern const command_t PLAYER_COMMANDS[];
+extern const size_t PLAYER_COMMANDS_SIZE;
 
 int init_players(server_data_t* s, client_t* client);
 

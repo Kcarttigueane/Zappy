@@ -17,12 +17,12 @@ int init_players(server_data_t* s, client_t* client)
 
     printf("New client connected with id %i\n", client->fd);
 
+    client->player->is_graphical = false;
     client->player->id = client->fd;
     client->player->pos.x = rand() % s->game.width;
     client->player->pos.y = rand() % s->game.height;
     client->player->orientation = UP_CENTER;
     client->player->level = 1;
-    client->player->team_name = NULL;
     memset(client->player->inventory, 0, sizeof(client->player->inventory));
     client->player->life_units = 10;
     // client->player->last_eat_time; // TODO : set this to current time I guess

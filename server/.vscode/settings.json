@@ -1,5 +1,40 @@
 {
-    "files.associations": {
-        "typeinfo": "c"
-    }
+  "files.associations": {
+    "stdio.h": "c",
+    "lib.h": "c",
+    "string.h": "c",
+    "stdbool.h": "c",
+    "colors.h": "c",
+    "unistd.h": "c",
+    "in.h": "c",
+    "signal.h": "c",
+    "utils.h": "c",
+    "uuid.h": "c",
+    "time.h": "c",
+    "regex.h": "c",
+    "array": "c",
+    "string_view": "c",
+    "initializer_list": "c",
+    "inet.h": "c",
+    "player.h": "c",
+    "deque": "c",
+    "vector": "c",
+    "netdb.h": "c",
+    "teams.h": "c",
+    "string": "c",
+    "typeinfo": "c",
+    "queue.h": "c",
+    "signals.h": "c",
+    "server.h": "c",
+    "command.h": "c"
+  },
+  "cSpell.words": [
+    "deraumere",
+    "linemate",
+    "mendiane",
+    "phiras",
+    "Repositery",
+    "thystame"
+  ],
+  "editor.formatOnSave": true
 }
