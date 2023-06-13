@@ -5,4 +5,6 @@
 ** fake_end.c
 */
 
-void fake_end(void) {}
+#include "server.h"
+
+void fake_end(list_args_t* args) {}

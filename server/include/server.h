@@ -102,6 +102,9 @@ void add_client(game_t* game, client_t* client);
 void free_client_list(game_t* game);
 void remove_client_by_fd(game_t* game, int fd);
 
+int append_to_write_buffer(client_t* client, const char* msg);
+void write_and_flush_client_buffer(client_t* client);
+
 // ! Extern Variables:
 
 extern volatile sig_atomic_t stop_server;

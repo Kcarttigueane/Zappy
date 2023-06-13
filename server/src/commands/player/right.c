@@ -5,4 +5,6 @@
 ** right.c
 */
 
-void right(void) {}
+#include "server.h"
+
+void right(list_args_t* args) {}

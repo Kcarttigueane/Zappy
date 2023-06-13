@@ -5,4 +5,6 @@
 ** broadcast.c
 */
 
-void broadcast(void) {}
+#include "server.h"
+
+void broadcast(list_args_t* args) {}

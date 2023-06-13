@@ -10,57 +10,41 @@
 
 #define MAX_ARGS 5
 
-typedef void (*command_func_t)(void);
+typedef void (*command_func_t)(list_args_t* args);
 
 typedef struct command_s {
     char* name;
     command_func_t function;
     char* description;
-    int expected_arg_count;
 } command_t;
 
 // ! Function Prototypes (GUI):
 
-void msz(void);
-void bct(void);
-void tna(void);
-void pnw(void);
-void ppo(void);
-void plv(void);
-void pin(void);
-void pex(void);
-void pbc(void);
-void pic(void);
-void pie(void);
-void pfk(void);
-void pdr(void);
-void pgt(void);
-void pdi(void);
-void enw(void);
-void ebo(void);
-void edi(void);
-void sgt(void);
-void sst(void);
-void seg(void);
-void smg(void);
-void suc(void);
-void sbp(void);
+void msz(list_args_t* args);
+void bct(list_args_t* args);
+void tna(list_args_t* args);
+void ppo(list_args_t* args);
+void plv(list_args_t* args);
+void pin(list_args_t* args);
+void mct(list_args_t* args);
+void pie(list_args_t* args);
+void sgt(list_args_t* args);
 
 // ! Function Prototypes (Player):
 
-void forward(void);
-void right(void);
-void left(void);
-void look(void);
-void inventory(void);
-void broadcast(void);
-void connect_nbr(void);
-void fork_player(void);
-void eject(void);
-void take(void);
-void set(void);
-void incantation(void);
-void hatch(void);
-void fake_end(void);
+void forward(list_args_t* args);
+void right(list_args_t* args);
+void left(list_args_t* args);
+void look(list_args_t* args);
+void inventory(list_args_t* args);
+void broadcast(list_args_t* args);
+void connect_nbr(list_args_t* args);
+void fork_player(list_args_t* args);
+void eject(list_args_t* args);
+void take(list_args_t* args);
+void set(list_args_t* args);
+void incantation(list_args_t* args);
+void hatch(list_args_t* args);
+void fake_end(list_args_t* args);
 
 #endif /* !COMMANDS_H_ */

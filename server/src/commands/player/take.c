@@ -5,4 +5,6 @@
 ** take.c
 */
 
-void take(void) {}
+#include "server.h"
+
+void take(list_args_t* args) {}

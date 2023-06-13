@@ -5,4 +5,6 @@
 ** left.c
 */
 
-void left(void) {}
+#include "server.h"
+
+void left(list_args_t* args) {}

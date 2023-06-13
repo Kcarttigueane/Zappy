@@ -5,4 +5,6 @@
 ** incantation.c
 */
 
-void incantation(void) {}
+#include "server.h"
+
+void incantation(list_args_t* args) {}

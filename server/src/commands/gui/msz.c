@@ -1,8 +1,18 @@
 /*
 ** EPITECH PROJECT, 2022
-** B-YEP-400-LYN-4-1-zappy-kevin.carttigueane
+** Repositery-ZAPPY
 ** File description:
 ** msz.c
 */
 
-void msz(void) {}
+#include "server.h"
+
+void msz(list_args_t* args)
+{
+    char response[MAX_BUFFER] = {0};
+
+    snprintf(response, sizeof(response), "msz %zu %zu\n",
+             args->server_data->game.width, args->server_data->game.height);
+
+    append_to_write_buffer(args->client, response);
+}

@@ -5,4 +5,6 @@
 ** hatch.c
 */
 
-void hatch(void) {}
+#include "server.h"
+
+void hatch(list_args_t* args) {}

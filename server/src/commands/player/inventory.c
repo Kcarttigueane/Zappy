@@ -5,4 +5,6 @@
 ** inventory.c
 */
 
-void inventory(void) {}
+#include "server.h"
+
+void inventory(list_args_t* args) {}

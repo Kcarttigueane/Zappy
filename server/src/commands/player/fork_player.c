@@ -5,4 +5,6 @@
 ** fork_player.c
 */
 
-void fork_player(void) {}
+#include "server.h"
+
+void fork_player(list_args_t* args) {}

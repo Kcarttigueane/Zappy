@@ -5,4 +5,6 @@
 ** set.c
 */
 
-void set(void) {}
+#include "server.h"
+
+void set(list_args_t* args) {}

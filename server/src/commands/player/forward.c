@@ -5,4 +5,6 @@
 ** forward.c
 */
 
-void forward(void) {}
+#include "server.h"
+
+void forward(list_args_t* args) {}

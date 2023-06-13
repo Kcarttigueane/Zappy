@@ -13,7 +13,7 @@
 #include "server.h"
 #include "teams.h"
 
-    /*
+/*
     q0 food
     q1 linemate
     q2 deraumere
@@ -23,16 +23,16 @@
     q6 thystame
 */
 
-    typedef enum orientation_s {
-        UP_CENTER = 1,
-        UP_LEFT,
-        CENTER_LEFT,
-        DOWN_LEFT,
-        DOWN_CENTER,
-        DOWN_RIGHT,
-        CENTER_RIGHT,
-        UP_RIGHT
-    } orientation_t;
+typedef enum orientation_s {
+    UP_CENTER = 1,
+    UP_LEFT,
+    CENTER_LEFT,
+    DOWN_LEFT,
+    DOWN_CENTER,
+    DOWN_RIGHT,
+    CENTER_RIGHT,
+    UP_RIGHT
+} orientation_t;
 
 typedef struct coord_s {
     int x;

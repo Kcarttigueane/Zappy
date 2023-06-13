@@ -5,4 +5,6 @@
 ** look.c
 */
 
-void look(void) {}
+#include "server.h"
+
+void look(list_args_t* args) {}

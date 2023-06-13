@@ -5,4 +5,6 @@
 ** connect_nbr.c
 */
 
-void connect_nbr(void) {}
+#include "server.h"
+
+void connect_nbr(list_args_t* args) {}

@@ -26,7 +26,8 @@
     "queue.h": "c",
     "signals.h": "c",
     "server.h": "c",
-    "command.h": "c"
+    "command.h": "c",
+    "common.h": "c"
   },
   "cSpell.words": [
     "deraumere",

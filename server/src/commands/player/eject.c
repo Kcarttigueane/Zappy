@@ -5,4 +5,6 @@
 ** eject.c
 */
 
-void eject(void) {}
+#include "server.h"
+
+void eject(list_args_t* args) {}

@@ -1,8 +1,10 @@
 /*
 ** EPITECH PROJECT, 2022
-** B-YEP-400-LYN-4-1-zappy-kevin.carttigueane
+** Repositery-ZAPPY
 ** File description:
 ** ppo.c
 */
 
-void ppo(void) {}
+#include "server.h"
+
+void ppo(list_args_t* args) {}
