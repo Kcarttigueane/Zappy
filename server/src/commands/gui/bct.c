@@ -19,7 +19,7 @@ void bct(list_args_t* args)
             .commands[args->client->player->command_queue.front];
 
     size_t x, y;
-    sscanf(command_str, "bct %d %d", &x, &y);
+    sscanf(command_str, "bct %lu %lu", &x, &y);
 
     if (x < 0 || x >= args->server_data->game.width || y < 0 ||
         y >= args->server_data->game.height) {
@@ -30,7 +30,7 @@ void bct(list_args_t* args)
     tile_t* tile = get_tile(args->server_data->game.map, x, y);
 
     char response[MAX_BUFFER] = {0};
-    sprintf(response, "bct %d %d %lu %lu %lu %lu %lu %lu %lu\n", x, y,
+    sprintf(response, "bct %lu %lu %lu %lu %lu %lu %lu %lu %lu\n", x, y,
             tile->quantity[FOOD], tile->quantity[LINEMATE],
             tile->quantity[DERAUMERE], tile->quantity[SIBUR],
             tile->quantity[MENDIANE], tile->quantity[PHIRAS],
