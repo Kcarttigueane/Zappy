@@ -17,6 +17,7 @@
 #include <netinet/in.h>
 #include <signal.h>
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -27,8 +28,8 @@
 #include <sys/types.h>
 #include <sys/un.h>
 #include <time.h>
+#include <unistd.h>
 #include <uuid/uuid.h>
-#include "unistd.h"
 
 #define MAX_NB_COMMANDS 10
 #define MAX_COMMANDS_LENGTH 256

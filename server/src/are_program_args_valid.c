@@ -38,19 +38,18 @@ int parse_arguments(int argc, char** argv, server_data_t* s)
         return handle_failure("Failed to allocate memory for parameters.\n");
 
     for (int i = 1; i < argc; ++i) {
-        if (strcmp(argv[i], "-p") == 0 && i + 1 < argc) {
+        if (strcmp(argv[i], "-p") == 0 && i + 1 < argc)
             s->PORT = atoi(argv[++i]);
-        } else if (strcmp(argv[i], "-x") == 0 && i + 1 < argc) {
+        if (strcmp(argv[i], "-x") == 0 && i + 1 < argc)
             s->game.width = atoi(argv[++i]);
-        } else if (strcmp(argv[i], "-y") == 0 && i + 1 < argc) {
+        if (strcmp(argv[i], "-y") == 0 && i + 1 < argc)
             s->game.height = atoi(argv[++i]);
-        } else if (strcmp(argv[i], "-n") == 0) {
+        if (strcmp(argv[i], "-n") == 0)
             i = parse_teams_names(argc, argv, i, s);
-        } else if (strcmp(argv[i], "-c") == 0 && i + 1 < argc) {
+        if (strcmp(argv[i], "-c") == 0 && i + 1 < argc)
             s->game.clients_nb = atoi(argv[++i]);
-        } else if (strcmp(argv[i], "-f") == 0 && i + 1 < argc) {
+        if (strcmp(argv[i], "-f") == 0 && i + 1 < argc)
             s->game.freq = atoi(argv[++i]);
-        }
     }
 
     return SUCCESS;

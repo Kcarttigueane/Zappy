@@ -8,6 +8,8 @@
 #ifndef COMMANDS_H_
 #define COMMANDS_H_
 
+#include <stddef.h>
+
 #define MAX_ARGS 5
 
 typedef void (*command_func_t)(list_args_t* args);
@@ -29,6 +31,7 @@ void pin(list_args_t* args);
 void mct(list_args_t* args);
 void pie(list_args_t* args);
 void sgt(list_args_t* args);
+void sst(list_args_t* args);
 
 // ! Function Prototypes (Player):
 
@@ -46,5 +49,10 @@ void set(list_args_t* args);
 void incantation(list_args_t* args);
 void hatch(list_args_t* args);
 void fake_end(list_args_t* args);
+
+// ! Function Prototypes (Utils):
+
+size_t find_player_command_index(char* command_name);
+size_t find_graphical_command_index(char* command_name);
 
 #endif /* !COMMANDS_H_ */

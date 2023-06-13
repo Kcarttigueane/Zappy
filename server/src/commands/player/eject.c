@@ -7,4 +7,4 @@
 
 #include "server.h"
 
-void eject(list_args_t* args) {}
+void eject(__attribute_maybe_unused__ list_args_t* args) {}

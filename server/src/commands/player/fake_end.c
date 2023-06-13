@@ -7,4 +7,4 @@
 
 #include "server.h"
 
-void fake_end(list_args_t* args) {}
+void fake_end(__attribute_maybe_unused__ list_args_t* args) {}

@@ -7,4 +7,4 @@
 
 #include "server.h"
 
-void incantation(list_args_t* args) {}
+void incantation(__attribute_maybe_unused__ list_args_t* args) {}

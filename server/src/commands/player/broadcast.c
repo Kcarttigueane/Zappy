@@ -7,4 +7,4 @@
 
 #include "server.h"
 
-void broadcast(list_args_t* args) {}
+void broadcast(__attribute_maybe_unused__ list_args_t* args) {}

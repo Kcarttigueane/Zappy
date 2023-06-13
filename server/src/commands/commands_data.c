@@ -5,8 +5,8 @@
 ** commands_data.c
 */
 
-#include "../../include/server.h"
-#include "../../include/utils.h"
+#include "server.h"
+#include "utils.h"
 
 const command_t GRAPHICAL_COMMANDS[] = {
     {"msz", msz, "Define the map size."},
@@ -17,6 +17,7 @@ const command_t GRAPHICAL_COMMANDS[] = {
     {"plv", plv, "Provide a player’s level."},
     {"pin", pin, "Provide a player’s inventory."},
     {"sgt", sgt, "Request the time unit."},
+    {"sst", sst, "Set the time unit."},
 };
 
 const command_t PLAYER_COMMANDS[] = {

@@ -7,4 +7,4 @@
 
 #include "server.h"
 
-void fork_player(list_args_t* args) {}
+void fork_player(__attribute_maybe_unused__ list_args_t* args) {}

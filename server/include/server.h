@@ -56,6 +56,7 @@ typedef struct client_s {
 // ! STRUCTURES:
 
 typedef struct game_s {
+    size_t next_player_id;
     tile_t** map;
     size_t width, height;
     size_t nb_players;
@@ -95,6 +96,8 @@ int server_loop(server_data_t* s);
 void accept_new_connection(server_data_t* s);
 
 void parse_client_input(list_args_t* args, char* input_buffer);
+
+void handle_client_activity(server_data_t* s);
 
 // ! CLIENT Functions:
 

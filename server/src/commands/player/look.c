@@ -7,4 +7,4 @@
 
 #include "server.h"
 
-void look(list_args_t* args) {}
+void look(__attribute_maybe_unused__ list_args_t* args) {}
