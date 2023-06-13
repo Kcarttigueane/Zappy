@@ -6,11 +6,11 @@
 */
 
 #ifndef COMMANDS_H_
-#define COMMANDS_H_
+    #define COMMANDS_H_
 
-#include <stddef.h>
+    #include <stddef.h>
 
-#define MAX_ARGS 5
+    #define MAX_ARGS 5
 
 typedef void (*command_func_t)(list_args_t* args);
 

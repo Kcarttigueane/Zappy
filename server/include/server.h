@@ -6,7 +6,7 @@
 */
 
 #ifndef SERVER_H_
-#define SERVER_H_
+    #define SERVER_H_
 
 // ! MY INCLUDES:
 
@@ -15,34 +15,34 @@ typedef struct game_s game_t;
 typedef struct server_data server_data_t;
 typedef struct list_args list_args_t;
 
-#include "command.h"
-#include "common.h"
-#include "lib.h"
-#include "map.h"
-#include "player.h"
-#include "signals.h"
-#include "teams.h"
+    #include "command.h"
+    #include "common.h"
+    #include "lib.h"
+    #include "map.h"
+    #include "player.h"
+    #include "signals.h"
+    #include "teams.h"
 
 enum ErrorCodes { SUCCESS = 0, FAILURE = -1, ERROR = 84 };
 
-#define SERVER_USAGE \
-    "./zappy_server -p port -x width -y height -n name1 name2 ... -c clientsNb\
-     -f freq\n\
-\tport\t\t is the port number\n\
-\twidth\t\t is the width of the world\n\
-\theight\t\t is the height of the world\n\
-\tnameX\t\t is the name of the team X\n\
-\tclientsNb\t is the number of authorized clients per team\n\
-\tfreq\t\t is the reciprocal of time unit for execution of actions\n"
+    #define SERVER_USAGE \
+        "./zappy_server -p port -x width -y height -n name1 name2 ... -c clientsNb\
+        -f freq\n\
+    \tport\t\t is the port number\n\
+    \twidth\t\t is the width of the world\n\
+    \theight\t\t is the height of the world\n\
+    \tnameX\t\t is the name of the team X\n\
+    \tclientsNb\t is the number of authorized clients per team\n\
+    \tfreq\t\t is the reciprocal of time unit for execution of actions\n"
 
-#define CALC_TOTAL_RESOURCES(total_tiles)                             \
-    {                                                                 \
-        (total_tiles) * 0.5, (total_tiles)*0.3, (total_tiles)*0.15,   \
-            (total_tiles)*0.1, (total_tiles)*0.1, (total_tiles)*0.08, \
-            (total_tiles)*0.05                                        \
-    }
+    #define CALC_TOTAL_RESOURCES(total_tiles)                             \
+        {                                                                 \
+            (total_tiles) * 0.5, (total_tiles)*0.3, (total_tiles)*0.15,   \
+                (total_tiles)*0.1, (total_tiles)*0.1, (total_tiles)*0.08, \
+                (total_tiles)*0.05                                        \
+        }
 
-#define TIMER_INTERVAL 20
+    #define TIMER_INTERVAL 20
 
 typedef struct client_s {
     int fd;

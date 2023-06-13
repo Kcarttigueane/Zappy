@@ -1,7 +1,7 @@
 /*
 ** EPITECH PROJECT, 2022
-** MyTeams
-** Fil:
+** server
+** File description:
 ** commands_data.c
 */
 

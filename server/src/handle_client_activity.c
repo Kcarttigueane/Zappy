@@ -7,9 +7,7 @@
 
 #include "server.h"
 
-static void handle_client_disconnected(
-    server_data_t* s,
-    client_t* client)  // TODO : check if this is correct or not
+static void handle_client_disconnected(server_data_t* s, client_t* client)  // TODO : check if this is correct or not
 {
     FD_CLR(client->fd, &s->readfds);
     close(client->fd);

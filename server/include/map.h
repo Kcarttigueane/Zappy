@@ -6,9 +6,9 @@
 */
 
 #ifndef MAP_H_
-#define MAP_H_
+    #define MAP_H_
 
-#include "server.h"
+    #include "server.h"
 
 typedef struct tile_s {
     size_t quantity[MAX_NB_RESOURCES];

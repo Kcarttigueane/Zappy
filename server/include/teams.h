@@ -6,9 +6,9 @@
 */
 
 #ifndef TEAMS_H_
-#define TEAMS_H_
+    #define TEAMS_H_
 
-#include "player.h"
+    #include "player.h"
 
 typedef struct team_s {
     char* name;

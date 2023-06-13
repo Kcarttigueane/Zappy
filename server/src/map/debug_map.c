@@ -24,34 +24,26 @@ void print_resources_location(tile_t** map, size_t height, size_t width)
     }
 }
 
+void calculate_resource_totals(tile_t* tile, size_t* totals)
+{
+    for (size_t k = 0; k < 7; k++) {
+        totals[k] += tile->quantity[k];
+    }
+}
+
 void print_total_resources(tile_t** map, size_t height, size_t width)
 {
-    size_t total_food = 0;
-    size_t total_linemate = 0;
-    size_t total_deraumere = 0;
-    size_t total_sibur = 0;
-    size_t total_mendiane = 0;
-    size_t total_phiras = 0;
-    size_t total_thystame = 0;
+    size_t total_resources[7] = {0};
+    const char* resource_names[7] = {"food",    "linemate", "deraumere",
+                                     "sibur",   "mendiane", "phiras",
+                                     "thystame"};
 
-    for (size_t i = 0; i < width; i++) {
-        for (size_t j = 0; j < height; j++) {
-            total_food += map[i][j].quantity[0];
-            total_linemate += map[i][j].quantity[1];
-            total_deraumere += map[i][j].quantity[2];
-            total_sibur += map[i][j].quantity[3];
-            total_mendiane += map[i][j].quantity[4];
-            total_phiras += map[i][j].quantity[5];
-            total_thystame += map[i][j].quantity[6];
-        }
-    }
+    for (size_t i = 0; i < width; i++)
+        for (size_t j = 0; j < height; j++)
+            calculate_resource_totals(&map[i][j], total_resources);
 
     printf("Total resources:\n");
-    printf("food: %zu\n", total_food);
-    printf("linemate: %zu\n", total_linemate);
-    printf("deraumere: %zu\n", total_deraumere);
-    printf("sibur: %zu\n", total_sibur);
-    printf("mendiane: %zu\n", total_mendiane);
-    printf("phiras: %zu\n", total_phiras);
-    printf("thystame: %zu\n", total_thystame);
+    for (size_t k = 0; k < 7; k++) {
+        printf("%s: %zu\n", resource_names[k], total_resources[k]);
+    }
 }

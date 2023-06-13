@@ -6,12 +6,12 @@
 */
 
 #ifndef PLAYER_H_
-#define PLAYER_H_
+    #define PLAYER_H_
 
-#include "common.h"
-#include "queue.h"
-#include "server.h"
-#include "teams.h"
+    #include "common.h"
+    #include "queue.h"
+    #include "server.h"
+    #include "teams.h"
 
 /*
     q0 food
