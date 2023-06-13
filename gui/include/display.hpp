@@ -32,6 +32,7 @@ class Display {
             _cubeTexture->loadFromFile("./assets/white_inv_cube.png");
             _uiTexture->loadFromFile("./assets/custompanel.png");
             _uiPosition = sf::Vector2f(100, 1080);
+            _uiPlayerPosition = sf::Vector2f(100, -200);
             _font->loadFromFile("./assets/font.ttf");
         }
         ~Display() {
@@ -50,6 +51,7 @@ class Display {
         void drawUI();
         void animateEntity(Entity *entity);
         void moveEntity(Entity *entity);
+        void teleportEntity(Entity *entity);
         void entitySelect(Entity *entity, sf::Vector2f *pos);
         void handleEvents();
         bool isMapCube(int x, int y);
@@ -83,8 +85,10 @@ class Display {
         bool _tileClicked = false;
         sf::Vector2f _lastClickedCoords;
         sf::Vector2f _uiPosition;
+        sf::Vector2f _uiPlayerPosition;
         std::vector<Entity> _entities;
         std::vector<std::string> _teamNames;
+        std::vector<sf::Color> _teamColors;
         int _displayLoop = 1;
         int _timeUnit;
         int _width;
@@ -92,6 +96,7 @@ class Display {
         int _mapWidth;
         int _mapHeight;
         int _uiAnimationPoint = 0;
+        int _uiPlayerPoint = 0;
         double _scale = 0.2;
         double _x_offset = 930.0;
         double _y_offset = 400.0;
@@ -101,6 +106,7 @@ class Display {
         sf::Time _animationTime = sf::seconds(0.5f);
         std::vector<Tile> _tiles;
         std::vector<Tile> _tileMovement;
+        Tile _playerTile;
         std::string _data = "";
         std::mutex _mtx;
         int _nb_calls = 0;

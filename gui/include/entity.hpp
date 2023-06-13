@@ -22,6 +22,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <random>
 #include <sys/select.h>
 #include <fcntl.h>
 
@@ -81,7 +82,10 @@ class Entity {
         float _objY;
         int _playerNumber;
         int _lvl;
+        size_t _teamNumb = 0;
+        int _dead = 0;
         int _move = 0;
+        int _inv = 255;
         std::string _teamName;
         sf::Texture *_texture;
         sf::IntRect _rect;

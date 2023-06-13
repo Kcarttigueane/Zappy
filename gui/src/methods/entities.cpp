@@ -9,12 +9,25 @@
 
 void Display::entitySelect(Entity *entity, sf::Vector2f *pos)
 {
-    int x = int(entity->_x);
-    int y = int(entity->_y);
+    int x = int(entity->_x + 0.05);
+    int y = int(entity->_y + 0.05);
 
     if (int(x) == int(_mouseGridCoords.x) && int(y) == int(_mouseGridCoords.y)) {
         pos->y -= 30 * _scale;
     }
+    
+}
+
+void Display::teleportEntity(Entity *e)
+{
+    if (e->_objX == _mapWidth - 1 && e->_direction == DIR_WEST)
+        e->_x = _mapWidth - 1;
+    if (e->_objX == 0 && e->_direction == DIR_EAST)
+        e->_x = 0;
+    if (e->_objY == _mapHeight - 1 && e->_direction == DIR_NORTH)
+        e->_y = _mapHeight - 1;
+    if (e->_objY == 0 && e->_direction == DIR_SOUTH)
+        e->_y = 0;
 }
 
 void Display::moveEntity(Entity *entity)
@@ -69,6 +82,7 @@ void Display::animateEntity(Entity *entity)
     entity->_animationPoint += 1;
 }
 
+#define PLAYER_HEIGHT 207
 void Display::drawEntities()
 {
     size_t size = _entities.size();
@@ -79,13 +93,20 @@ void Display::drawEntities()
     rect.width = ASSET_WIDHT;
 
     for (size_t i = 0; i < size; i++) {
+        if (_entities[i]._dead)
+            _entities[i]._inv -= 2;
+        if (_entities[i]._inv <= 0)
+            continue;
         moveEntity(&_entities[i]);
+        teleportEntity(&_entities[i]);
         animateEntity(&_entities[i]);
         sf::Vector2f ortho_pos = _entities[i].getPosition();
         ortho_pos.y -= 0.5;
         sf::Vector2f pos = getIsometricPos(ortho_pos.x, ortho_pos.y, _scale, rect, _x_offset, _y_offset);
         entitySelect(&_entities[i], &pos);
-        _sprite->setColor(sf::Color::White);
+        sf::Color teamColor = _teamColors[_entities[i]._teamNumb];
+        teamColor.a = _entities[i]._inv;
+        _sprite->setColor(teamColor);
         _sprite->setTexture(*(_entities[i].getTexture()));
         _sprite->setPosition(pos);
         _sprite->setScale(sf::Vector2f(_scale, _scale));

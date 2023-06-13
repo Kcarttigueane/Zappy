@@ -39,6 +39,7 @@ void Display::handleEvents()
             if (_event->mouseButton.button == sf::Mouse::Left) {
                 _tileClicked = false;
                 _uiAnimationPoint = 0;
+                _uiPlayerPoint = 0;
                 isDragging = true;
                 dragStartPosition = sf::Mouse::getPosition(*_window);
                 currentMousePosition = dragStartPosition;
@@ -46,7 +47,15 @@ void Display::handleEvents()
                     _lastClickedCoords = _mouseGridCoords;
                     _tileClicked = true;
                     _uiAnimationPoint = 1;
-                    debugTile(_tiles[int(_mouseGridCoords.y) * _mapWidth + int(_mouseGridCoords.x)]);
+                    for (size_t i = 0; i < _entities.size(); i++) {
+                        int x = int(_entities[i]._x + 0.05);
+                        int y = int(_entities[i]._y + 0.05);
+                        if (int(x) == int(_mouseGridCoords.x) && int(y) == int(_mouseGridCoords.y)) {
+                            char buffer[10];
+                            std::sprintf(buffer, "pin %d\n", _entities[i]._playerNumber);
+                            sendData(buffer);
+                        }
+                    }
                 }
             }
         } else if (_event->type == sf::Event::MouseMoved) {

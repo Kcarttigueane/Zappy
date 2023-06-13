@@ -10,7 +10,7 @@
 
 void Display::draw()
 {
-    _window->clear(sf::Color(12, 79, 106));
+    _window->clear(sf::Color(0, 50, 70));
     drawTileMap();
     drawEntities();
     drawUI();
@@ -79,6 +79,7 @@ void Display::createIsometricCube(float x, float y, float scale, sf::Texture *te
 
 void Display::drawUI()
 {
+    //Tile ui
     sf::Vector2u size = _uiTexture->getSize();
     _sprite->setTexture(*_uiTexture);
     _sprite->setTextureRect(sf::IntRect(0, 0, size.x, size.y));
@@ -92,7 +93,7 @@ void Display::drawUI()
     _window->draw(*_sprite);
 
     char buffer[100];
-    Tile tile = _tiles[int(_lastClickedCoords.y) * _mapWidth + int(_lastClickedCoords.x)];
+    Tile tile = _tiles[(_mapHeight - int(_lastClickedCoords.y) - 1) * _mapWidth + int(_lastClickedCoords.x)];
     std::sprintf(buffer, "    %d     %d     %d     %d     %d     %d     %d", tile.food, tile.linemate, tile.deraumere, tile.sibur, tile.mendiane, tile.phiras, tile.thystame);
     sf::Text text;
     text.setFont(*_font);
@@ -101,4 +102,18 @@ void Display::drawUI()
     text.setCharacterSize(40);
     text.setPosition(sf::Vector2f(_uiPosition.x, _uiPosition.y + 70));
     _window->draw(text);
+
+    //Player UI
+    if (_uiPlayerPoint && _uiPlayerPosition.y < 50)
+        _uiPlayerPosition.y += 10;
+    if (!_uiPlayerPoint && _uiPlayerPosition.y > -200)
+        _uiPlayerPosition.y -= 10;
+    _sprite->setPosition(_uiPlayerPosition);
+    _window->draw(*_sprite);
+    tile = _playerTile;
+    std::sprintf(buffer, "    %d     %d     %d     %d     %d     %d     %d", tile.food, tile.linemate, tile.deraumere, tile.sibur, tile.mendiane, tile.phiras, tile.thystame);
+    text.setString(buffer);
+    text.setPosition(sf::Vector2f(_uiPlayerPosition.x, _uiPlayerPosition.y + 70));
+    _window->draw(text);
+
 }

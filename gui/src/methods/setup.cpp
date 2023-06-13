@@ -28,12 +28,3 @@ void Display::setupTiles()
         }
     }
 }
-
-
-
-// table = [[x,y] | (x,y) in your grid]
-// for i
-//     for j
-//         table = [[np.sin(i + w*t), np.cos(j + w*t)]]
-
-// 2pi / omega = 1 period

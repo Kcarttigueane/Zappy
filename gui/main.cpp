@@ -31,6 +31,7 @@ int main(int argc, char* argv[])
         std::cout << "Usage: ./client <server_ip> <server_port>" << std::endl;
         return 1;
     }
+    srand(time(NULL));
     Display display(1920, 1080, "Zappy");
 
     // Handle Client
