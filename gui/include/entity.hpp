@@ -26,6 +26,8 @@
 #include <sys/select.h>
 #include <fcntl.h>
 
+#include "tile.hpp"
+
 #define PLAYER_TYPE 0
 #define ROCK_TYPE 1
 #define DIR_STOP 0
@@ -46,6 +48,8 @@ class Entity {
             _direction = direction;
             _lvl = lvl;
             _teamName = teamName;
+            Tile tile = {10, 0, 0, 0, 0, 0, 0, 0, 0.0f};
+            _inventory = tile;
         }
         void setPosition(float x, float y) {
             _x = x;
@@ -81,13 +85,15 @@ class Entity {
         float _objX;
         float _objY;
         int _playerNumber;
-        int _lvl;
+        int _lvl = 1;
         size_t _teamNumb = 0;
         int _dead = 0;
         int _move = 0;
         int _inv = 255;
+        Tile _inventory;
         std::string _teamName;
         sf::Texture *_texture;
         sf::IntRect _rect;
 };
 
+int findEntity(std::vector<Entity> entities, int playerNumber);

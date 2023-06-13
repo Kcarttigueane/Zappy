@@ -51,6 +51,9 @@ void Display::handleEvents()
                         int x = int(_entities[i]._x + 0.05);
                         int y = int(_entities[i]._y + 0.05);
                         if (int(x) == int(_mouseGridCoords.x) && int(y) == int(_mouseGridCoords.y)) {
+                            _notFirstSelect = 1;
+                            _uiPlayerPoint = 1;
+                            _selectedPlayerNumber = _entities[i]._playerNumber;
                             char buffer[10];
                             std::sprintf(buffer, "pin %d\n", _entities[i]._playerNumber);
                             sendData(buffer);
@@ -81,4 +84,14 @@ void Display::getMousePosition()
     int mouseX = mousePosition.x;
     int mouseY = mousePosition.y;
     _mouseGridCoords = getGridCoordinates(float(mouseX), float(mouseY), _scale, _x_offset, _y_offset);
+
+    _highlightedPlayerNumber = -1;
+    for (size_t i = 0; i < _entities.size(); i++) {
+        int x = int(_entities[i]._x + 0.05);
+        int y = int(_entities[i]._y + 0.05);
+        if (int(x) == int(_mouseGridCoords.x) && int(y) == int(_mouseGridCoords.y)) {
+            _highlightedPlayerNumber = _entities[i]._playerNumber;
+            break;
+        }
+    }
 }

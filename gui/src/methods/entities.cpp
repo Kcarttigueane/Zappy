@@ -7,6 +7,16 @@
 
 #include "../../include/display.hpp"
 
+int findEntity(std::vector<Entity> entities, int playerNumber)
+{
+    size_t size = entities.size();
+
+    for (size_t i = 0; i < size; i++)
+        if (entities[i]._playerNumber == playerNumber)
+            return i;
+    return -1;
+}
+
 void Display::entitySelect(Entity *entity, sf::Vector2f *pos)
 {
     int x = int(entity->_x + 0.05);
@@ -15,7 +25,7 @@ void Display::entitySelect(Entity *entity, sf::Vector2f *pos)
     if (int(x) == int(_mouseGridCoords.x) && int(y) == int(_mouseGridCoords.y)) {
         pos->y -= 30 * _scale;
     }
-    
+
 }
 
 void Display::teleportEntity(Entity *e)

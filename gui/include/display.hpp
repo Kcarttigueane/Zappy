@@ -8,7 +8,6 @@
 #pragma once
 
 #include "entity.hpp"
-#include "tile.hpp"
 
 #define ASSET_WIDHT 444
 #define ASSET_HEIGHT 498
@@ -106,7 +105,9 @@ class Display {
         sf::Time _animationTime = sf::seconds(0.5f);
         std::vector<Tile> _tiles;
         std::vector<Tile> _tileMovement;
-        Tile _playerTile;
+        int _notFirstSelect = 0;
+        int _selectedPlayerNumber = 0;
+        int _highlightedPlayerNumber = -1;
         std::string _data = "";
         std::mutex _mtx;
         int _nb_calls = 0;

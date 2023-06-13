@@ -7,6 +7,28 @@
 
 #include "../../include/display.hpp"
 
+bool in_range(int a, int b, int dif)
+{
+    return (a > b - (dif / 2) && a < b + (dif / 2));
+}
+
+sf::Color getRandomColor(std::vector<sf::Color> colors)
+{
+    size_t size = 0;
+    int too_close = 1;
+    sf::Color color(rand() % 255 + 100, rand() % 255 + 100, rand() % 255 + 100, 255);
+    int stop = 0;
+
+    while (too_close && stop < 100) {
+        too_close = 0;
+        color = sf::Color(rand() % 255 + 100, rand() % 255 + 100, rand() % 255 + 100, 255);
+        for (size_t i = 0; i < size; i++)
+            if (in_range(color.r, colors[i].r, 50) && in_range(color.r, colors[i].r, 50) && in_range(color.r, colors[i].r, 50))
+                too_close = 1;
+        stop++;
+    }
+    return color;
+}
 
 void Display::setupServerInfo(std::string response)
 {
@@ -42,7 +64,7 @@ void Display::setupServerInfo(std::string response)
             std::string name;
             while (iss >> name) {
                 names.push_back(name);
-                _teamColors.push_back(sf::Color(rand() % 255 + 100, rand() % 255 + 100, rand() % 255 + 100, 255));
+                _teamColors.push_back(getRandomColor(_teamColors));
             }
             _teamNames = names;
         }
@@ -102,8 +124,19 @@ void Display::parseServerInfo(std::string res)
             tile.mendiane = mendiane;
             tile.phiras = phiras;
             tile.thystame = thystame;
-            _playerTile = tile;
-            _uiPlayerPoint = 1;
+            _entities[findEntity(_entities, playerNumber)]._inventory = tile;
+            char buffer[50];
+            std::sprintf(buffer, "plv %d\n", playerNumber);
+            sendData(buffer);
+        }
+    } else if (command == "plv") {
+        int playerNumber, lvl;
+        if (iss >> playerNumber >> lvl) {
+            for (size_t i = 0; i < _entities.size(); i++)
+                if (_entities[i]._playerNumber == playerNumber) {
+                    _entities[i]._lvl = lvl;
+                    break;
+                }
         }
     }
 }

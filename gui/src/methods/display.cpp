@@ -79,6 +79,28 @@ void Display::createIsometricCube(float x, float y, float scale, sf::Texture *te
 
 void Display::drawUI()
 {
+    sf::Text text;
+    text.setFont(*_font);
+
+    if (_highlightedPlayerNumber != -1) {
+        int entityIndex = findEntity(_entities, _highlightedPlayerNumber);
+        std::string lvl = std::to_string(_entities[entityIndex]._lvl);
+        text.setString(lvl);
+        text.setFillColor(sf::Color::Red);
+        text.setCharacterSize(100);
+        sf::Vector2f selectedPlayerPos = _entities[entityIndex].getPosition();
+        sf::IntRect rect;
+        rect.left = 183;
+        rect.top = 42;
+        rect.height = ASSET_HEIGHT;
+        rect.width = ASSET_WIDHT;
+        sf::Vector2f isometricPos = getIsometricPos(selectedPlayerPos.x, selectedPlayerPos.y, _scale, rect, _x_offset, _y_offset);
+        isometricPos.x += 140 * _scale;
+        isometricPos.y -= 220 * _scale;
+        text.setScale(sf::Vector2f(_scale, _scale));
+        text.setPosition(isometricPos);
+        _window->draw(text);
+    }
     //Tile ui
     sf::Vector2u size = _uiTexture->getSize();
     _sprite->setTexture(*_uiTexture);
@@ -95,8 +117,7 @@ void Display::drawUI()
     char buffer[100];
     Tile tile = _tiles[(_mapHeight - int(_lastClickedCoords.y) - 1) * _mapWidth + int(_lastClickedCoords.x)];
     std::sprintf(buffer, "    %d     %d     %d     %d     %d     %d     %d", tile.food, tile.linemate, tile.deraumere, tile.sibur, tile.mendiane, tile.phiras, tile.thystame);
-    sf::Text text;
-    text.setFont(*_font);
+    text.setScale(1, 1);
     text.setString(buffer);
     text.setFillColor(sf::Color::Black);
     text.setCharacterSize(40);
@@ -110,10 +131,13 @@ void Display::drawUI()
         _uiPlayerPosition.y -= 10;
     _sprite->setPosition(_uiPlayerPosition);
     _window->draw(*_sprite);
-    tile = _playerTile;
-    std::sprintf(buffer, "    %d     %d     %d     %d     %d     %d     %d", tile.food, tile.linemate, tile.deraumere, tile.sibur, tile.mendiane, tile.phiras, tile.thystame);
-    text.setString(buffer);
-    text.setPosition(sf::Vector2f(_uiPlayerPosition.x, _uiPlayerPosition.y + 70));
-    _window->draw(text);
 
+    if (_notFirstSelect) {
+        int entityIndex = findEntity(_entities, _selectedPlayerNumber);
+        tile = _entities[entityIndex]._inventory;
+        std::sprintf(buffer, "    %d     %d     %d     %d     %d     %d     %d", tile.food, tile.linemate, tile.deraumere, tile.sibur, tile.mendiane, tile.phiras, tile.thystame);
+        text.setString(buffer);
+        text.setPosition(sf::Vector2f(_uiPlayerPosition.x, _uiPlayerPosition.y + 70));
+        _window->draw(text);
+    }
 }
