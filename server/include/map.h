@@ -6,9 +6,9 @@
 */
 
 #ifndef MAP_H_
-    #define MAP_H_
+#define MAP_H_
 
-    #include "server.h"
+#include "server.h"
 
 typedef struct tile_s {
     size_t quantity[MAX_NB_RESOURCES];
@@ -27,5 +27,7 @@ void distribute_resources(tile_t** map, int total_resources[], size_t height,
 
 void spawning_resources(server_data_t* data, int* total_resources);
 void free_map(tile_t** map, size_t width);
+
+tile_t* get_tile(tile_t** map, int x, int y);
 
 #endif /* !MAP_H_ */

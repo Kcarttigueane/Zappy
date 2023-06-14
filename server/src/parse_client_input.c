@@ -18,7 +18,7 @@ void update_player(list_args_t* args, char** inputs)
     args->client->player->level = 1;
     args->client->player->pos.x = args->server_data->game.width;
     args->client->player->pos.y = args->server_data->game.height;
-    args->client->player->orientation = UP_CENTER;
+    args->client->player->orientation = NORTH;
     args->client->player->inventory[FOOD] = 10;
     args->client->player->is_graphical = false;
 }
