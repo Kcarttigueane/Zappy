@@ -5,4 +5,6 @@
 ** look.c
 */
 
-void look(void) {}
+#include "server.h"
+
+void look(__attribute_maybe_unused__ list_args_t* args) {}

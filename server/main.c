@@ -26,6 +26,7 @@ int main(int argc, char** argv)
     if (setup_signal_handler() == ERROR)
         return handle_error("main() :Signal handler setup failed\n");
 
+    data->game.next_player_id = 15;
     data->game.map = init_map(data->game.width, data->game.height);
 
     LIST_INIT(&data->game.client_list);

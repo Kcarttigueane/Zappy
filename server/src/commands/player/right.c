@@ -5,4 +5,6 @@
 ** right.c
 */
 
-void right(void) {}
+#include "server.h"
+
+void right(__attribute_maybe_unused__ list_args_t* args) {}

@@ -5,14 +5,13 @@
 ** player.h
 */
 
-#pragma once
+#ifndef PLAYER_H_
+    #define PLAYER_H_
 
-typedef struct client_s client_t;
-typedef struct team_s team_t;
-typedef struct player_s player_t;
-
-#include "./server.h"
-#include "teams.h"
+    #include "common.h"
+    #include "queue.h"
+    #include "server.h"
+    #include "teams.h"
 
 /*
     q0 food
@@ -47,18 +46,22 @@ typedef enum state_s {
     DEAD,
 } state_t;
 
-typedef struct command_queue_s {
-    char commands[10][256];
-    int front;
-    int rear;
-} command_queue_t;
+typedef enum inventory_s {
+    FOOD,
+    LINEMATE,
+    DERAUMERE,
+    SIBUR,
+    MENDIANE,
+    PHIRAS,
+    THYSTAME
+} inventory_t;
 
 typedef struct player_s {
+    bool is_graphical;
     size_t id;
     coord_t pos;
     orientation_t orientation;
     size_t level;
-    char* team_name;
     size_t inventory[7];
     size_t life_units;
     time_t last_eat_time;
@@ -67,24 +70,14 @@ typedef struct player_s {
     team_t* team;
 } player_t;
 
-typedef struct client_s {
-    int fd;
-    struct sockaddr_in address;
-    player_t* player;
-    char write_buf[1024];
-    char read_buf[1024];
-    LIST_ENTRY(client_s) entries;
-} client_t;
-
 // ! Function prototypes:
 
-//  ! Command queue functions:
-
-void init_command_queue(client_t* client);
-int is_command_queue_empty(client_t* client);
-int is_command_queue_full(client_t* client);
-void enqueue_command(client_t* client, const char* command);
-void dequeue_command(client_t* client);
-void print_command_queue(client_t* client);
-
 void print_client_info(client_t* client);
+
+void update_player(list_args_t* args, char** inputs);
+bool is_team_name_valid(list_args_t* args, char** inputs);
+void handle_first_client_msg(list_args_t* args, char** inputs);
+void handle_client_command(list_args_t* args, char** inputs);
+void parse_client_input(list_args_t* args, char* input_buffer);
+
+#endif /* !PLAYER_H_ */

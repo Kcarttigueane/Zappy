@@ -1,8 +1,17 @@
 /*
 ** EPITECH PROJECT, 2022
-** B-YEP-400-LYN-4-1-zappy-kevin.carttigueane
+** server
 ** File description:
 ** sst.c
 */
 
-void sst(void) {}
+#include "server.h"
+
+void sst(list_args_t* args)
+{
+    // char response[MAX_BUFFER] = {0};
+
+    // sprintf(response, "sst %d\n", args->time);
+
+    // append_to_write_buffer(args->client, response);
+}
