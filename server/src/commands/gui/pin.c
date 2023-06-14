@@ -20,5 +20,5 @@ void pin(list_args_t* args)
             player->inventory[MENDIANE], player->inventory[PHIRAS],
             player->inventory[THYSTAME]);
 
-    append_to_write_buffer(args->client, response);
+    // append_to_write_buffer(args->client, response);
 }

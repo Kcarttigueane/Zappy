@@ -7,7 +7,7 @@
 
 #include "server.h"
 
-void set_object(list_args_t* args)
+void set(list_args_t* args)
 {
     char* command_str =
         args->client->player->command_queue
@@ -16,7 +16,7 @@ void set_object(list_args_t* args)
     client_t* client = args->client;
     game_t* game = &args->server_data->game;
 
-    char* object_name = split_str(command_str, ' ')[1];
+    char* object_name = split_str(command_str, " ")[1];
 
     if (object_name == NULL) {
         // add_message_to_write_buffer(client, "ko\n");

@@ -46,7 +46,7 @@ char** get_objects_on_tile(server_data_t* s, tile_t* tile, coord_t pos)
             objects[i] = strdup(inventory_names[i]);
             if (!objects[i]) {
                 perror("Failed to allocate memory for object name");
-                for (int j = 0; j < i; ++j)
+                for (size_t j = 0; j < i; ++j)
                     free(objects[j]);
                 free(objects);
                 return NULL;

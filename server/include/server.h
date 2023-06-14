@@ -102,6 +102,8 @@ void handle_client_activity(server_data_t* s);
 int append_to_write_buffer(client_t* client, const char* msg);
 void write_and_flush_client_buffer(client_t* client);
 
+int find_object_index(char* object_name);
+
 // ! CLIENT Functions:
 
 void add_client(game_t* game, client_t* client);

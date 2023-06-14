@@ -16,5 +16,5 @@ void ppo(list_args_t* args)
     sprintf(response, "ppo %lu %i %i %d\n", player->id, player->pos.x,
             player->pos.y, player->orientation);
 
-    append_to_write_buffer(args->client, response);
+    // append_to_write_buffer(args->client, response);
 }

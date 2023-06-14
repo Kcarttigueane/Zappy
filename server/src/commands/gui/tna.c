@@ -14,6 +14,6 @@ void tna(list_args_t* args)
     for (size_t i = 0; i < args->server_data->game.team_count; i++) {
         snprintf(response, sizeof(response), "tna %s\n",
                  args->server_data->game.team_names[i]);
-        append_to_write_buffer(args->client, response);
+        // append_to_write_buffer(args->client, response);
     }
 }

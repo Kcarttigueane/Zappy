@@ -23,7 +23,7 @@ void mct(list_args_t* args)
                      tile->quantity[MENDIANE], tile->quantity[PHIRAS],
                      tile->quantity[THYSTAME]);
 
-            append_to_write_buffer(args->client, response);
+            // append_to_write_buffer(args->client, response);
         }
     }
 }
