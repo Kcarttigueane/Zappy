@@ -15,5 +15,5 @@ void plv(__attribute_maybe_unused__ list_args_t* args)
 
     sprintf(response, "plv %lu %lu\n", player->id, player->level);
 
-    append_to_write_buffer(args->client, response);
+    // append_to_write_buffer(args->client, response);
 }

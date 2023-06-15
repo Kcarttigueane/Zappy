@@ -13,5 +13,5 @@ void sgt(list_args_t* args)
 
     sprintf(response, response, args->server_data->game.freq);
 
-    append_to_write_buffer(args->client, response);
+    // append_to_write_buffer(args->client, response);
 }

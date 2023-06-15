@@ -7,4 +7,14 @@
 
 #include "server.h"
 
-void left(__attribute_maybe_unused__ list_args_t* args) {}
+void left(list_args_t* args)
+{
+    player_t* player = args->client->player;
+
+    player->orientation--;
+    if (player->orientation < NORTH)
+        player->orientation = WEST;
+
+    // I need to append to the client ok or ko
+    // I need to append to the graphical part the new position of the player
+}

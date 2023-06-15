@@ -14,5 +14,5 @@ void msz(list_args_t* args)
     snprintf(response, sizeof(response), "msz %zu %zu\n",
              args->server_data->game.width, args->server_data->game.height);
 
-    append_to_write_buffer(args->client, response);
+    // append_to_write_buffer(args->client, response);
 }

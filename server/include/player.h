@@ -6,12 +6,12 @@
 */
 
 #ifndef PLAYER_H_
-    #define PLAYER_H_
+#define PLAYER_H_
 
-    #include "common.h"
-    #include "queue.h"
-    #include "server.h"
-    #include "teams.h"
+#include "common.h"
+#include "queue.h"
+#include "server.h"
+#include "teams.h"
 
 /*
     q0 food
@@ -24,14 +24,10 @@
 */
 
 typedef enum orientation_s {
-    UP_CENTER = 1,
-    UP_LEFT,
-    CENTER_LEFT,
-    DOWN_LEFT,
-    DOWN_CENTER,
-    DOWN_RIGHT,
-    CENTER_RIGHT,
-    UP_RIGHT
+    NORTH = 1,
+    EAST = 2,
+    SOUTH = 3,
+    WEST = 4,
 } orientation_t;
 
 typedef struct coord_s {

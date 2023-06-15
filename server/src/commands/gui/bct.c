@@ -23,7 +23,7 @@ void bct(list_args_t* args)
 
     if (x < 0 || x >= args->server_data->game.width || y < 0 ||
         y >= args->server_data->game.height) {
-        append_to_write_buffer(args->client, "sbp\n");
+        // append_to_write_buffer(args->client, "sbp\n");
         return;
     }
 
@@ -36,5 +36,5 @@ void bct(list_args_t* args)
             tile->quantity[MENDIANE], tile->quantity[PHIRAS],
             tile->quantity[THYSTAME]);
 
-    append_to_write_buffer(args->client, response);
+    // append_to_write_buffer(args->client, response);
 }
