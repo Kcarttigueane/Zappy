@@ -20,6 +20,7 @@ typedef struct list_args list_args_t;
 #include "lib.h"
 #include "map.h"
 #include "player.h"
+#include "responses_format.h"
 #include "signals.h"
 #include "teams.h"
 
@@ -35,20 +36,11 @@ enum ErrorCodes { SUCCESS = 0, FAILURE = -1, ERROR = 84 };
     \tclientsNb\t is the number of authorized clients per team\n\
     \tfreq\t\t is the reciprocal of time unit for execution of actions\n"
 
-#define CALC_TOTAL_RESOURCES(total_tiles)                             \
-    {                                                                 \
-        (total_tiles) * 0.5, (total_tiles)*0.3, (total_tiles)*0.15,   \
-            (total_tiles)*0.1, (total_tiles)*0.1, (total_tiles)*0.08, \
-            (total_tiles)*0.05                                        \
-    }
-
-#define TIMER_INTERVAL 20
-
 typedef struct client_s {
     int fd;
     struct sockaddr_in address;
     player_t* player;
-    char write_buf[MAX_BUFFER];
+    char write_buf[MAX_W_BUFFER_LENGTH];
     char read_buf[MAX_BUFFER];
     LIST_ENTRY(client_s) entries;
 } client_t;
@@ -88,7 +80,32 @@ bool are_program_args_valid(int argc, char** argv);
 int parse_arguments(int argc, char** argv, server_data_t* s);
 void free_teams_names(server_data_t* s);
 
+/**
+** @brief Binds the server to a socket and listens for connections.
+**
+** This function initializes a server address using the INADDR_ANY address and
+** the port specified in the server_data_t structure. It then binds the server
+** to the socket and starts listening for incoming connections.
+**
+** @param s Pointer to server_data_t structure containing server details
+**          including the socket file descriptor and the port to bind to.
+** @return Returns SUCCESS if the server successfully binds and starts
+**         listening, otherwise returns the error from handle_error function.
+**/
 int bind_and_listen_socket(server_data_t* s);
+
+/**
+** @brief Initializes a server, sets socket options, binds, and listens.
+**
+** This function creates a server socket, sets it to reuse the same address,
+** and then calls bind_and_listen_socket to bind the socket to an address and
+** port and listen for incoming connections.
+**
+** @param s Pointer to server_data_t structure containing server details.
+** @return Returns SUCCESS if the server successfully initializes, sets socket
+**         options, binds and starts listening, otherwise returns the error
+**         from handle_error function.
+**/
 int initialize_server(server_data_t* s);
 
 int server_loop(server_data_t* s);
@@ -99,10 +116,12 @@ void parse_client_input(list_args_t* args, char* input_buffer);
 
 void handle_client_activity(server_data_t* s);
 
-int append_to_write_buffer(client_t* client, const char* msg);
+int append_to_player_write_buffer(client_t* client, const char* msg);
 void write_and_flush_client_buffer(client_t* client);
 
 int find_object_index(char* object_name);
+
+void execute_commands(server_data_t* s);
 
 // ! CLIENT Functions:
 
@@ -110,8 +129,8 @@ void add_client(game_t* game, client_t* client);
 void free_client_list(game_t* game);
 void remove_client_by_fd(game_t* game, int fd);
 
-int append_to_write_buffer(client_t* client, const char* msg);
-void write_and_flush_client_buffer(client_t* client);
+int append_to_player_write_buffer(client_t* client, const char* msg);
+int append_to_gui_write_buffer(server_data_t* s, const char* msg);
 
 // ! Extern Variables:
 
@@ -122,7 +141,9 @@ extern const size_t GRAPHICAL_COMMANDS_SIZE;
 extern const command_t PLAYER_COMMANDS[];
 extern const size_t PLAYER_COMMANDS_SIZE;
 
-int init_players(server_data_t* s, client_t* client);
+extern const char* inventory_names[];
+
+int initialize_players(server_data_t* s, client_t* client);
 
 void print_all_clients(game_t* game);
 

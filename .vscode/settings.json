@@ -23,7 +23,8 @@
     "deque": "c",
     "vector": "c",
     "netdb.h": "c",
-    "teams.h": "c"
+    "teams.h": "c",
+    "map.h": "c"
   },
   "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
   "editor.formatOnSave": true,

@@ -1,23 +1,17 @@
 /*
 ** EPITECH PROJECT, 2022
-** Repositery-ZAPPY
+** server
 ** File description:
-** left.c
+** get_player_position.c
 */
 
 #include "server.h"
 
-void left(list_args_t* args)
+void get_player_position(list_args_t* args)
 {
     player_t* player = args->client->player;
 
-    player->orientation--;
-    if (player->orientation < NORTH)
-        player->orientation = WEST;
-
-    append_to_player_write_buffer(args->client, OK_FORMAT);
-
-    char response[24] = {0};
+    char response[MAX_BUFFER] = {0};
 
     sprintf(response, PPO_FORMAT, player->id, player->pos.x, player->pos.y,
             player->orientation);

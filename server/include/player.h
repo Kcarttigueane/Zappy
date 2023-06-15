@@ -9,19 +9,10 @@
 #define PLAYER_H_
 
 #include "common.h"
+#include "map.h"
 #include "queue.h"
 #include "server.h"
 #include "teams.h"
-
-/*
-    q0 food
-    q1 linemate
-    q2 deraumere
-    q3 sibur
-    q4 mendiane
-    q5 phiras
-    q6 thystame
-*/
 
 typedef enum orientation_s {
     NORTH = 1,
@@ -58,7 +49,7 @@ typedef struct player_s {
     coord_t pos;
     orientation_t orientation;
     size_t level;
-    size_t inventory[7];
+    size_t inventory[MAX_NB_RESOURCES];
     size_t life_units;
     time_t last_eat_time;
     state_t state;

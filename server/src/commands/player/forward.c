@@ -36,6 +36,12 @@ void forward(list_args_t* args)
             break;
     }
 
-    // I need to append to the client ok or ko
-    // I need to append to the graphical part the new position of the player
+    append_to_player_write_buffer(args->client, OK_FORMAT);
+
+    char response[24] = {0};
+
+    sprintf(response, PPO_FORMAT, player->id, player->pos.x, player->pos.y,
+            player->orientation);
+
+    append_to_gui_write_buffer(args->server_data, response);
 }

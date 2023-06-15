@@ -25,6 +25,18 @@ static void reset_set(server_data_t* s, fd_set* set)
     }
 }
 
+void send_responses(server_data_t* s)
+{
+    client_t *client, *temp;
+
+    LIST_FOREACH_SAFE(client, &s->game.client_list, entries, temp)
+    {
+        if (strlen(client->write_buf) > 0) {
+            write_and_flush_client_buffer(client);
+        }
+    }
+}
+
 int server_loop(server_data_t* s)
 {
     int total_tiles = s->game.width * s->game.height;
@@ -32,11 +44,10 @@ int server_loop(server_data_t* s)
 
     time_t start, current;
 
-    //     // Get the current time as the start time
     time(&start);
 
     while (!stop_server) {
-        time(&current);  // Get the current time
+        time(&current);
 
         reset_set(s, &s->readfds);
         reset_set(s, &s->writefds);
@@ -48,10 +59,9 @@ int server_loop(server_data_t* s)
         if (stop_server)
             break;
 
-        if (FD_ISSET(s->socket_fd, &s->readfds)) {
+        if (FD_ISSET(s->socket_fd, &s->readfds))
             accept_new_connection(s);
-        }
-        // print_all_clients(&s->game); // DEBUG
+
         handle_client_activity(s);
 
         int elapsed_time = difftime(current, start);
@@ -62,7 +72,7 @@ int server_loop(server_data_t* s)
             time(&start);
         }
         execute_commands(s);
-        // send responses to the available clients
+        send_responses(s);
     }
 
     free_client_list(&s->game);

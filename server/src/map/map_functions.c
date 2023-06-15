@@ -7,25 +7,6 @@
 
 #include "server.h"
 
-#define OOD 0.5
-#define LINEMATE 0.3
-#define DERAUMERE 0.15
-#define SIBUR 0.1
-#define MENDIANE 0.1
-#define PHIRAS 0.08
-#define THYSTAME 0.05
-
-void calc_total_resources(int total_tiles, int* total_resources)
-{
-    total_resources[0] = total_tiles * OOD;
-    total_resources[1] = total_tiles * LINEMATE;
-    total_resources[2] = total_tiles * DERAUMERE;
-    total_resources[3] = total_tiles * SIBUR;
-    total_resources[4] = total_tiles * MENDIANE;
-    total_resources[5] = total_tiles * PHIRAS;
-    total_resources[6] = total_tiles * THYSTAME;
-}
-
 tile_t** init_map(size_t width, size_t height)
 {
     tile_t** map = malloc(width * sizeof(tile_t*));

@@ -32,10 +32,6 @@ char** get_objects_on_tile(server_data_t* s, tile_t* tile, coord_t pos)
         return NULL;
     }
 
-    const char* inventory_names[] = {"food",    "linemate", "deraumere",
-                                     "sibur",   "mendiane", "phiras",
-                                     "thystame"};
-
     size_t i = 0;
 
     for (; i < nb_players; ++i)
@@ -53,6 +49,8 @@ char** get_objects_on_tile(server_data_t* s, tile_t* tile, coord_t pos)
             }
         }
     }
+
+    return objects;
 }
 
 void look(list_args_t* args)
@@ -67,7 +65,7 @@ void look(list_args_t* args)
     int x = player->pos.x, y = player->pos.y;
     size_t width = s->game.width, height = s->game.height;
 
-    // append_to_write_buffer(s, player, "[");
+    // append_to_player_write_buffer(s, player, "[");
 
     for (int i = 0; i < level; ++i) {
         for (int j = -i; j <= i; ++j) {
@@ -79,15 +77,15 @@ void look(list_args_t* args)
 
             // Add each object to the response
             for (int k = 0; objects[k] != NULL; ++k) {
-                // append_to_write_buffer(s, player, objects[k]);
-                // append_to_write_buffer(s, player, " ");
+                // append_to_player_write_buffer(s, player, objects[k]);
+                // append_to_player_write_buffer(s, player, " ");
                 free(objects[k]);
             }
             free(objects);
 
-            // append_to_write_buffer(s, player, ",");
+            // append_to_player_write_buffer(s, player, ",");
         }
     }
 
-    // append_to_write_buffer(s, player, "]\n");
+    // append_to_player_write_buffer(s, player, "]\n");
 }

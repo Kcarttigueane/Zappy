@@ -36,6 +36,11 @@ void handle_first_client_msg(list_args_t* args, char** inputs)
 {
     if (!strcmp(inputs[0], "GRAPHIC")) {
         args->client->player->is_graphical = true;
+        // msz(args);
+        // sgt(args);
+        // mct(args);
+        // tna(args);
+        // pnw(args);
     } else {
         if (!is_team_name_valid(args, inputs)) {
             printf("Invalid team name\n");

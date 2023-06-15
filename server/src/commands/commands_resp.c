@@ -7,17 +7,7 @@
 
 #include "server.h"
 
-void append_to_player_w_buffer(char* dest, char* src)
-{
-    memmove(dest + strlen(dest), src, strlen(src) + 1);
-}
-
-void append_to_gui_w_buffer(char* dest, char* src)
-{
-    memmove(dest + strlen(dest), src, strlen(src) + 1);
-}
-
-int append_to_write_buffer(client_t* client, const char* msg)
+int append_to_player_write_buffer(client_t* client, const char* msg)
 {
     if (strlen(client->write_buf) + strlen(msg) + 1 > MAX_W_BUFFER_LENGTH) {
         return FAILURE;
@@ -27,6 +17,22 @@ int append_to_write_buffer(client_t* client, const char* msg)
             MAX_W_BUFFER_LENGTH - strlen(client->write_buf) - 1);
 
     return 0;
+}
+
+int append_to_gui_write_buffer(server_data_t* s, const char* msg)
+{
+    client_t *client, *temp;
+
+    LIST_FOREACH_SAFE(client, &s->game.client_list, entries, temp)
+    {
+        if (client->player->is_graphical) {
+            if (append_to_player_write_buffer(client, msg) == FAILURE) {
+                return FAILURE;
+            }
+        }
+    }
+
+    return SUCCESS;
 }
 
 void write_and_flush_client_buffer(client_t* client)

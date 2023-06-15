@@ -7,13 +7,12 @@
 
 #include "server.h"
 
-int init_players(server_data_t* s, client_t* client)
+int initialize_players(server_data_t* s, client_t* client)
 {
     client->player = (player_t*)calloc(1, sizeof(player_t));
 
-    if (!client->player) {
+    if (!client->player)
         return handle_failure("Failed to allocate memory for new player");
-    }
 
     printf("New client connected with id %i\n", client->fd);
 
@@ -30,6 +29,19 @@ int init_players(server_data_t* s, client_t* client)
     init_command_queue(client);
 
     return 0;
+}
+
+void initialize_client(server_data_t* s, client_t* new_client,
+                       struct sockaddr_in address, int new_socket)
+{
+    new_client->fd = new_socket;
+    new_client->address = address;
+    new_client->player = NULL;
+    memset(new_client->write_buf, 0, MAX_BUFFER);
+    memset(new_client->read_buf, 0, MAX_BUFFER);
+
+    initialize_players(s, new_client);
+    add_client(&s->game, new_client);
 }
 
 void accept_new_connection(server_data_t* s)
@@ -50,15 +62,9 @@ void accept_new_connection(server_data_t* s)
         handle_error("Accept failed");
     }
 
-    new_client->fd = new_socket;
-    new_client->address = address;
-    new_client->player = NULL;
-    memset(new_client->write_buf, 0, MAX_BUFFER);
-    memset(new_client->read_buf, 0, MAX_BUFFER);
+    dprintf(new_socket, "WELCOME\n");
 
-    init_players(s, new_client);
-
-    add_client(&s->game, new_client);
+    initialize_client(s, new_client, address, new_socket);
 }
 
 void add_client(game_t* game, client_t* client)

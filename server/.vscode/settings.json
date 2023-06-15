@@ -28,7 +28,8 @@
     "server.h": "c",
     "command.h": "c",
     "common.h": "c",
-    "map.h": "c"
+    "map.h": "c",
+    "responses_format.h": "c"
   },
   "cSpell.words": [
     "deraumere",

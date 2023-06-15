@@ -1,18 +1,18 @@
 /*
 ** EPITECH PROJECT, 2022
-** Repositery-ZAPPY
+** server
 ** File description:
-** msz.c
+** get_map_size.c
 */
 
 #include "server.h"
 
-void msz(list_args_t* args)
+void get_map_size(list_args_t* args)
 {
     char response[MAX_BUFFER] = {0};
 
-    snprintf(response, sizeof(response), "msz %zu %zu\n",
+    snprintf(response, sizeof(response), MSZ_FORMAT,
              args->server_data->game.width, args->server_data->game.height);
 
-    // append_to_write_buffer(args->client, response);
+    append_to_gui_write_buffer(args->server_data, response);
 }

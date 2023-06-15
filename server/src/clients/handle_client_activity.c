@@ -7,7 +7,7 @@
 
 #include "server.h"
 
-static void handle_client_disconnected(server_data_t* s, client_t* client)  // TODO : check if this is correct or not
+static void handle_client_disconnection(server_data_t* s, client_t* client)  // TODO : check if this is correct or not
 {
     FD_CLR(client->fd, &s->readfds);
     close(client->fd);
@@ -41,7 +41,7 @@ void handle_client_activity(server_data_t* s)
             };
 
             int bytes_read = read(sd, buffer, MAX_BUFFER);
-            (bytes_read == 0) ? handle_client_disconnected(s, client)
+            (bytes_read == 0) ? handle_client_disconnection(s, client)
                               : handle_received_data(&args, buffer);
         }
     }

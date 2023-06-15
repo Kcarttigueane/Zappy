@@ -20,6 +20,7 @@ void print_all_clients(game_t* game)
     client_t *client, *temp;
 
     printf("Clients in the game:\n");
+
     LIST_FOREACH_SAFE(client, &game->client_list, entries, temp)
     {
         print_client_info(client);

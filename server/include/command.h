@@ -6,11 +6,11 @@
 */
 
 #ifndef COMMANDS_H_
-    #define COMMANDS_H_
+#define COMMANDS_H_
 
-    #include <stddef.h>
+#include <stddef.h>
 
-    #define MAX_ARGS 5
+#define MAX_ARGS 5
 
 typedef void (*command_func_t)(list_args_t* args);
 
@@ -22,16 +22,75 @@ typedef struct command_s {
 
 // ! Function Prototypes (GUI):
 
-void msz(list_args_t* args);
-void bct(list_args_t* args);
-void tna(list_args_t* args);
-void ppo(list_args_t* args);
-void plv(list_args_t* args);
-void pin(list_args_t* args);
-void mct(list_args_t* args);
-void pie(list_args_t* args);
-void sgt(list_args_t* args);
-void sst(list_args_t* args);
+/**
+** @brief Get the size of the game map.
+**
+** @param args list_args_t structure pointer with server data and client data.
+**/
+void get_map_size(list_args_t* args);
+
+/**
+** @brief Get the content of a specific tile in the game map.
+**
+** @param args list_args_t structure pointer with server data and client data.
+**/
+void get_tile_content(list_args_t* args);
+
+/**
+** @brief Get all team names in the game.
+**
+** @param args list_args_t structure pointer with server data and client data.
+**/
+void get_all_team_names(list_args_t* args);
+
+/**
+** @brief Get the position of a player in the game map.
+**
+** @param args list_args_t structure pointer with server data and client data.
+**/
+void get_player_position(list_args_t* args);
+
+/**
+** @brief Get the level of a player in the game.
+**
+** @param args list_args_t structure pointer with server data and client data.
+**/
+void get_player_level(list_args_t* args);
+
+/**
+** @brief Get the player's inventory.
+**
+** @param args list_args_t structure pointer with server data and client data.
+**/
+void get_player_inventory(list_args_t* args);
+
+/**
+** @brief Get the content of all tiles in the game map.
+**
+** @param args list_args_t structure pointer with server data and client data.
+**/
+void get_all_tiles_content(list_args_t* args);
+
+/**
+** @brief End the incantation in the game.
+**
+** @param args list_args_t structure pointer with server data and client data.
+**/
+void end_incantation(list_args_t* args);
+
+/**
+** @brief Get the time unit of the server.
+**
+** @param args list_args_t structure pointer with server data and client data.
+**/
+void get_time_unit(list_args_t* args);
+
+/**
+** @brief Set the time unit of the server.
+**
+** @param args list_args_t structure pointer with server data and client data.
+**/
+void set_time_unit(list_args_t* args);
 
 // ! Function Prototypes (Player):
 

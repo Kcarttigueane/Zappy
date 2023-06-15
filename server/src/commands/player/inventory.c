@@ -9,10 +9,6 @@
 
 void inventory(list_args_t* args)
 {
-    const char* inventory_names[] = {"food",    "linemate", "deraumere",
-                                     "sibur",   "mendiane", "phiras",
-                                     "thystame"};
-
     client_t* client = args->client;
     size_t* player_inventory = client->player->inventory;
 

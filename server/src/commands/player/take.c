@@ -9,11 +9,8 @@
 
 int find_object_index(char* object_name)
 {
-    const char* inventory_names[] = {"food",    "linemate", "deraumere",
-                                     "sibur",   "mendiane", "phiras",
-                                     "thystame"};
-
     int object_index = FAILURE;
+
     for (int i = 0; i < MAX_NB_RESOURCES; i++) {
         if (strcmp(inventory_names[i], object_name) == 0) {
             object_index = i;

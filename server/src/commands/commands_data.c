@@ -9,15 +9,15 @@
 #include "utils.h"
 
 const command_t GRAPHICAL_COMMANDS[] = {
-    {"msz", msz, "Define the map size."},
-    {"bct", bct, "Provide the content of a tile."},
-    {"mct", mct, "Provide the content of the whole map."},
-    {"tna", tna, "Name all the teams."},
-    {"ppo", ppo, "Provide a player’s position."},
-    {"plv", plv, "Provide a player’s level."},
-    {"pin", pin, "Provide a player’s inventory."},
-    {"sgt", sgt, "Request the time unit."},
-    {"sst", sst, "Set the time unit."},
+    {"msz", get_map_size, "Define the map size."},
+    {"bct", get_tile_content, "Provide the content of a tile."},
+    {"mct", get_all_tiles_content, "Provide the content of the whole map."},
+    {"tna", get_all_team_names, "Name all the teams."},
+    {"ppo", get_player_position, "Provide a player’s position."},
+    {"plv", get_player_level, "Provide a player’s level."},
+    {"pin", get_player_inventory, "Provide a player’s inventory."},
+    {"sgt", get_time_unit, "Request the time unit."},
+    {"sst", set_time_unit, "Set the time unit."},
 };
 
 const command_t PLAYER_COMMANDS[] = {
