@@ -130,7 +130,7 @@ void free_client_list(game_t* game);
 void remove_client_by_fd(game_t* game, int fd);
 
 int append_to_player_write_buffer(client_t* client, const char* msg);
-int append_to_gui_write_buffer(server_data_t* s, const char* msg);
+int append_to_gui_write_buffer(server_data_t* s, char* msg);
 
 // ! Extern Variables:
 

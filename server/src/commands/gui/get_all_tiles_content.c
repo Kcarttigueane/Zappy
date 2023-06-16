@@ -23,6 +23,7 @@ void get_all_tiles_content(list_args_t* args)
                      tile->quantity[THYSTAME]);
 
             append_to_gui_write_buffer(args->server_data, response);
+            memset(response, 0, sizeof(response));
         }
     }
 }

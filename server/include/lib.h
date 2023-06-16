@@ -96,6 +96,25 @@ int handle_failure(const char* msg);
 */
 bool regex_match(const char* pattern, const char* string);
 
+/**
+** @brief Appends the contents of one string to another.
+**
+** This function appends the characters from the source string `src` to the
+** destination string `dest`. The resulting string is terminated with a null
+** character.
+**
+** @param dest Pointer to the destination string.
+** @param src Pointer to the source string.
+**
+** @note The destination string `dest` must have sufficient space to accommodate
+** the appended characters from `src`.
+**
+** @warning The behavior is undefined if `dest` or `src` are null pointers.
+**
+** @see memmove, strlen
+**/
+void append_to_string(char* dest, char* src);
+
 // ! TIME functions:
 
 /**

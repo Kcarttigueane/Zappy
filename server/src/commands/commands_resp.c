@@ -16,19 +16,17 @@ int append_to_player_write_buffer(client_t* client, const char* msg)
     strncat(client->write_buf, msg,
             MAX_W_BUFFER_LENGTH - strlen(client->write_buf) - 1);
 
-    return 0;
+    return SUCCESS;
 }
 
-int append_to_gui_write_buffer(server_data_t* s, const char* msg)
+int append_to_gui_write_buffer(server_data_t* s, char* msg)
 {
     client_t *client, *temp;
 
     LIST_FOREACH_SAFE(client, &s->game.client_list, entries, temp)
     {
         if (client->player->is_graphical) {
-            if (append_to_player_write_buffer(client, msg) == FAILURE) {
-                return FAILURE;
-            }
+            append_to_string(client->write_buf, msg);
         }
     }
 
@@ -37,19 +35,20 @@ int append_to_gui_write_buffer(server_data_t* s, const char* msg)
 
 void write_and_flush_client_buffer(client_t* client)
 {
-    ssize_t bytes_written =
-        write(client->fd, client->write_buf, strlen(client->write_buf));
+    size_t i = 0;
+    char* full_response = client->write_buf;
+    char resp_to_send[MAX_BUFFER] = {0};
 
-    if (bytes_written > 0) {
-        size_t remaining_bytes = strlen(client->write_buf) - bytes_written;
-
-        if (remaining_bytes > 0) {
-            memmove(client->write_buf, client->write_buf + bytes_written,
-                    remaining_bytes);
-        }
-
-        client->write_buf[remaining_bytes] = '\0';
-    } else if (bytes_written == FAILURE) {
-        perror("write");
+    while (full_response[i] != '\0') {
+        resp_to_send[i] = full_response[i];
+        if (resp_to_send[i] == '\n') {
+            resp_to_send[i + 1] = '\0';
+            dprintf(client->fd, "%s", resp_to_send);
+            memmove(full_response, full_response + i + 1,
+                    strlen(full_response + i + 1) + 1);
+            i = 0;
+            return;
+        } else
+            i++;
     }
 }

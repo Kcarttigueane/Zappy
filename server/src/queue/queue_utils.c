@@ -15,7 +15,7 @@ void init_command_queue(client_t* client)
 
 int is_command_queue_empty(client_t* client)
 {
-    return (client->player->command_queue.front == -1);
+    return (client->player->command_queue.front == FAILURE);
 }
 
 int is_command_queue_full(client_t* client)

@@ -31,8 +31,10 @@ void send_responses(server_data_t* s)
 
     LIST_FOREACH_SAFE(client, &s->game.client_list, entries, temp)
     {
-        if (strlen(client->write_buf) > 0) {
-            write_and_flush_client_buffer(client);
+        if (FD_ISSET(client->fd, &s->writefds)) {
+            if (strlen(client->write_buf) > 0) {
+                write_and_flush_client_buffer(client);
+            }
         }
     }
 }

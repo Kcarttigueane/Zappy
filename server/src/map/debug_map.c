@@ -34,9 +34,6 @@ void calculate_resource_totals(tile_t* tile, size_t* totals)
 void print_total_resources(tile_t** map, size_t height, size_t width)
 {
     size_t total_resources[7] = {0};
-    const char* resource_names[7] = {"food",    "linemate", "deraumere",
-                                     "sibur",   "mendiane", "phiras",
-                                     "thystame"};
 
     for (size_t i = 0; i < width; i++)
         for (size_t j = 0; j < height; j++)
@@ -44,6 +41,6 @@ void print_total_resources(tile_t** map, size_t height, size_t width)
 
     printf("Total resources:\n");
     for (size_t k = 0; k < 7; k++) {
-        printf("%s: %zu\n", resource_names[k], total_resources[k]);
+        printf("%s: %zu\n", inventory_names[k], total_resources[k]);
     }
 }

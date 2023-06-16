@@ -37,7 +37,7 @@ void initialize_client(server_data_t* s, client_t* new_client,
     new_client->fd = new_socket;
     new_client->address = address;
     new_client->player = NULL;
-    memset(new_client->write_buf, 0, MAX_BUFFER);
+    memset(new_client->write_buf, 0, MAX_W_BUFFER_LENGTH);
     memset(new_client->read_buf, 0, MAX_BUFFER);
 
     initialize_players(s, new_client);

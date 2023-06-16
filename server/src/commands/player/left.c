@@ -15,7 +15,7 @@ void left(list_args_t* args)
     if (player->orientation < NORTH)
         player->orientation = WEST;
 
-    append_to_player_write_buffer(args->client, OK_FORMAT);
+    append_to_string(args->client->write_buf, OK_FORMAT);
 
     char response[24] = {0};
 

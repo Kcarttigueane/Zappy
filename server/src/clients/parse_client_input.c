@@ -36,6 +36,7 @@ void handle_first_client_msg(list_args_t* args, char** inputs)
 {
     if (!strcmp(inputs[0], "GRAPHIC")) {
         args->client->player->is_graphical = true;
+        args->client->player->state = ACTIVE;
         // msz(args);
         // sgt(args);
         // mct(args);

@@ -9,13 +9,12 @@
 
 void execute_commands(server_data_t* s)
 {
-    client_t *client, *temp;
+    client_t *client, *temp = NULL;
 
     LIST_FOREACH_SAFE(client, &s->game.client_list, entries, temp)
     {
-
         if (!is_command_queue_empty(client)) {
-            if (!client->player->is_graphical) {
+            if (client->player->is_graphical) {
                 list_args_t args = {
                     .server_data = s,
                     .client = client,
@@ -32,6 +31,9 @@ void execute_commands(server_data_t* s)
                 }
 
                 GRAPHICAL_COMMANDS[index].function(&args);
+                dequeue_command(client);
+            } else {
+                continue;
             }
 
             // size_t index = find_player_command_index(
