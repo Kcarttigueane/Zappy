@@ -102,6 +102,10 @@ void Display::threadRecieveData()
                 continue;
         } else
             continue;
+        std::istringstream iss(buffer);
+        std::string command;
+        if (iss >> command && command == "suc")
+            break;
         setData(buffer);
     }
 }

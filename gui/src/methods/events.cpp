@@ -50,7 +50,7 @@ void Display::handleEvents()
                     for (size_t i = 0; i < _entities.size(); i++) {
                         int x = int(_entities[i]._x + 0.05);
                         int y = int(_entities[i]._y + 0.05);
-                        if (int(x) == int(_mouseGridCoords.x) && int(y) == int(_mouseGridCoords.y)) {
+                        if (int(x) == int(_mouseGridCoords.x) && int(y) == int(_mouseGridCoords.y) && !_entities[i]._dead) {
                             _notFirstSelect = 1;
                             _uiPlayerPoint = 1;
                             _selectedPlayerNumber = _entities[i]._playerNumber;
@@ -89,7 +89,7 @@ void Display::getMousePosition()
     for (size_t i = 0; i < _entities.size(); i++) {
         int x = int(_entities[i]._x + 0.05);
         int y = int(_entities[i]._y + 0.05);
-        if (int(x) == int(_mouseGridCoords.x) && int(y) == int(_mouseGridCoords.y)) {
+        if (int(x) == int(_mouseGridCoords.x) && int(y) == int(_mouseGridCoords.y) && !_entities[i]._dead) {
             _highlightedPlayerNumber = _entities[i]._playerNumber;
             break;
         }

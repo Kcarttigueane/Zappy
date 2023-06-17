@@ -13,6 +13,7 @@ void Display::draw()
     _window->clear(sf::Color(0, 50, 70));
     drawTileMap();
     drawEntities();
+    drawBroadcast();
     drawUI();
     _window->display();
 }
@@ -39,8 +40,9 @@ bool Display::isMapCube(int x, int y)
 }
 
 #define WAVE_FREQ 0.02
-#define TIME_INCREMENT 3.5
-#define OFFSET_SCALE 130
+#define TIME_INCREMENT 3.9
+#define OFFSET_SCALE 100
+#define DENOMINATOR 1.2
 
 sf::Color color_multi(sf::Color color, double scalar)
 {
@@ -61,8 +63,8 @@ void Display::createIsometricCube(float x, float y, float scale, sf::Texture *te
     if (!isCenterCube) {
         Tile tile = _tileMovement[(int(y) + EXTRA_TILES) * (EXTRA_TILES * 2 + 1) + (int(x) + EXTRA_TILES)];
         float t = _frame * TIME_INCREMENT;
-        tile.offset = sin(x + WAVE_FREQ * t) + cos(y + WAVE_FREQ * t);
-        color_offset = std::max(((-tile.offset + 2.0) / 2.0), 0.6);
+        tile.offset = sin((x / DENOMINATOR) + WAVE_FREQ * t) + cos((y / DENOMINATOR) + WAVE_FREQ * t);
+        color_offset = std::min(((-tile.offset + 2.0) / 2.0) * 0.15 + 0.8, 1.0);
         tile.offset *= OFFSET_SCALE;
         pos.y += (tile.offset * _scale) + 20;
     }
@@ -138,6 +140,47 @@ void Display::drawUI()
         std::sprintf(buffer, "    %d     %d     %d     %d     %d     %d     %d", tile.food, tile.linemate, tile.deraumere, tile.sibur, tile.mendiane, tile.phiras, tile.thystame);
         text.setString(buffer);
         text.setPosition(sf::Vector2f(_uiPlayerPosition.x, _uiPlayerPosition.y + 70));
+        _window->draw(text);
+    }
+}
+
+
+void Display::drawBroadcast()
+{
+    size_t size = _broadcasts.size();
+    _sprite->setTexture(*_speechTexture);
+    _sprite->setTextureRect(sf::IntRect(0, 0, 1012, 558));
+    _sprite->setColor(sf::Color::White);
+    sf::Text text;
+    text.setFont(*_font);
+    text.setFillColor(sf::Color::Black);
+    text.setCharacterSize(60);
+    text.setScale(_scale, _scale);
+
+    for (size_t i = 0; i < size; i++) {
+        Broadcast broadcast = _broadcasts[i];
+        if (broadcast.frames <= 0)
+            continue;
+        _broadcasts[i].frames--;
+        int entityIndex = findEntity(_entities, broadcast.playerNumber);
+        sf::Vector2f selectedPlayerPos = _entities[entityIndex].getPosition();
+        sf::IntRect rect;
+        rect.left = 183;
+        rect.top = 42;
+        rect.height = ASSET_HEIGHT;
+        rect.width = ASSET_WIDHT;
+        sf::Vector2f isometricPos = getIsometricPos(selectedPlayerPos.x, selectedPlayerPos.y, _scale, rect, _x_offset, _y_offset);
+        isometricPos.x += 200 * _scale;
+        isometricPos.y -= 590 * _scale;
+        _sprite->setPosition(isometricPos);
+        int offset = int(broadcast.message.length()) - 12;
+        double x_scale_push = std::max(0.0, double(offset)) * 0.1 * _scale;
+        _sprite->setScale(sf::Vector2f(_scale + x_scale_push, _scale));
+        isometricPos.x += 250 * (_scale + x_scale_push);
+        isometricPos.y += 180 * _scale;
+        text.setPosition(isometricPos);
+        text.setString(broadcast.message);
+        _window->draw(*_sprite);
         _window->draw(text);
     }
 }

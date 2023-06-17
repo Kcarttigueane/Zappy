@@ -33,7 +33,6 @@ int main(int argc, char* argv[])
     }
     srand(time(NULL));
     Display display(1920, 1080, "Zappy");
-
     // Handle Client
     std::string serverIP = argv[1];
     int serverPort = std::stoi(argv[2]);

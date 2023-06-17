@@ -27,6 +27,7 @@
 #include <fcntl.h>
 
 #include "tile.hpp"
+#include "broadcasts.hpp"
 
 #define PLAYER_TYPE 0
 #define ROCK_TYPE 1

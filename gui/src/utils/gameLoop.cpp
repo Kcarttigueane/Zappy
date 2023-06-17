@@ -26,5 +26,5 @@ void gameLoop(Display *display)
             sf::sleep(display->_frameTime - elapsedTime);
         display->_frame++;
     }
-    
+    display->sendData("BAD_COMMAND\n");
 }

@@ -24,12 +24,14 @@ class Display {
             _cubeTexture = new sf::Texture;
             _playerTexture = new sf::Texture;
             _uiTexture = new sf::Texture;
+            _speechTexture = new sf::Texture;
             _sprite = new sf::Sprite;
             _font = new sf::Font;
             _event = new sf::Event;
             _playerTexture->loadFromFile("./assets/players_scaled.png");
             _cubeTexture->loadFromFile("./assets/white_inv_cube.png");
             _uiTexture->loadFromFile("./assets/custompanel.png");
+            _speechTexture->loadFromFile("./assets/speech.png");
             _uiPosition = sf::Vector2f(100, 1080);
             _uiPlayerPosition = sf::Vector2f(100, -200);
             _font->loadFromFile("./assets/font.ttf");
@@ -39,6 +41,7 @@ class Display {
             delete _cubeTexture;
             delete _playerTexture;
             delete _uiTexture;
+            delete _speechTexture;
             delete _sprite;
             delete _font;
         }
@@ -48,6 +51,7 @@ class Display {
         void drawTileMap();
         void drawEntities();
         void drawUI();
+        void drawBroadcast();
         void animateEntity(Entity *entity);
         void moveEntity(Entity *entity);
         void teleportEntity(Entity *entity);
@@ -56,7 +60,6 @@ class Display {
         bool isMapCube(int x, int y);
         void getMousePosition();
         void setupTiles();
-        void setupServerInfo(std::string response);
         void draw();
         void parseServerInfo(std::string response);
 
@@ -77,6 +80,7 @@ class Display {
         sf::Texture *_cubeTexture;
         sf::Texture *_playerTexture;
         sf::Texture *_uiTexture;
+        sf::Texture *_speechTexture;
         sf::Event *_event;
         sf::Sprite *_sprite;
         sf::Font *_font;
@@ -116,6 +120,7 @@ class Display {
         std::string serverIP;
         int serverPort;
         long _frame = 0;
+        std::vector<Broadcast> _broadcasts;
 };
 
 

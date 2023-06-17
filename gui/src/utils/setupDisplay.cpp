@@ -9,6 +9,7 @@
 
 void setupDisplay(Display *display, std::string response)
 {
-    display->setupServerInfo(response);
+    printf("%s\n", response.c_str());
+    display->parseServerInfo(response);
     display->setupTiles();
 }
