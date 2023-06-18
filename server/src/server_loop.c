@@ -70,7 +70,7 @@ int server_loop(server_data_t* s)
 
         if (elapsed_time >= TIMER_INTERVAL) {
             spawning_resources(s, total_resources);
-            print_total_resources(s->game.map, s->game.height, s->game.width);
+            // print_total_resources(s->game.map, s->game.height, s->game.width);
             time(&start);
         }
         execute_commands(s);

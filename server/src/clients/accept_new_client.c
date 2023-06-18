@@ -28,7 +28,19 @@ int initialize_players(server_data_t* s, client_t* client)
     client->player->state = NONE;
     init_command_queue(client);
 
-    return 0;
+    return SUCCESS;
+}
+
+bool is_egg_present(server_data_t* s)
+{
+    client_t* client = NULL;
+
+    LIST_FOREACH(client, &s->game.client_list, entries)
+    {
+        if (client->player && client->player->state == EGG)
+            return true;
+    }
+    return false;
 }
 
 void initialize_client(server_data_t* s, client_t* new_client,
@@ -42,6 +54,24 @@ void initialize_client(server_data_t* s, client_t* new_client,
 
     initialize_players(s, new_client);
     add_client(&s->game, new_client);
+}
+
+void update_egg(server_data_t* s, int new_socket, struct sockaddr_in address)
+{
+    client_t* client = NULL;
+
+    LIST_FOREACH(client, &s->game.client_list, entries)
+    {
+        if (client->player && client->player->state == EGG) {
+            char response[256] = {0};
+
+            sprintf(response, EBO_FORMAT, client->player->id);
+            client->fd = new_socket;
+            client->address = address;
+            client->player->state = ACTIVE;
+            return;
+        }
+    }
 }
 
 void accept_new_connection(server_data_t* s)
@@ -61,10 +91,14 @@ void accept_new_connection(server_data_t* s)
                              (socklen_t*)&addrlen)) < 0) {
         handle_error("Accept failed");
     }
-
     dprintf(new_socket, "WELCOME\n");
 
-    initialize_client(s, new_client, address, new_socket);
+    if (is_egg_present(s) == true) {
+        update_egg(s, new_socket, address);
+    } else {
+        initialize_client(s, new_client, address, new_socket);
+    }
+
 }
 
 void add_client(game_t* game, client_t* client)
