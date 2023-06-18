@@ -27,8 +27,8 @@ Connect_nbr : ✅
     -> [P] -> 'ok' | 'ko'
     -> [GUI] -> nothing
 
-Fork : ❌ *
-    -> [P] -> 'ok' | 'ko'
+Fork : ❌ * (Need to implement the logic when the team is full and so the client should be disconnected)
+    -> [P] -> 'ok' | 'ko'u
     -> [GUI] -> 'pfk' && 'enw'
 
 Eject : ❌
