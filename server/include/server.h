@@ -56,6 +56,7 @@ typedef struct game_s {
     size_t team_count;
     size_t clients_nb;
     size_t freq;
+    team_t* team;
     client_t* clients;
     LIST_HEAD(client_head, client_s) client_list;
 } game_t;
@@ -120,7 +121,7 @@ int append_to_player_write_buffer(client_t* client, const char* msg);
 void write_and_flush_client_buffer(client_t* client);
 
 int find_object_index(char* object_name);
-
+int find_team_index(list_args_t* args, char* team_name);
 void execute_commands(server_data_t* s);
 
 // ! CLIENT Functions:

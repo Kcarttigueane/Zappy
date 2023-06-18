@@ -7,6 +7,15 @@
 
 #include "server.h"
 
+team_t* find_team_by_name(server_data_t* data, char* team_name)
+{
+    for (size_t i = 0; i < data->game.team_count; i++) {
+        if (!strcmp(data->game.team_names[i], team_name))
+            return &data->game.team[i];
+    }
+    return NULL;
+}
+
 void fork_player(__attribute_maybe_unused__ list_args_t* args)
 {
     printf("fork_player\n");
@@ -47,6 +56,23 @@ void fork_player(__attribute_maybe_unused__ list_args_t* args)
     sprintf(response, PFK_FORMAT, player->id);
 
     append_to_gui_write_buffer(args->server_data, response);
+
+    team_t* team = find_team_by_name(args->server_data, player->team_name);
+
+    if (!team)
+        return;
+
+    egg_t* egg = create_and_add_egg(team, new_client->player->pos);
+
+    if (!egg)
+        return;
+
+    char response2[256] = {0};
+
+    sprintf(response2, ENW_FORMAT, egg->id, new_client->player->id,
+            new_client->player->pos.x, new_client->player->pos.y);
+
+    append_to_gui_write_buffer(args->server_data, response2);
 
     printf("New egg created with id %ld\n", new_client->player->id);
 }
