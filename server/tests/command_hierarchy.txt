@@ -1,0 +1,65 @@
+Forward : ✅
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> 'ppo'
+
+Right : ✅
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> 'ppo'
+
+Left : ✅
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> 'ppo'
+
+Look : ✅
+    -> [P] -> [ player , object - on - tile1 , ... , object - on - tileP ,...]
+    -> [GUI] -> nothing
+
+Inventory : ✅
+    -> [P] -> [ food n , linemate n , deraumere n , sibur n , mendiane n , phiras n , thystame n ]
+    -> [GUI] -> nothing
+
+Broadcast : ❌
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> 'pbc'
+
+
+Connect_nbr : ✅
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> nothing
+
+Fork : ❌
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> 'pfk' && 'enw'
+
+Eject : ❌
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> 'pex'
+
+Take object : ✅
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> 'pgt' && 'pin' && 'bct'
+
+Set object : ✅
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> 'pdr' && 'pin' && 'bct'
+
+Incantation : ❌
+    -> [P] -> 'Elevation underway' | 'ko' | 'Current level: n'
+    -> [GUI] -> 'pic' && 'pie' && 'bct' && 'plv'
+
+Death of a player : ❌
+    -> [P] -> 'dead'
+    -> [GUI] -> 'pdi'
+
+Death of an Egg ❌
+    -> [P] -> 'dead'
+    -> [GUI] -> 'edi'
+
+Connection to an Egg ❌
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> 'ebo'
+
+End of the game ❌
+    -> [P] -> 'seg'
+    -> [GUI] -> 'seg'
+

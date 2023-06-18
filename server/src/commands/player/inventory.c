@@ -9,21 +9,17 @@
 
 void inventory(list_args_t* args)
 {
+    player_t* player = args->client->player;
     client_t* client = args->client;
     size_t* player_inventory = client->player->inventory;
 
-    char inventory_str[MAX_BUFFER] = "[";
+    char response[1024] = {0};
 
-    for (int i = 0; i < MAX_NB_RESOURCES; i++) {
-        char object_quantity[100] = {0};
+    sprintf(response, INVENTORY_FORMAT, player->inventory[FOOD],
+            player->inventory[LINEMATE], player->inventory[DERAUMERE],
+            player->inventory[SIBUR], player->inventory[MENDIANE],
+            player->inventory[PHIRAS], player->inventory[THYSTAME]);
 
-        sprintf(object_quantity, "%s %ld,", inventory_names[i],
-                player_inventory[i]);
-
-        strcat(inventory_str, object_quantity);
-    }
-
-    inventory_str[strlen(inventory_str) - 1] = ']';
-
-    // add_message_to_write_buffer(client, inventory_str);
+    printf("response: %s\n", response);
+    append_to_string(client->write_buf, response);
 }

@@ -26,7 +26,6 @@ void get_tile_content(list_args_t* args)
         append_to_gui_write_buffer(args->server_data, SBP_FORMAT);
         return;
     }
-
     tile_t* tile = get_tile(args->server_data->game.map, x, y);
 
     char response[MAX_BUFFER] = {0};
