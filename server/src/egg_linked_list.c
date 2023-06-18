@@ -7,23 +7,19 @@
 
 #include "server.h"
 
-//  If there are no eggs in the list, it would return NULL.
 egg_t* random_select_egg(team_t* team)
 {
     egg_t *e, *selected = NULL;
     int count = 0;
 
-    // Count the number of eggs.
     LIST_FOREACH(e, &team->egg_list, entries)
     {
         count++;
     }
 
     if (count > 0) {
-        // Generate a random number in the range [0, count).
         int random_index = rand() % count;
 
-        // Go to the egg at the random index.
         int i = 0;
         LIST_FOREACH(e, &team->egg_list, entries)
         {
@@ -43,7 +39,6 @@ int is_egg_list_empty(team_t* team)
     return LIST_EMPTY(&team->egg_list);
 }
 
-// Create and add an egg.
 egg_t* create_and_add_egg(team_t* team, coord_t pos)
 {
     egg_t* e = (egg_t*)calloc(1, sizeof(egg_t));
@@ -59,7 +54,6 @@ egg_t* create_and_add_egg(team_t* team, coord_t pos)
     return e;
 }
 
-// Free the list of eggs.
 void free_list(team_t* team)
 {
     egg_t *e, *temp;
@@ -71,7 +65,6 @@ void free_list(team_t* team)
     }
 }
 
-// Print the list of eggs.
 void print_egg_list(team_t* team)
 {
     egg_t* e;
@@ -82,7 +75,6 @@ void print_egg_list(team_t* team)
     }
 }
 
-// Find an egg by ID.
 egg_t* find_egg_by_id(team_t* team, size_t id)
 {
     egg_t* e;
@@ -94,10 +86,9 @@ egg_t* find_egg_by_id(team_t* team, size_t id)
         }
     }
 
-    return NULL;  // Egg not found.
+    return NULL;
 }
 
-// Remove an egg by ID.
 void remove_egg_by_id(team_t* team, size_t id)
 {
     egg_t *e, *temp;
