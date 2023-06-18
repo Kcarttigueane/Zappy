@@ -27,7 +27,7 @@ Connect_nbr : ✅
     -> [P] -> 'ok' | 'ko'
     -> [GUI] -> nothing
 
-Fork : ❌
+Fork : ✅
     -> [P] -> 'ok' | 'ko'
     -> [GUI] -> 'pfk' && 'enw'
 
