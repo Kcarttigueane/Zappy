@@ -23,7 +23,7 @@ Broadcast : ❌
     -> [GUI] -> 'pbc'
 
 
-Connect_nbr : ❌
+Connect_nbr : ✅
     -> [P] -> 'ok' | 'ko'
     -> [GUI] -> nothing
 
