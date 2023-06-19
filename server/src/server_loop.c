@@ -61,10 +61,10 @@ int server_loop(server_data_t* s)
         if (stop_server)
             break;
 
-        if (is_game_over(s)) {
-            stop_server = true;
-            break;
-        }
+        // if (is_game_over(s)) {
+        //     stop_server = true;
+        //     break;
+        // }
 
         if (FD_ISSET(s->socket_fd, &s->readfds))
             accept_new_connection(s);

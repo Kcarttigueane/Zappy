@@ -64,7 +64,6 @@ int shortest_delta_y(size_t map_height, int y1, int y2)
     return delta_y;
 }
 
-// ! A function to adjust the direction based on the receiver's orientation
 int adjust_direction(int direction, orientation_t orientation)
 {
     int adjusted_direction = (direction + orientation - 2) % 8;
