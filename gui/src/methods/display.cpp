@@ -12,6 +12,7 @@ void Display::draw()
 {
     _window->clear(sf::Color(0, 50, 70));
     drawTileMap();
+    drawEgg();
     drawEntities();
     drawBroadcast();
     drawUI();
@@ -26,9 +27,13 @@ void Display::drawTileMap()
     rect.height = ASSET_HEIGHT;
     rect.width = ASSET_WIDHT;
 
+    _sprite->setTexture(*_cubeTexture);
+    _sprite->setScale(sf::Vector2f(_scale, _scale));
+    _sprite->setTextureRect(rect);
+
     for (int i = -EXTRA_TILES; i < EXTRA_TILES + _mapWidth; i++) {
         for (int j = -EXTRA_TILES; j < EXTRA_TILES + _mapHeight; j++) {
-            createIsometricCube(i, j, _scale, _cubeTexture, rect, isMapCube(i, j));
+            createIsometricCube(i, j, _scale, rect, isMapCube(i, j));
             _window->draw(*_sprite);
         }
     }
@@ -49,7 +54,7 @@ sf::Color color_multi(sf::Color color, double scalar)
     return sf::Color(color.r * scalar, color.g * scalar, color.b * scalar);
 }
 
-void Display::createIsometricCube(float x, float y, float scale, sf::Texture *texture, sf::IntRect rect, bool isCenterCube)
+void Display::createIsometricCube(float x, float y, float scale, sf::IntRect rect, bool isCenterCube)
 {
     sf::Vector2f pos = getIsometricPos(x, y, scale, rect, _x_offset, _y_offset);
     int oddeven = (int(std::abs(x)) + int(std::abs(y))) % 2;
@@ -67,16 +72,13 @@ void Display::createIsometricCube(float x, float y, float scale, sf::Texture *te
         color_offset = std::min(((-tile.offset + 2.0) / 2.0) * 0.15 + 0.8, 1.0);
         tile.offset *= OFFSET_SCALE;
         pos.y += (tile.offset * _scale) + 20;
-    }
+    }   
     _sprite->setColor(color_multi(colors[int(isCenterCube)][oddeven], color_offset));
     if (int(x) == int(_mouseGridCoords.x) && int(y) == int(_mouseGridCoords.y) && isCenterCube) {
         pos.y -= 30 * _scale;
         _sprite->setColor(sf::Color::Yellow);
     }
-    _sprite->setTexture(*texture);
     _sprite->setPosition(pos);
-    _sprite->setScale(sf::Vector2f(scale, scale));
-    _sprite->setTextureRect(rect);
 }
 
 void Display::drawUI()
@@ -182,5 +184,34 @@ void Display::drawBroadcast()
         text.setString(broadcast.message);
         _window->draw(*_sprite);
         _window->draw(text);
+    }
+}
+
+
+void Display::drawEgg()
+{
+    size_t size = _eggs.size();
+    _sprite->setTexture(*_eggTexture);
+    _sprite->setTextureRect(sf::IntRect(0, 0, 289, 253));
+    _sprite->setScale(_scale * 0.7, _scale * 0.7);
+    sf::IntRect rect;
+    rect.left = 183;
+    rect.top = 42;
+    rect.height = ASSET_HEIGHT;
+    rect.width = ASSET_WIDHT;
+    
+    for (size_t i = 0; i < size; i++) {
+        Egg egg = _eggs[i];
+        if (!egg.display)
+            continue;
+        sf::Vector2f isometricPos = getIsometricPos(egg.x, egg.y, _scale, rect, _x_offset, _y_offset);
+        isometricPos.x += 120 * _scale;
+        isometricPos.y -= 0 * _scale;
+        if (egg.x == int(_mouseGridCoords.x) && egg.y == int(_mouseGridCoords.y)) {
+            isometricPos.y -= 50 * _scale;
+        }
+        _sprite->setColor(sf::Color(egg.r, egg.g, egg.b, 255));
+        _sprite->setPosition(isometricPos);
+        _window->draw(*_sprite);
     }
 }

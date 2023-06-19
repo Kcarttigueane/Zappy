@@ -105,8 +105,10 @@ void Display::parseServerInfo(std::string response)
             int playerNumber;
             if (linestream >> playerNumber) {
                 for (size_t i = 0; i < _entities.size(); i++)
-                    if (_entities[i]._playerNumber == playerNumber)
+                    if (_entities[i]._playerNumber == playerNumber) {
                         _entities[i]._dead = 1;
+                        _entities[i]._playerNumber = -1;
+                    }
                 if (playerNumber == _highlightedPlayerNumber)
                     _highlightedPlayerNumber = -1;
                 if (playerNumber == _selectedPlayerNumber) {
@@ -149,6 +151,46 @@ void Display::parseServerInfo(std::string response)
                 _broadcasts.push_back(broadcast);
             }
             
+        } else if (command == "enw") {
+            int eggNumber, playerNumber, x, y;
+            if (linestream >> eggNumber >> playerNumber >> x >> y) {
+                int entityIndex = findEntity(_entities, playerNumber);
+                sf::Color color = sf::Color::White;
+                if (entityIndex != -1)
+                    color = _teamColors[_entities[findEntity(_entities, playerNumber)]._teamNumb];
+                Egg egg;
+                egg.eggNumber = eggNumber;
+                egg.x = x;
+                egg.y = _mapHeight - y - 1.0;
+                egg.r = color.r;
+                egg.g = color.g;
+                egg.b = color.b;
+                _eggs.push_back(egg);
+            }
+        } else if (command == "ebo" || command == "edi") {
+            int eggNumber;
+            if (linestream >> eggNumber)
+                for (size_t i = 0; i < _eggs.size(); i++)
+                    if (_eggs[i].eggNumber == eggNumber)
+                        _eggs[i].display = 0;
+        } else if (command == "pic") {
+            int x, y, lvl, playerNumber;
+            if (linestream >> x >> y >> lvl) {
+                while (linestream >> playerNumber) {
+                    int index = findEntity(_entities, playerNumber);
+                    _entities[index]._incantation = 1;
+                }
+            }
+        } else if (command == "pie") {
+            int x, y, result;
+            if (linestream >> x >> y >> result) {
+                for (size_t i = 0; i < _entities.size(); i++) {
+                    int player_x = int(_entities[i]._x + 0.05);
+                    int player_y = int(_entities[i]._y + 0.05);
+                    if (_entities[i]._incantation && player_x == x && player_y == y)
+                        _entities[i]._incantation = 0;
+                }
+            }
         }
     }
 }

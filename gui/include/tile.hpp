@@ -22,4 +22,14 @@ struct Tile {
     float offset;
 };
 
+struct Egg {
+    int eggNumber;
+    int x;
+    int y;
+    int display = 1;
+    int r = 225;
+    int g = 225;
+    int b = 225;
+};
+
 void debugTile(Tile tile);

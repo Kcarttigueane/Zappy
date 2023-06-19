@@ -25,10 +25,12 @@ class Display {
             _playerTexture = new sf::Texture;
             _uiTexture = new sf::Texture;
             _speechTexture = new sf::Texture;
+            _eggTexture = new sf::Texture;
             _sprite = new sf::Sprite;
             _font = new sf::Font;
             _event = new sf::Event;
             _playerTexture->loadFromFile("./assets/players_scaled.png");
+            _eggTexture->loadFromFile("./assets/egg_scaled.png");
             _cubeTexture->loadFromFile("./assets/white_inv_cube.png");
             _uiTexture->loadFromFile("./assets/custompanel.png");
             _speechTexture->loadFromFile("./assets/speech.png");
@@ -39,6 +41,7 @@ class Display {
         ~Display() {
             delete _window;
             delete _cubeTexture;
+            delete _eggTexture;
             delete _playerTexture;
             delete _uiTexture;
             delete _speechTexture;
@@ -47,11 +50,12 @@ class Display {
         }
 
         // Game
-        void createIsometricCube(float x, float y, float scale, sf::Texture *texture, sf::IntRect rect, bool isCenterCube);
+        void createIsometricCube(float x, float y, float scale, sf::IntRect rect, bool isCenterCube);
         void drawTileMap();
         void drawEntities();
         void drawUI();
         void drawBroadcast();
+        void drawEgg();
         void animateEntity(Entity *entity);
         void moveEntity(Entity *entity);
         void teleportEntity(Entity *entity);
@@ -80,6 +84,7 @@ class Display {
         sf::Texture *_cubeTexture;
         sf::Texture *_playerTexture;
         sf::Texture *_uiTexture;
+        sf::Texture *_eggTexture;
         sf::Texture *_speechTexture;
         sf::Event *_event;
         sf::Sprite *_sprite;
@@ -121,6 +126,7 @@ class Display {
         int serverPort;
         long _frame = 0;
         std::vector<Broadcast> _broadcasts;
+        std::vector<Egg> _eggs;
 };
 
 

@@ -91,6 +91,7 @@ class Entity {
         int _dead = 0;
         int _move = 0;
         int _inv = 255;
+        int _incantation = 0;
         Tile _inventory;
         std::string _teamName;
         sf::Texture *_texture;
