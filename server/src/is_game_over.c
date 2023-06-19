@@ -18,7 +18,7 @@ bool is_game_over(server_data_t* s)
 
         LIST_FOREACH(client, &game->client_list, entries)
         {
-            if (!strcmp(client->player->team->name, game->team_names[i])) {
+            if (!strcmp(client->player->team_name, game->team_names[i])) {
                 if (client->player->level >= MAX_LEVEL) {
                     ++players_at_max_level;
                 }
