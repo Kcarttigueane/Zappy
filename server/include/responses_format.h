@@ -25,7 +25,7 @@
 #define PDR_FORMAT "pdr %ld %d\n"
 #define PGT_FORMAT "pgt %ld %d\n"
 #define PDI_FORMAT "pdi %ld\n"
-#define ENW_FORMAT "enw %d %ld %d %d\n"
+#define ENW_FORMAT "enw %ld %ld %d %d\n"
 #define EBO_FORMAT "ebo %ld\n"
 #define EDI_FORMAT "edi %d\n"
 #define SGT_FORMAT "sgt %d\n"

@@ -21,11 +21,6 @@ typedef enum orientation_s {
     WEST = 4,
 } orientation_t;
 
-typedef struct coord_s {
-    int x;
-    int y;
-} coord_t;
-
 typedef enum state_s {
     NONE,
     EGG,
@@ -53,8 +48,8 @@ typedef struct player_s {
     size_t life_units;
     time_t last_eat_time;
     state_t state;
+    char* team_name;
     command_queue_t command_queue;
-    team_t* team;
 } player_t;
 
 // ! Function prototypes:
