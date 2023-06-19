@@ -18,7 +18,7 @@ Inventory : ✅
     -> [P] -> [ food n , linemate n , deraumere n , sibur n , mendiane n , phiras n , thystame n ]
     -> [GUI] -> nothing
 
-Broadcast : ❌
+Broadcast : ❌ *
     -> [P] -> 'ok' | 'ko'
     -> [GUI] -> 'pbc'
 
@@ -27,8 +27,8 @@ Connect_nbr : ✅
     -> [P] -> 'ok' | 'ko'
     -> [GUI] -> nothing
 
-Fork : ❌
-    -> [P] -> 'ok' | 'ko'
+Fork : ❌ * (Need to implement the logic when the team is full and so the client should be disconnected)
+    -> [P] -> 'ok' | 'ko'u
     -> [GUI] -> 'pfk' && 'enw'
 
 Eject : ❌
@@ -55,11 +55,11 @@ Death of an Egg ❌
     -> [P] -> 'dead'
     -> [GUI] -> 'edi'
 
-Connection to an Egg ❌
+Connection to an Egg ❌ *
     -> [P] -> 'ok' | 'ko'
     -> [GUI] -> 'ebo'
 
-End of the game ❌
+End of the game ❌ *
     -> [P] -> 'seg'
     -> [GUI] -> 'seg'
 

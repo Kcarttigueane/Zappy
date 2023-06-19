@@ -29,7 +29,9 @@
     "command.h": "c",
     "common.h": "c",
     "map.h": "c",
-    "responses_format.h": "c"
+    "responses_format.h": "c",
+    "numbers": "c",
+    "types.h": "c"
   },
   "cSpell.words": [
     "deraumere",

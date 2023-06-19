@@ -40,6 +40,12 @@
     #define MAX_W_BUFFER_LENGTH 100000
     #define MAX_R_BUFFER_LENGTH 100000
 
+
+    typedef struct coord_s {
+        int x;
+        int y;
+    } coord_t;
+
     #define MAX_LEVEL 8
     #define WINNING_PLAYERS 6
 

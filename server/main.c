@@ -14,6 +14,19 @@ const char* colors[] = {RED,  CYAN,   GRAY, GREEN, YELLOW,
 const char* inventory_names[] = {"food",     "linemate", "deraumere", "sibur",
                                  "mendiane", "phiras",   "thystame"};
 
+void init_teams(server_data_t* data)
+{
+    data->game.team_count = data->game.team_count;
+
+    data->game.team = (team_t*)calloc(data->game.team_count, sizeof(team_t));
+
+    for (size_t i = 0; i < data->game.team_count; i++) {
+        data->game.team[i].name = strdup(data->game.team_names[i]);
+        data->game.team[i].max_players = data->game.clients_nb;
+        LIST_INIT(&data->game.team[i].egg_list);
+    }
+}
+
 int main(int argc, char** argv)
 {
     srand(time(NULL));
@@ -31,6 +44,8 @@ int main(int argc, char** argv)
 
     data->game.next_player_id = 15;
     data->game.map = init_map(data->game.width, data->game.height);
+
+    init_teams(data);
 
     LIST_INIT(&data->game.client_list);
 

@@ -56,24 +56,6 @@ void initialize_client(server_data_t* s, client_t* new_client,
     add_client(&s->game, new_client);
 }
 
-void update_egg(server_data_t* s, int new_socket, struct sockaddr_in address)
-{
-    client_t* client = NULL;
-
-    LIST_FOREACH(client, &s->game.client_list, entries)
-    {
-        if (client->player && client->player->state == EGG) {
-            char response[256] = {0};
-
-            sprintf(response, EBO_FORMAT, client->player->id);
-            client->fd = new_socket;
-            client->address = address;
-            client->player->state = ACTIVE;
-            return;
-        }
-    }
-}
-
 void accept_new_connection(server_data_t* s)
 {
     client_t* new_client = (client_t*)calloc(1, sizeof(client_t));
@@ -93,11 +75,7 @@ void accept_new_connection(server_data_t* s)
     }
     dprintf(new_socket, "WELCOME\n");
 
-    if (is_egg_present(s) == true) {
-        update_egg(s, new_socket, address);
-    } else {
         initialize_client(s, new_client, address, new_socket);
-    }
 
 }
 
