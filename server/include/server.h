@@ -149,4 +149,6 @@ int initialize_players(server_data_t* s, client_t* client);
 
 void print_all_clients(game_t* game);
 
+bool is_game_over(server_data_t* s);
+
 #endif /* !SERVER_H_ */

@@ -58,7 +58,7 @@ int server_loop(server_data_t* s)
             errno != EINTR) {
             return handle_error("Select failed");
         }
-        if (stop_server)
+        if (is_game_over(s) || stop_server)
             break;
 
         if (FD_ISSET(s->socket_fd, &s->readfds))
