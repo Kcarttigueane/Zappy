@@ -55,7 +55,7 @@ void Display::handleMenuEvents()
             }
         } else if (_event->type == sf::Event::Closed) {
             _menuLoop = 0;
-            _quit = 0;
+            _quit = 1;
         }
         if (_event->type == sf::Event::MouseButtonPressed)
             if (_event->mouseButton.button == sf::Mouse::Left) {
