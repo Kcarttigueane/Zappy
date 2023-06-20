@@ -95,7 +95,6 @@ void handle_first_client_msg(list_args_t* args, char** inputs)
             update_player(args, inputs);
         }
         char response[1024] = {0};
-        size_t new_id = args->client->player->id--;
         sprintf(response, PNW_FORMAT, args->client->player->id,
                 args->client->player->pos.x, args->client->player->pos.y,
                 args->client->player->orientation, args->client->player->level,

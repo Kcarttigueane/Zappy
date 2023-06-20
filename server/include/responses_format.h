@@ -17,7 +17,7 @@
 #define PLV_FORMAT "plv %lu %lu\n"
 #define PNW_FORMAT "pnw %ld %d %d %i %ld %s\n"
 #define PIN_FORMAT "pin %lu %i %i %lu %lu %lu %lu %lu %lu %lu\n"
-#define PEX_FORMAT "pex %d\n"
+#define PEX_FORMAT "pex %ld\n"
 #define PBC_FORMAT "pbc %ld %s\n"
 #define PIC_FORMAT "pic %d %d %d %d %d ...\n"
 #define PIE_FORMAT "pie %d %d %d\n"

@@ -13,7 +13,7 @@ player_t* find_player_by_id(server_data_t* s, int id)
 
     LIST_FOREACH(client, &s->game.client_list, entries)
     {
-        if (client->player->id == id) {
+        if (client->player->id == (size_t)id) {
             return client->player;
         }
     }

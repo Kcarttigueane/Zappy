@@ -30,7 +30,7 @@ void move_client_based_on_orientation(client_t* client)
 void send_eject_message(client_t* client, int direction)
 {
     char message[64] = {0};
-    sprintf(message, "eject: %d\n", client->player->orientation);
+    sprintf(message, "eject: %d\n", direction);
     append_to_string(client->write_buf, message);
     memset(message, 0, sizeof(message));
 }
@@ -46,7 +46,7 @@ void send_eject_response_gui(server_data_t* server_data, client_t* client)
 void destroy_eggs_on_tile(server_data_t* server_data, coord_t tile_pos)
 {
     for (size_t i = 0; i < server_data->game.team_count; i++) {
-        team_t* team = &server_data->game.team_names[i];
+        team_t* team = &server_data->game.team[i];
 
         egg_t *e, *temp;
 

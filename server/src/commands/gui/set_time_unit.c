@@ -7,7 +7,7 @@
 
 #include "server.h"
 
-void set_time_unit(list_args_t* args)
+void set_time_unit(__attribute_maybe_unused__ list_args_t* args)
 {
     // char response[MAX_BUFFER] = {0};
 

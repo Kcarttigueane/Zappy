@@ -11,7 +11,6 @@ void inventory(list_args_t* args)
 {
     player_t* player = args->client->player;
     client_t* client = args->client;
-    size_t* player_inventory = client->player->inventory;
 
     char response[1024] = {0};
 
