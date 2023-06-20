@@ -10,8 +10,8 @@
 void forward(list_args_t* args)
 {
     player_t* player = args->client->player;
-    int board_width = args->server_data->game.width;
-    int board_height = args->server_data->game.height;
+    size_t board_width = args->server_data->game.width;
+    size_t board_height = args->server_data->game.height;
 
     switch (player->orientation) {
         case NORTH:

@@ -31,13 +31,10 @@ int main(int argc, char** argv)
 {
     srand(time(NULL));
 
-    if (!are_program_args_valid(argc, argv))
-        return ERROR;
-
     server_data_t* data = (server_data_t*)calloc(1, sizeof(server_data_t));
 
     if (parse_arguments(argc, argv, data) != 0)
-        return handle_error("main() :Invalid arguments\n");
+        return handle_error("main() : Invalid arguments\n");
 
     if (setup_signal_handler() == ERROR)
         return handle_error("main() :Signal handler setup failed\n");

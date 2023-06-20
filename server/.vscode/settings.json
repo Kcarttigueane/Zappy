@@ -31,7 +31,9 @@
     "map.h": "c",
     "responses_format.h": "c",
     "numbers": "c",
-    "types.h": "c"
+    "types.h": "c",
+    "cstdlib": "c",
+    "error_handling.h": "c"
   },
   "cSpell.words": [
     "deraumere",
