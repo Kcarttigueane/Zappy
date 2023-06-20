@@ -92,7 +92,7 @@ int calculate_direction(int delta_x, int delta_y)
     return direction;
 }
 
-void broadcast(__attribute_maybe_unused__ list_args_t* args)
+void broadcast(list_args_t* args)
 {
     char* command_str =
         args->client->player->command_queue

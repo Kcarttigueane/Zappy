@@ -7,7 +7,7 @@
 
 #include "server.h"
 
-void connect_nbr(__attribute_maybe_unused__ list_args_t* args)
+void connect_nbr(list_args_t* args)
 {
     char response[24] = {0};
     char *team_name = args->client->player->team_name;

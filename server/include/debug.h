@@ -6,9 +6,9 @@
 */
 
 #ifndef DEBUG_H
-#    define DEBUG_H
+    #define DEBUG_H
 
-#include "server.h"
+    #include "server.h"
 
 /**
  * @brief Prints the program arguments for debugging purposes.

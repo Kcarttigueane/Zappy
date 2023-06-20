@@ -6,9 +6,9 @@
 */
 
 #ifndef ERROR_HANDLING_H
-#define ERROR_HANDLING_H
+    #define ERROR_HANDLING_H
 
-#include "server.h"
+    #include "server.h"
 
 /**
  *  @brief Validates and sets server port.

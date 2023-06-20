@@ -10,6 +10,7 @@
 void get_all_tiles_content(list_args_t* args)
 {
     char response[MAX_BUFFER] = {0};
+
     size_t height = args->server_data->game.height;
     size_t width = args->server_data->game.width;
 

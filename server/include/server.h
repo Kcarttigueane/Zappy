@@ -150,6 +150,8 @@ int append_to_player_write_buffer(client_t* client, const char* msg);
 int append_to_gui_write_buffer(server_data_t* s, char* msg);
 
 player_t* find_player_by_id(server_data_t* s, int id);
+player_t* get_player_from_command(list_args_t* args);
+
 // ! Extern Variables:
 
 extern volatile sig_atomic_t stop_server;
