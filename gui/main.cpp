@@ -27,23 +27,23 @@ std::string handle_client(Display *client)
 
 int main(int argc, char* argv[])
 {
-    if (argc != 3) {
-        std::cout << "Usage: ./client <server_ip> <server_port>" << std::endl;
-        return 1;
-    }
     srand(time(NULL));
     Display display(1920, 1080, "Zappy");
-    // Handle Client
-    std::string serverIP = argv[1];
-    int serverPort = std::stoi(argv[2]);
-    display.serverIP = serverIP;
-    display.serverPort = serverPort;
-    std::string response = handle_client(&display);
-
-    //set up display
-    setupDisplay(&display, response);
-
     display._deltaTime = display._clock.restart();
+    display.setupMenu();
+
+    if (argc != 3) {
+        display.handleMenu();
+    } else {
+        display._menuIpString = argv[1];
+        display._menuPortString = argv[2];
+        display.handleMenu();
+    }
+    if (display._quit)
+        return EXIT_SUCCESS;
+    //set up display
+    setupDisplay(&display, display._serverResponse);
+
     // display loop
     display.startClientThread();
     gameLoop(&display);

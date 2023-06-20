@@ -92,6 +92,18 @@ void Display::animateEntity(Entity *entity)
     entity->_animationPoint += 1;
 }
 
+
+void Display::entityIncantation(Entity *entity)
+{
+    if (!entity->_incantation) 
+        return;
+    sf::Color colors[4] = {sf::Color(2, 165, 255, 255), sf::Color(255, 51, 0, 255),
+    sf::Color(102, 204, 51, 255), sf::Color(255, 204, 0, 255)};
+    _sprite->setColor(colors[entity->_incantationColor % 4]);
+    if (_frame % 10 == 0)
+        entity->_incantationColor++;
+}
+
 #define PLAYER_HEIGHT 207
 void Display::drawEntities()
 {
@@ -117,6 +129,7 @@ void Display::drawEntities()
         sf::Color teamColor = _teamColors[_entities[i]._teamNumb];
         teamColor.a = _entities[i]._inv;
         _sprite->setColor(teamColor);
+        entityIncantation(&_entities[i]);
         _sprite->setTexture(*(_entities[i].getTexture()));
         _sprite->setPosition(pos);
         _sprite->setScale(sf::Vector2f(_scale, _scale));

@@ -14,7 +14,7 @@
 #define SCALE 0.2
 #define ISOMETRIC_X_OFFSET 930.0
 #define ISOMETRIC_Y_OFFSET 400.0
-#define EXTRA_TILES 50
+#define EXTRA_TILES 30
 class Display {
     public:
         Display(int width_res, int height_res, std::string title) {
@@ -25,6 +25,7 @@ class Display {
             _playerTexture = new sf::Texture;
             _uiTexture = new sf::Texture;
             _speechTexture = new sf::Texture;
+            _titleTexture = new sf::Texture;
             _eggTexture = new sf::Texture;
             _sprite = new sf::Sprite;
             _font = new sf::Font;
@@ -34,6 +35,7 @@ class Display {
             _cubeTexture->loadFromFile("./assets/white_inv_cube.png");
             _uiTexture->loadFromFile("./assets/custompanel.png");
             _speechTexture->loadFromFile("./assets/speech.png");
+            _titleTexture->loadFromFile("./assets/ZAPPY.png");
             _uiPosition = sf::Vector2f(100, 1080);
             _uiPlayerPosition = sf::Vector2f(100, -200);
             _font->loadFromFile("./assets/font.ttf");
@@ -44,6 +46,7 @@ class Display {
             delete _eggTexture;
             delete _playerTexture;
             delete _uiTexture;
+            delete _titleTexture;
             delete _speechTexture;
             delete _sprite;
             delete _font;
@@ -60,12 +63,21 @@ class Display {
         void moveEntity(Entity *entity);
         void teleportEntity(Entity *entity);
         void entitySelect(Entity *entity, sf::Vector2f *pos);
+        void entityIncantation(Entity *entity);
         void handleEvents();
         bool isMapCube(int x, int y);
         void getMousePosition();
         void setupTiles();
         void draw();
         void parseServerInfo(std::string response);
+
+
+        void handleMenu();
+        void drawMenu();
+        void handleMenuEvents();
+        void setupMenu();
+
+        std::string handleClient();
 
         //Thread
         void startClientThread();
@@ -85,6 +97,7 @@ class Display {
         sf::Texture *_playerTexture;
         sf::Texture *_uiTexture;
         sf::Texture *_eggTexture;
+        sf::Texture *_titleTexture;
         sf::Texture *_speechTexture;
         sf::Event *_event;
         sf::Sprite *_sprite;
@@ -98,6 +111,8 @@ class Display {
         std::vector<std::string> _teamNames;
         std::vector<sf::Color> _teamColors;
         int _displayLoop = 1;
+        int _quit = 0;
+        int _menuLoop = 1;
         int _timeUnit;
         int _width;
         int _height;
@@ -127,6 +142,16 @@ class Display {
         long _frame = 0;
         std::vector<Broadcast> _broadcasts;
         std::vector<Egg> _eggs;
+
+        //Menu
+        sf::RectangleShape _inputBoxIP;
+        sf::RectangleShape _inputBoxPort;
+        sf::RectangleShape _playButton;
+        std::string _menuIpString = "";
+        std::string _menuPortString = "";
+        int _clickedBox = -1;
+        std::string _serverResponse = "";
+        int _errorServer = 0;
 };
 
 
