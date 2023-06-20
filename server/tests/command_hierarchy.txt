@@ -18,7 +18,7 @@ Inventory : ✅
     -> [P] -> [ food n , linemate n , deraumere n , sibur n , mendiane n , phiras n , thystame n ]
     -> [GUI] -> nothing
 
-Broadcast : ❌ *
+Broadcast : ✅
     -> [P] -> 'ok' | 'ko'
     -> [GUI] -> 'pbc'
 
@@ -59,7 +59,7 @@ Connection to an Egg ❌ *
     -> [P] -> 'ok' | 'ko'
     -> [GUI] -> 'ebo'
 
-End of the game ❌ *
+End of the game : ✅
     -> [P] -> 'seg'
     -> [GUI] -> 'seg'
 
