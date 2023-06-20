@@ -31,7 +31,7 @@ Fork : ✅ (Need to implement the logic when the team is full and so the client 
     -> [P] -> 'ok' | 'ko'
     -> [GUI] -> 'pfk' && 'enw'
 
-Eject : ❌
+Eject : ✅ (not tested)
     -> [P] -> 'ok' | 'ko'
     -> [GUI] -> 'pex'
 
@@ -55,7 +55,7 @@ Death of an Egg ❌
     -> [P] -> 'dead'
     -> [GUI] -> 'edi'
 
-Connection to an Egg ❌ *
+Connection to an Egg : ✅
     -> [P] -> 'ok' | 'ko'
     -> [GUI] -> 'ebo'
 
