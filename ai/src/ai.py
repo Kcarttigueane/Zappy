@@ -115,7 +115,8 @@ class AI:
                 self.inventory[i.split(" ")[1]] = int(i.split(" ")[2])
 
 
-    def loop(self, data, connected_socket):
+    def loop(self, buffer, connected_socket):
+        data = buffer.pop(0)
         if data != "ok" and data != "ko" and data != "dead" and data != [] and data != None and got_numbers(data) == False:
             rare_stones = self.parse_look(data)
             if rare_stones:
