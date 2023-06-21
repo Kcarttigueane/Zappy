@@ -60,14 +60,15 @@ class SocketManager:
     def is_connected(self):
         return self.connected
 
-def receive_handler(connected_socket: SocketManager, mask, XF=False):
-    data = connected_socket.receive()
+def receive_handler(connected_socket: SocketManager, buffer: list, mask, XF=False):
     ai = AI()
-    if data:
+    data = connected_socket.receive()
+    buffer.append(data)
+    if len(buffer) > 0 and data:
         print(f"\nReceived: {data}") if not XF else print(f"{data}")
-        ai.loop(data, connected_socket)
+        ai.loop(buffer, connected_socket)
 
-def input_handler(connected_socket: SocketManager, mask):
+def input_handler(connected_socket: SocketManager, buffer: list, mask):
     connected_socket.query = sys.stdin.readline().strip()
     if "exit" in connected_socket.query or "quit" in connected_socket.query:
         connected_socket.run = False
@@ -78,18 +79,19 @@ def input_handler(connected_socket: SocketManager, mask):
 
 
 def main(connected_socket: SocketManager):
+    buffer = []
     sel = selectors.DefaultSelector()
     sel.register(connected_socket.socket, selectors.EVENT_READ, receive_handler)
     sel.register(sys.stdin, selectors.EVENT_READ, input_handler)
-    receive_handler(connected_socket, None, True)
+    receive_handler(connected_socket, buffer, None, True)
     connected_socket.send(connected_socket.name)
     time.sleep(0.2)
-    receive_handler(connected_socket, None, True)
+    receive_handler(connected_socket, buffer, None, True)
     while connected_socket.is_connected():
         events = sel.select(timeout=0)
         for key, mask in events:
             callback = key.data
-            callback(connected_socket, mask)
+            callback(connected_socket, buffer, mask)
 
 
 if __name__ == '__main__':
