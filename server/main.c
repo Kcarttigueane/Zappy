@@ -33,7 +33,7 @@ int main(int argc, char** argv)
 
     server_data_t* data = (server_data_t*)calloc(1, sizeof(server_data_t));
 
-    if (parse_arguments(argc, argv, data) != 0)
+    if (parse_arguments(argc, argv, data) == FAILURE)
         return handle_error("main() : Invalid arguments\n");
 
     if (setup_signal_handler() == ERROR)

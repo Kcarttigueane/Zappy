@@ -19,7 +19,7 @@
  *  @param arg The provided port value as a string.
  *  @param s Pointer to the server_data_t struct where the port will be set.
  */
-void validate_and_set_port(char* arg, server_data_t* s);
+int validate_and_set_port(char* arg, server_data_t* s);
 
 /**
  *  @brief Validates and sets game width.
@@ -30,7 +30,7 @@ void validate_and_set_port(char* arg, server_data_t* s);
  *  @param arg The provided width value as a string.
  *  @param s Pointer to the server_data_t struct where the width will be set.
  */
-void validate_and_set_width(char* arg, server_data_t* s);
+int validate_and_set_width(char* arg, server_data_t* s);
 
 /**
  *  @brief Validates and sets game height.
@@ -41,7 +41,7 @@ void validate_and_set_width(char* arg, server_data_t* s);
  *  @param arg The provided height value as a string.
  *  @param s Pointer to the server_data_t struct where the height will be set.
  */
-void validate_and_set_height(char* arg, server_data_t* s);
+int validate_and_set_height(char* arg, server_data_t* s);
 
 /**
  *  @brief Validates and sets number of clients.
@@ -54,7 +54,7 @@ void validate_and_set_height(char* arg, server_data_t* s);
  *  @param s Pointer to the server_data_t struct where the number of clients
  *           will be set.
  */
-void validate_and_set_clients_nb(char* arg, server_data_t* s);
+int validate_and_set_clients_nb(char* arg, server_data_t* s);
 
 /**
  *  @brief Validates and sets game frequency.
@@ -66,7 +66,7 @@ void validate_and_set_clients_nb(char* arg, server_data_t* s);
  *  @param s Pointer to the server_data_t struct where the frequency
  *  will be set.
  */
-void validate_and_set_freq(char* arg, server_data_t* s);
+int validate_and_set_freq(char* arg, server_data_t* s);
 
 /**
  * @brief Parses command-line arguments and initializes the

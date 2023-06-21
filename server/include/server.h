@@ -47,6 +47,8 @@
         "\n-y option only accepts integer values between 10 and 30\n\n"
     #define WRONG_CLIENTS_NB \
         "\n-c option only accepts integer values greater or equal to 1\n\n"
+    #define FREQ_MISSING "\n-f option is missing\n\n"
+    #define UNIQUE_TEAM_NAMES "\n-n option only accepts unique team names\n\n"
 
     #define DEFAULT_PORT 4242
     #define DEFAULT_WIDTH 10
