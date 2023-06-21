@@ -36,38 +36,17 @@ void shuffle(int* array, size_t n)
     }
 }
 
-void distribute_resources(tile_t** map, int total_resources[], size_t height,
-                          size_t width)
-{
-    size_t total_tiles = width * height;
-    int* tiles = malloc(total_tiles * sizeof(int));
-
-    for (size_t i = 0; i < total_tiles; i++) {
-        tiles[i] = i;
-    }
-
-    for (int resource = 0; resource < MAX_NB_RESOURCES; resource++) {
-        shuffle(tiles, total_tiles);
-        for (int i = 0; i < total_resources[resource]; i++) {
-            int tile_index = tiles[i % total_tiles];
-            int x = tile_index / height;
-            int y = tile_index % height;
-            map[x][y].quantity[resource]++;
-        }
-    }
-
-    free(tiles);
-}
 
 void spawning_resources(server_data_t* data, int* total_resources)
 {
     printf("Spawning resources\n");
 
-    distribute_resources(data->game.map, total_resources, data->game.height,
-                         data->game.width);
+    distribute_resources(data->game.map, total_resources,
+                         data->game.height, data->game.width);
 
     print_total_resources(data->game.map, data->game.height, data->game.width);
 }
+
 
 void free_map(tile_t** map, size_t width)
 {
