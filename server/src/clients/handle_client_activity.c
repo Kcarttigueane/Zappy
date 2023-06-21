@@ -19,7 +19,7 @@ static void handle_client_disconnection(server_data_t* s, client_t* client)  // 
 
 static void handle_received_data(list_args_t* args, char* buffer)
 {
-    buffer[strlen(buffer) - 1] = '\0';
+    buffer[strlen(buffer)] = '\0';
     parse_client_input(args, buffer);
 }
 

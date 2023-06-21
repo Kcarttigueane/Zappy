@@ -97,8 +97,6 @@
 
 // ! SERVER Functions:
 
-bool are_program_args_valid(int argc, char** argv);
-int parse_arguments(int argc, char** argv, server_data_t* s);
 void free_teams_names(server_data_t* s);
 
 /**

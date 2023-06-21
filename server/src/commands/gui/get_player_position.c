@@ -22,3 +22,26 @@ void get_player_position(list_args_t* args)
 
     append_to_gui_write_buffer(args->server_data, response);
 }
+
+
+void get_all_player_positions(list_args_t* args)
+{
+    char response[MAX_BUFFER] = {0};
+
+    client_t *client, *temp;
+
+    LIST_FOREACH_SAFE(client, &args->server_data->game.client_list, entries, temp)
+    {
+        if (client->player->is_graphical) {
+            continue;
+        }
+
+        sprintf(response, PNW_FORMAT, client->player->id, client->player->pos.x,
+                client->player->pos.y, client->player->orientation,
+                client->player->level, client->player->team_name);
+
+        append_to_gui_write_buffer(args->server_data, response);
+
+        memset(response, 0, MAX_BUFFER);
+    }
+}

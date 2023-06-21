@@ -66,7 +66,7 @@ void spawning_resources(server_data_t* data, int* total_resources)
     distribute_resources(data->game.map, total_resources, data->game.height,
                          data->game.width);
 
-    print_total_resources(data->game.map, data->game.height, data->game.width);
+    // print_total_resources(data->game.map, data->game.height, data->game.width);
 }
 
 void free_map(tile_t** map, size_t width)
