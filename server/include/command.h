@@ -92,6 +92,9 @@ void get_time_unit(list_args_t* args);
 **/
 void set_time_unit(list_args_t* args);
 
+void get_all_player_positions(list_args_t* args);
+
+
 // ! Function Prototypes (Player):
 
 /**

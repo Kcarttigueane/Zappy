@@ -63,11 +63,11 @@ void handle_first_client_msg(list_args_t* args, char** inputs)
     if (!strcmp(inputs[0], "GRAPHIC")) {
         args->client->player->is_graphical = true;
         args->client->player->state = ACTIVE;
-        // msz(args);
-        // sgt(args);
-        // mct(args);
-        // tna(args);
-        // pnw(args);
+        get_map_size(args);
+        get_time_unit(args);
+        get_all_tiles_content(args);
+        get_all_team_names(args);
+        get_all_player_positions(args);
     } else {
         if (!is_team_name_valid(args, inputs)) {
             printf("Invalid team name\n");
@@ -128,11 +128,11 @@ void handle_client_command(list_args_t* args, char** inputs, char* input_buffer)
     }
 }
 
-void parse_client_input(list_args_t* args, char* input_buffer)
+static void process_command_buffer(list_args_t* args, char* command_buff)
 {
-    char** split_command = split_str(input_buffer, " ");
+    char** split_command = split_str(command_buff, " ");
 
-    debug_word_array(split_command);
+    // debug_word_array(split_command);
 
     if (!split_command)
         return;
@@ -140,7 +140,45 @@ void parse_client_input(list_args_t* args, char* input_buffer)
     if (args->client->player->state == NONE)
         handle_first_client_msg(args, split_command);
     else
-        handle_client_command(args, split_command, input_buffer);
+        handle_client_command(args, split_command, command_buff);
+}
 
-    free_word_array(split_command);
+void parse_client_input(list_args_t* args, char* received_buff)
+{
+    char command_extracted[256] = {0};
+
+    if (strlen(args->client->read_buf) + strlen(received_buff) <
+        MAX_W_BUFFER_LENGTH) {
+        strcat(args->client->read_buf, received_buff);
+    } else {
+        printf("Buffer overflow\n");
+    }
+
+    printf("Received: |%s|\n", args->client->read_buf);
+
+    size_t size =
+        strlen(args->client->read_buf);
+
+    for (size_t i = 0; i < size; i++) {
+        if (i >= sizeof(command_extracted)) {
+            printf("Command is too long\n");
+            break;
+        }
+        command_extracted[i] = args->client->read_buf[i];
+        if (args->client->read_buf[i] == '\n') {
+            command_extracted[i] = '\0';
+
+            printf("Processing line: %s\n", command_extracted);
+            process_command_buffer(args, command_extracted);
+
+            size_t line_length = i + 1;
+            size_t remaining = size - line_length;
+            memmove(args->client->read_buf,
+                    args->client->read_buf + line_length, remaining);
+            args->client->read_buf[remaining] = '\0';
+            size = remaining;
+
+            i = 0;
+        }
+    }
 }
