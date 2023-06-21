@@ -60,7 +60,7 @@ void look(list_args_t* args)
 
     int dx[4] = {0, 1, 0, -1};
     int dy[4] = {-1, 0, 1, 0};
-    int level = player->level;
+    size_t level = player->level;
     int d = player->orientation - 1;
     int x = player->pos.x, y = player->pos.y;
     size_t width = s->game.width, height = s->game.height;

@@ -16,7 +16,7 @@ team_t* find_team_by_name(server_data_t* data, char* team_name)
     return NULL;
 }
 
-void fork_player(__attribute_maybe_unused__ list_args_t* args)
+void fork_player(list_args_t* args)
 {
     printf("fork_player\n");
 

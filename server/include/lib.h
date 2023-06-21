@@ -7,13 +7,13 @@
 
 #pragma once
 
-#include <regex.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+    #include <regex.h>
+    #include <stdbool.h>
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <string.h>
 
-#include <time.h>
+    #include <time.h>
 
 // ! STR TO WORD ARRAY functions:
 

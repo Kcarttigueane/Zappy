@@ -40,7 +40,7 @@ void handle_client_activity(server_data_t* s)
                 .client = client,
             };
 
-            int bytes_read = read(sd, buffer, MAX_BUFFER);
+            ssize_t bytes_read = read(sd, buffer, MAX_BUFFER);
             (bytes_read == 0) ? handle_client_disconnection(s, client)
                               : handle_received_data(&args, buffer);
         }

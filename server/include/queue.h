@@ -11,11 +11,11 @@
     #include "player.h"
     #include "server.h"
 
-typedef struct command_queue_s {
-    char commands[MAX_NB_COMMANDS][MAX_COMMANDS_LENGTH];
-    int front;
-    int rear;
-} command_queue_t;
+    typedef struct command_queue_s {
+        char commands[MAX_NB_COMMANDS][MAX_COMMANDS_LENGTH];
+        int front;
+        int rear;
+    } command_queue_t;
 
 void init_command_queue(client_t* client);
 int is_command_queue_empty(client_t* client);
