@@ -45,6 +45,8 @@ void send_eject_response_gui(server_data_t* server_data, client_t* client)
 
 void destroy_eggs_on_tile(server_data_t* server_data, coord_t tile_pos)
 {
+    char gui_message[64] = {0};
+
     for (size_t i = 0; i < server_data->game.team_count; i++) {
         team_t* team = &server_data->game.team[i];
 
@@ -53,6 +55,9 @@ void destroy_eggs_on_tile(server_data_t* server_data, coord_t tile_pos)
         LIST_FOREACH_SAFE(e, &team->egg_list, entries, temp)
         {
             if (e->pos.x == tile_pos.x && e->pos.y == tile_pos.y) {
+                sprintf(gui_message, EDI_FORMAT, e->id);
+                append_to_gui_write_buffer(server_data, gui_message);
+                memset(gui_message, 0, sizeof(gui_message));
                 LIST_REMOVE(e, entries);
                 free(e);
             }

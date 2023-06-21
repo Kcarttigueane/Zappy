@@ -51,7 +51,7 @@ Death of a player : ❌
     -> [P] -> 'dead'
     -> [GUI] -> 'pdi'
 
-Death of an Egg ❌
+Death of an Egg ✅
     -> [P] -> 'dead'
     -> [GUI] -> 'edi'
 
