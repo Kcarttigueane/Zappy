@@ -71,7 +71,6 @@ void player_lifetime(server_data_t* s)
 
             if (client->player->life_units <= 0) {
                 printf("Player %ld died\n", client->player->id);
-                exit(0);
             }
         }
     }
@@ -81,8 +80,6 @@ int server_loop(server_data_t* s)
 {
     int total_tiles = s->game.width * s->game.height;
     int total_resources[MAX_NB_RESOURCES] = CALC_TOTAL_RESOURCES(total_tiles);
-
-    struct timeval tv = {.tv_sec = 0, .tv_usec = 0};
 
     time_t start, current;
 
@@ -94,7 +91,7 @@ int server_loop(server_data_t* s)
         reset_set(s, &s->readfds);
         reset_set(s, &s->writefds);
 
-        if (select(FD_SETSIZE, &s->readfds, &s->writefds, NULL, &tv) < 0 &&
+        if (select(FD_SETSIZE, &s->readfds, &s->writefds, NULL, NULL) < 0 &&
             errno != EINTR) {
             return handle_error("Select failed");
         }
