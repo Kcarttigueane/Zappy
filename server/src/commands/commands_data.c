@@ -33,8 +33,7 @@ const command_t PLAYER_COMMANDS[] = {
     {"Take", take, "Take object", 7},
     {"Set", set, "Set object", 7},
     {"Incantation", incantation, "Incantation", 300},
-    {"Hatch", hatch, "Hatch", 0},  // Assuming it doesn't have a time cost
-    {"fake_end", fake_end, "fake_end", 0},
+    {"Hatch", hatch, "Hatch", 0},
 };
 
 const size_t GRAPHICAL_COMMANDS_SIZE = ARRAY_SIZE(GRAPHICAL_COMMANDS);

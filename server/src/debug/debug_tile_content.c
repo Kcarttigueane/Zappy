@@ -10,7 +10,7 @@
 
 void debug_tile_content(tile_t* tile)
 {
-    fprintf(stdout, GREEN, "%s", RESET, "\n",
+    fprintf(stdout, GREEN "%s" RESET "\n",
             "============  Start DEBUG tile content ============");
 
     printf("FOOD: %zu\n", tile->quantity[FOOD]);
