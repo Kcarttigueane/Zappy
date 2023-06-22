@@ -61,3 +61,7 @@ Connection to an Egg : ✅
 End of the game : ✅
     -> [P] -> 'seg'
     -> [GUI] -> 'seg'
+
+Time unit modification -> SST T\n : ✅
+    -> [P] -> nothing
+    -> [GUI] -> 'sgt'o
