@@ -24,6 +24,7 @@ void update_player(list_args_t* args, char** inputs)
     args->client->player->orientation = NORTH;
     args->client->player->inventory[FOOD] = 9;
     args->client->player->is_graphical = false;
+    args->client->player->start_time = clock();
 
     int team_index = find_team_index(args, inputs[0]);
     if (team_index == FAILURE)
