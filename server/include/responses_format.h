@@ -28,7 +28,7 @@
     #define ENW_FORMAT "enw %ld %ld %d %d\n"
     #define EBO_FORMAT "ebo %ld\n"
     #define EDI_FORMAT "edi %ld\n"
-    #define SGT_FORMAT "sgt %d\n"
+    #define SGT_FORMAT "sgt %ld\n"
     #define SST_FORMAT "sst %d\n"
     #define SEG_FORMAT "seg %s\n"
     #define SMG_FORMAT "smg %s\n"
