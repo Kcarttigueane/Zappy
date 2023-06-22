@@ -30,6 +30,8 @@
     #include <time.h>
     #include <unistd.h>
     #include <uuid/uuid.h>
+    #include <sys/time.h>
+
 
     #define MAX_NB_COMMANDS 10
     #define MAX_COMMANDS_LENGTH 256

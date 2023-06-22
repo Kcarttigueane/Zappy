@@ -39,10 +39,48 @@ void send_responses(server_data_t* s)
     }
 }
 
+void update_life(player_t* player, int freq)
+{
+    int life_unit_duration = (double)126.0 / freq;
+    clock_t current_time = clock();
+    double elapsed_time =
+        (double)(current_time - player->start_time) / CLOCKS_PER_SEC;
+
+    if (elapsed_time >= life_unit_duration) {
+        printf("Player %ld lost 1 life unit\n", player->id);
+        player->life_units -= 1;
+        player->start_time = current_time;
+    }
+}
+
+void player_lifetime(server_data_t* s)
+{
+    client_t *client, *temp;
+
+    LIST_FOREACH_SAFE(client, &s->game.client_list, entries, temp)
+    {
+        if (client->player && !client->player->is_graphical &&
+            client->player->state == ACTIVE) {
+            update_life(client->player, s->game.freq);
+
+            if (client->player->inventory[FOOD] > 0) {
+                client->player->inventory[FOOD] -= 1;
+                client->player->life_units += 1;
+                printf("Player %ld ate 1 food\n", client->player->id);
+            }
+
+            if (client->player->life_units <= 0) {
+                printf("Player %ld died\n", client->player->id);
+            }
+        }
+    }
+}
+
 int server_loop(server_data_t* s)
 {
     int total_tiles = s->game.width * s->game.height;
     int total_resources[MAX_NB_RESOURCES] = CALC_TOTAL_RESOURCES(total_tiles);
+
     time_t start, current;
 
     time(&start);
@@ -57,6 +95,7 @@ int server_loop(server_data_t* s)
             errno != EINTR) {
             return handle_error("Select failed");
         }
+
         if (stop_server)
             break;
 
@@ -78,6 +117,7 @@ int server_loop(server_data_t* s)
         }
         execute_commands(s);
         send_responses(s);
+        player_lifetime(s);
     }
 
     free_client_list(&s->game);
