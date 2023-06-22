@@ -110,18 +110,16 @@ void handle_client_command(list_args_t* args, char** inputs, char* input_buffer)
     if (args->client->player->is_graphical) {
         for (size_t i = 0; i < GRAPHICAL_COMMANDS_SIZE; i++) {
             if (!strcasecmp(inputs[0], GRAPHICAL_COMMANDS[i].name)) {
-                printf("[G] ->Enqueueing command: |%s|\n",
-                       GRAPHICAL_COMMANDS[i].name);
-                enqueue_command(args->client, input_buffer);
+                enqueue_command(args->client, input_buffer,
+                                args->server_data->game.freq);
                 return;
             }
         }
     } else {
         for (size_t i = 0; i < PLAYER_COMMANDS_SIZE; i++) {
             if (!strcasecmp(inputs[0], PLAYER_COMMANDS[i].name)) {
-                printf("[P] ->Enqueueing command: |%s|\n",
-                       PLAYER_COMMANDS[i].name);
-                enqueue_command(args->client, input_buffer);
+                enqueue_command(args->client, input_buffer,
+                                args->server_data->game.freq);
                 return;
             }
         }
@@ -141,6 +139,7 @@ static void process_command_buffer(list_args_t* args, char* command_buff)
         handle_first_client_msg(args, split_command);
     else
         handle_client_command(args, split_command, command_buff);
+    print_command_queue(args->client);
 }
 
 void parse_client_input(list_args_t* args, char* received_buff)
@@ -156,8 +155,7 @@ void parse_client_input(list_args_t* args, char* received_buff)
 
     printf("Received: |%s|\n", args->client->read_buf);
 
-    size_t size =
-        strlen(args->client->read_buf);
+    size_t size = strlen(args->client->read_buf);
 
     for (size_t i = 0; i < size; i++) {
         if (i >= sizeof(command_extracted)) {
@@ -168,7 +166,7 @@ void parse_client_input(list_args_t* args, char* received_buff)
         if (args->client->read_buf[i] == '\n') {
             command_extracted[i] = '\0';
 
-            printf("Processing line: %s\n", command_extracted);
+            // printf("Processing line: %s\n", command_extracted);
             process_command_buffer(args, command_extracted);
 
             size_t line_length = i + 1;

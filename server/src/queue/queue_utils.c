@@ -13,15 +13,16 @@ void init_command_queue(client_t* client)
     client->player->command_queue.rear = -1;
 }
 
-int is_command_queue_empty(client_t* client)
+bool is_command_queue_empty(client_t* client)
 {
-    return (client->player->command_queue.front == FAILURE);
+    command_queue_t* queue = &(client->player->command_queue);
+
+    return (queue->front == -1);
 }
 
-int is_command_queue_full(client_t* client)
+bool is_command_queue_full(client_t* client)
 {
-    command_queue_t* queue = &client->player->command_queue;
+    command_queue_t* queue = &(client->player->command_queue);
 
-    return ((queue->front == 0 && queue->rear == MAX_COMMANDS_PER_CLIENT - 1) ||
-            (queue->front == queue->rear + 1));
+    return ((queue->rear + 1) % MAX_COMMANDS_PER_CLIENT == queue->front);
 }

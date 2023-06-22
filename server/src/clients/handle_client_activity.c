@@ -5,9 +5,12 @@
 ** handle_client_activity.c
 */
 
+#include "colors.h"
 #include "server.h"
 
-static void handle_client_disconnection(server_data_t* s, client_t* client)  // TODO : check if this is correct or not
+static void handle_client_disconnection(
+    server_data_t* s,
+    client_t* client)  // TODO : check if this is correct or not
 {
     FD_CLR(client->fd, &s->readfds);
     close(client->fd);
@@ -20,6 +23,8 @@ static void handle_client_disconnection(server_data_t* s, client_t* client)  // 
 static void handle_received_data(list_args_t* args, char* buffer)
 {
     buffer[strlen(buffer)] = '\0';
+    fprintf(stderr, BLUE, "Client %d send the message '%s'\n", RESET,
+    args->client->fd, buffer);
     parse_client_input(args, buffer);
 }
 
@@ -34,7 +39,6 @@ void handle_client_activity(server_data_t* s)
         int sd = client->fd;
 
         if (FD_ISSET(sd, &s->readfds)) {
-            printf("Client %d sent a message\n", sd);
             list_args_t args = {
                 .server_data = s,
                 .client = client,
