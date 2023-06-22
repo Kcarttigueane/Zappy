@@ -9,10 +9,11 @@
 
 void dequeue_command(client_t* client)
 {
-    if (is_command_queue_empty(client)) {
+    if (is_command_queue_empty(client) == true) {
         printf("Command queue is empty. Unable to dequeue command.\n");
         return;
     }
+
     command_queue_t* queue = &client->player->command_queue;
 
     if (queue->front == queue->rear)

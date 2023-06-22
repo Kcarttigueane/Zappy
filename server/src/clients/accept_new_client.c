@@ -31,18 +31,6 @@ int initialize_players(server_data_t* s, client_t* client)
     return SUCCESS;
 }
 
-bool is_egg_present(server_data_t* s)
-{
-    client_t* client = NULL;
-
-    LIST_FOREACH(client, &s->game.client_list, entries)
-    {
-        if (client->player && client->player->state == EGG)
-            return true;
-    }
-    return false;
-}
-
 void initialize_client(server_data_t* s, client_t* new_client,
                        struct sockaddr_in address, int new_socket)
 {
@@ -75,11 +63,5 @@ void accept_new_connection(server_data_t* s)
     }
     dprintf(new_socket, "WELCOME\n");
 
-        initialize_client(s, new_client, address, new_socket);
-
-}
-
-void add_client(game_t* game, client_t* client)
-{
-    LIST_INSERT_HEAD(&game->client_list, client, entries);
+    initialize_client(s, new_client, address, new_socket);
 }

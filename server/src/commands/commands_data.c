@@ -9,32 +9,32 @@
 #include "utils.h"
 
 const command_t GRAPHICAL_COMMANDS[] = {
-    {"msz", get_map_size, "Define the map size."},
-    {"bct", get_tile_content, "Provide the content of a tile."},
-    {"mct", get_all_tiles_content, "Provide the content of the whole map."},
-    {"tna", get_all_team_names, "Name all the teams."},
-    {"ppo", get_player_position, "Provide a player’s position."},
-    {"plv", get_player_level, "Provide a player’s level."},
-    {"pin", get_player_inventory, "Provide a player’s inventory."},
-    {"sgt", get_time_unit, "Request the time unit."},
-    {"sst", set_time_unit, "Set the time unit."},
+    {"msz", get_map_size, "Define the map size.", 0},
+    {"bct", get_tile_content, "Provide the content of a tile.", 0},
+    {"mct", get_all_tiles_content, "Provide the content of the whole map.", 0},
+    {"tna", get_all_team_names, "Name all the teams.", 0},
+    {"ppo", get_player_position, "Provide a player’s position.", 0},
+    {"plv", get_player_level, "Provide a player’s level.", 0},
+    {"pin", get_player_inventory, "Provide a player’s inventory.", 0},
+    {"sgt", get_time_unit, "Request the time unit.", 0},
+    {"sst", set_time_unit, "Set the time unit.", 0},
 };
 
 const command_t PLAYER_COMMANDS[] = {
-    {"Forward", forward, "Move forward"},
-    {"Right", right, "Turn right"},
-    {"Left", left, "Turn left"},
-    {"Look", look, "Look around"},
-    {"Inventory", inventory, "Inventory"},
-    {"Broadcast", broadcast, "Broadcast message"},
-    {"Connect_nbr", connect_nbr, "Number of free slots"},
-    {"Fork", fork_player, "Fork"},
-    {"Eject", eject, "Eject player"},
-    {"Take", take, "Take object"},
-    {"Set", set, "Set object"},
-    {"Incantation", incantation, "Incantation"},
-    {"Hatch", hatch, "Hatch"},
-    {"fake_end", fake_end, "fake_end"},
+    {"Forward", forward, "Move forward", 7},
+    {"Right", right, "Turn right", 7},
+    {"Left", left, "Turn left", 7},
+    {"Look", look, "Look around", 7},
+    {"Inventory", inventory, "Inventory", 1},
+    {"Broadcast", broadcast, "Broadcast message", 7},
+    {"Connect_nbr", connect_nbr, "Number of free slots", 0},
+    {"Fork", fork_player, "Fork", 42},
+    {"Eject", eject, "Eject player", 7},
+    {"Take", take, "Take object", 7},
+    {"Set", set, "Set object", 7},
+    {"Incantation", incantation, "Incantation", 300},
+    {"Hatch", hatch, "Hatch", 0},  // Assuming it doesn't have a time cost
+    {"fake_end", fake_end, "fake_end", 0},
 };
 
 const size_t GRAPHICAL_COMMANDS_SIZE = ARRAY_SIZE(GRAPHICAL_COMMANDS);

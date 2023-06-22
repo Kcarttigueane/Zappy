@@ -18,6 +18,7 @@
         char* name;
         command_func_t function;
         char* description;
+        int action_time;
     } command_t;
 
 // ! Function Prototypes (GUI):

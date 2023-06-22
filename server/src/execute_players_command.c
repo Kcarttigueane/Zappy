@@ -10,15 +10,18 @@
 void execute_commands(server_data_t* s)
 {
     client_t *client, *temp = NULL;
+    time_t current_time = clock();
 
     LIST_FOREACH_SAFE(client, &s->game.client_list, entries, temp)
     {
         if (!is_command_queue_empty(client)) {
             if (client->player->is_graphical) {
+                printf("client->fd: %d\n", client->fd);
                 list_args_t args = {
                     .server_data = s,
                     .client = client,
                 };
+
                 printf(
                     "client->player->command_queue.commands[client->player->"
                     "command_queue.front]: |%s|\n",
@@ -42,32 +45,47 @@ void execute_commands(server_data_t* s)
                 GRAPHICAL_COMMANDS[index].function(&args);
                 dequeue_command(client);
             } else {
-                list_args_t args = {
-                    .server_data = s,
-                    .client = client,
-                };
-
-                printf(
-                    "client->player->command_queue.commands[client->player->"
-                    "command_queue.front]: |%s|\n",
+                if (current_time >=
                     client->player->command_queue
-                        .commands[client->player->command_queue.front]);
-                char* command_name = split_str(
-                    client->player->command_queue
-                        .commands[client->player->command_queue.front],
-                    " ")[0];
+                        .completion_time[client->player->command_queue.front]) {
 
-                size_t index = find_player_command_index(command_name);
+                    list_args_t args = {
+                        .server_data = s,
+                        .client = client,
+                    };
 
-                printf("index: %ld\n", index);
+                    // double completion_time_sec =
+                    //     (double)client->player->command_queue
+                    //         .completion_time[client->player->command_queue.front] /
+                    //     CLOCKS_PER_SEC;
 
-                if (index == (size_t)FAILURE) {
-                    append_to_gui_write_buffer(s, SUC_FORMAT);
+                    // printf("Completion time: %.2f seconds\n", completion_time_sec);
+                    // print_command_queue(client);
+
+                    printf(
+                        "client->player->command_queue.commands[client->player-"
+                        ">"
+                        "command_queue.front]: |%s|\n",
+                        client->player->command_queue
+                            .commands[client->player->command_queue.front]);
+
+                    char* command_name = split_str(
+                        client->player->command_queue
+                            .commands[client->player->command_queue.front],
+                        " ")[0];
+
+                    size_t index = find_player_command_index(command_name);
+
+                    printf("index: %ld\n", index);
+
+                    if (index == (size_t)FAILURE) {
+                        append_to_gui_write_buffer(s, SUC_FORMAT);
+                        dequeue_command(client);
+                        continue;
+                    }
+                    PLAYER_COMMANDS[index].function(&args);
                     dequeue_command(client);
-                    continue;
                 }
-                PLAYER_COMMANDS[index].function(&args);
-                dequeue_command(client);
             }
         }
     }
