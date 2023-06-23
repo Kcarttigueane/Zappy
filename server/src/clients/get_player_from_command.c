@@ -7,12 +7,12 @@
 
 #include "server.h"
 
-player_t* get_player_from_command(list_args_t* args)
+player_t* get_player_from_command(game_t* game, char* command)
 {
-    char** splits = split_str(args->command, " ");
+    char** splits = split_str(command, " ");
 
     if (get_size_word_array(splits) != 2) {
-        append_to_gui_write_buffer(args->server_data, SBP_FORMAT);
+        append_to_gui_write_buffer(game, SBP_FORMAT);
         free_word_array(splits);
         return NULL;
     }
@@ -20,10 +20,10 @@ player_t* get_player_from_command(list_args_t* args)
     int id = atoi(splits[1]);
     printf("id: %d\n", id);
 
-    player_t* player = find_player_by_id(args->server_data, id);
+    player_t* player = find_player_by_id(game, id);
 
     if (player == NULL) {
-        append_to_gui_write_buffer(args->server_data, SBP_FORMAT);
+        append_to_gui_write_buffer(game, SBP_FORMAT);
     }
 
     free_word_array(splits);

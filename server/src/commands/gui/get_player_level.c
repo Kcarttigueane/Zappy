@@ -7,16 +7,18 @@
 
 #include "server.h"
 
-void get_player_level(list_args_t* args)
+void get_player_level(game_t* game, client_t* client)
 {
-    player_t* player = get_player_from_command(args);
+    char* command = peek_command(client);
+    player_t* player = get_player_from_command(game, command);
 
     if (player == NULL) {
         return;
     }
+
     char response[MAX_BUFFER] = {0};
 
     sprintf(response, PLV_FORMAT, player->id, player->level);
 
-    append_to_gui_write_buffer(args->server_data, response);
+    append_to_gui_write_buffer(game, response);
 }

@@ -25,7 +25,7 @@ static void reset_set(server_data_t* s, fd_set* set)
     }
 }
 
-void send_responses(server_data_t* s)
+static void send_responses(server_data_t* s)
 {
     client_t *client, *temp;
 
@@ -43,8 +43,7 @@ void update_life(player_t* player, int freq)
 {
     int life_unit_duration = (double)126.0 / freq;
     clock_t current_time = clock();
-    double elapsed_time =
-        (double)(current_time - player->start_time) / CLOCKS_PER_SEC;
+    double elapsed_time = (double)(current_time - player->start_time) / CLOCKS_PER_SEC;
 
     if (elapsed_time >= life_unit_duration) {
         printf("Player %ld lost 1 life unit\n", player->id);
@@ -56,11 +55,11 @@ void update_life(player_t* player, int freq)
 void player_lifetime(server_data_t* s)
 {
     client_t *client, *temp;
+    char response[1024] = {0};
 
     LIST_FOREACH_SAFE(client, &s->game.client_list, entries, temp)
     {
-        if (client->player && !client->player->is_graphical &&
-            client->player->state == ACTIVE) {
+        if (client->player && !client->player->is_graphical && client->player->state == ACTIVE) {
             update_life(client->player, s->game.freq);
 
             if (client->player->inventory[FOOD] > 0) {
@@ -70,6 +69,8 @@ void player_lifetime(server_data_t* s)
             }
 
             if (client->player->life_units <= 0) {
+                sprintf(response, PDI_FORMAT, client->player->id);
+                memset(client->write_buf, 0, sizeof(client->write_buf));
                 printf("Player %ld died\n", client->player->id);
             }
         }
@@ -91,8 +92,7 @@ int server_loop(server_data_t* s)
         reset_set(s, &s->readfds);
         reset_set(s, &s->writefds);
 
-        if (select(FD_SETSIZE, &s->readfds, &s->writefds, NULL, NULL) < 0 &&
-            errno != EINTR) {
+        if (select(FD_SETSIZE, &s->readfds, &s->writefds, NULL, NULL) < 0 && errno != EINTR) {
             return handle_error("Select failed");
         }
 

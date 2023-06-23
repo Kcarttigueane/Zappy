@@ -73,4 +73,23 @@ bool is_command_queue_empty(client_t* client);
  */
 bool is_command_queue_full(client_t* client);
 
+/**
+ * @brief Retrieves the command at the front of the command queue without removing it.
+ *
+ * @param client Pointer to the client structure.
+ *
+ * @return char* Returns the command at the front of the queue. If the queue is empty, returns NULL.
+ */
+char* peek_command(client_t* client);
+
+/**
+ * @brief Returns the completion time of the last command in the client's command queue.
+ *
+ * @param client The client whose command queue's last command completion time is to be retrieved.
+ *
+ * @return Returns the clock_t value representing the completion time of the last command.
+ *         If the queue is empty, returns -1.
+ */
+clock_t get_last_command_completion_time(client_t* client);
+
 #endif /* !QUEUE_H_ */

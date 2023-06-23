@@ -5,38 +5,41 @@
 ** execute_players_command.c
 */
 
+#include "colors.h"
 #include "server.h"
 
-void execute_graphical_command(list_args_t* args)
+static void execute_graphical_command(game_t* game, client_t* client, char* command)
 {
-    char* command_name = split_str(args->command, " ")[0];
+    char* command_name = split_str(command, " ")[0];
 
-    size_t index = find_graphical_command_index(command_name);
+    int index = find_graphical_command_index(command_name);
 
-    if (index == (size_t)FAILURE) {
-        append_to_gui_write_buffer(args->server_data, SUC_FORMAT);
+    if (index == FAILURE) {
+        append_to_gui_write_buffer(game, SUC_FORMAT);
     } else {
-        GRAPHICAL_COMMANDS[index].function(args);
+        GRAPHICAL_COMMANDS[index].function(game, client);
     }
-    dequeue_command(args->client);
+
+    dequeue_command(client);
 }
 
-void execute_player_command(list_args_t* args, time_t current_time)
+static void execute_player_command(game_t* game, client_t* client, char* command,
+                                   time_t current_time)
 {
-    if (current_time >=
-        args->client->player->command_queue
-            .completion_time[args->client->player->command_queue.front]) {
+    clock_t completion_time = get_last_command_completion_time(client);
 
-        char* command_name = split_str(args->command, " ")[0];
+    if (current_time >= completion_time) {
 
-        size_t index = find_player_command_index(command_name);
+        char* command_name = split_str(command, " ")[0];
 
-        if (index == (size_t)FAILURE) {
-            append_to_gui_write_buffer(args->server_data, SUC_FORMAT);
+        int index = find_player_command_index(command_name);
+
+        if (index == FAILURE) {
+            append_to_gui_write_buffer(game, SUC_FORMAT);
         } else {
-            PLAYER_COMMANDS[index].function(args);
+            PLAYER_COMMANDS[index].function(game, client);
         }
-        dequeue_command(args->client);
+        dequeue_command(client);
     }
 }
 
@@ -45,22 +48,15 @@ void execute_commands(server_data_t* s)
     client_t *client, *temp = NULL;
     time_t current_time = clock();
 
-    LIST_FOREACH_SAFE(client, &s->game.client_list, entries, temp) {
+    LIST_FOREACH_SAFE(client, &s->game.client_list, entries, temp)
+    {
         if (!is_command_queue_empty(client)) {
-            int front = client->player->command_queue.front;
-            char* command = &client->player->command_queue.commands[front][0];
-
-            list_args_t args = {
-                .server_data = s,
-                .client = client,
-                .player = client->player,
-                .command = command,
-            };
+            char* command = peek_command(client);
 
             if (client->player->is_graphical)
-                execute_graphical_command(&args);
+                execute_graphical_command(&s->game, client, command);
             else
-                execute_player_command(&args, current_time);
+                execute_player_command(&s->game, client, command, current_time);
         }
     }
 }

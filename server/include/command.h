@@ -10,7 +10,7 @@
 
     #include <stddef.h>
 
-typedef void (*command_func_t)(list_args_t* args);
+    typedef void (*command_func_t)(game_t* game, client_t* client);
 
     typedef struct command_s {
         char* name;
@@ -22,170 +22,221 @@ typedef void (*command_func_t)(list_args_t* args);
 // ! Function Prototypes (GUI):
 
 /**
-** @brief Get the size of the game map.
-**
-** @param args list_args_t structure pointer with server data and client data.
-**/
-void get_map_size(list_args_t* args);
+ * @brief Get the size of the game map.
+ *
+ * @param game Pointer to the game structure containing the map data.
+ * @param client Pointer to the client structure requesting the map size.
+ */
+void get_map_size(game_t* game, client_t* client);
 
 /**
-** @brief Get the content of a specific tile in the game map.
-**
-** @param args list_args_t structure pointer with server data and client data.
-**/
-void get_tile_content(list_args_t* args);
+ * @brief Get the content of a specific tile in the game map.
+ *
+ * @param game Pointer to the game structure containing the map data.
+ * @param client Pointer to the client structure requesting the tile content.
+ */
+void get_tile_content(game_t* game, client_t* client);
 
 /**
-** @brief Get all team names in the game.
-**
-** @param args list_args_t structure pointer with server data and client data.
-**/
-void get_all_team_names(list_args_t* args);
+ * @brief Get all team names in the game.
+ *
+ * @param game Pointer to the game structure containing the team data.
+ * @param client Pointer to the client structure requesting the team names.
+ */
+void get_all_team_names(game_t* game, client_t* client);
 
 /**
-** @brief Get the position of a player in the game map.
-**
-** @param args list_args_t structure pointer with server data and client data.
-**/
-void get_player_position(list_args_t* args);
+ * @brief Get the position of a player in the game map.
+ *
+ * @param game Pointer to the game structure containing the player and map data.
+ * @param client Pointer to the client structure representing the player.
+ */
+void get_player_position(game_t* game, client_t* client);
 
 /**
-** @brief Get the level of a player in the game.
-**
-** @param args list_args_t structure pointer with server data and client data.
-**/
-void get_player_level(list_args_t* args);
+ * @brief Get the level of a player in the game.
+ *
+ * @param game Pointer to the game structure containing the player data.
+ * @param client Pointer to the client structure representing the player.
+ */
+void get_player_level(game_t* game, client_t* client);
 
 /**
-** @brief Get the player's inventory.
-**
-** @param args list_args_t structure pointer with server data and client data.
-**/
-void get_player_inventory(list_args_t* args);
+ * @brief Get the player's inventory.
+ *
+ * @param game Pointer to the game structure containing the player data.
+ * @param client Pointer to the client structure representing the player.
+ */
+void get_player_inventory(game_t* game, client_t* client);
 
 /**
-** @brief Get the content of all tiles in the game map.
-**
-** @param args list_args_t structure pointer with server data and client data.
-**/
-void get_all_tiles_content(list_args_t* args);
+ * @brief Get the content of all tiles in the game map.
+ *
+ * @param game Pointer to the game structure containing the map data.
+ * @param client Pointer to the client structure requesting the tile contents.
+ */
+void get_all_tiles_content(game_t* game, client_t* client);
 
 /**
-** @brief End the incantation in the game.
-**
-** @param args list_args_t structure pointer with server data and client data.
-**/
-void end_incantation(list_args_t* args);
+ * @brief End the incantation in the game.
+ *
+ * @param game Pointer to the game structure.
+ * @param client Pointer to the client structure performing the incantation.
+ */
+void end_incantation(game_t* game, client_t* client);
 
 /**
-** @brief Get the time unit of the server.
-**
-** @param args list_args_t structure pointer with server data and client data.
-**/
-void get_time_unit(list_args_t* args);
+ * @brief Get the time unit of the server.
+ *
+ * @param game Pointer to the game structure containing the time unit data.
+ * @param client Pointer to the client structure requesting the time unit.
+ */
+void get_time_unit(game_t* game, client_t* client);
 
 /**
-** @brief Set the time unit of the server.
-**
-** @param args list_args_t structure pointer with server data and client data.
-**/
-void set_time_unit(list_args_t* args);
+ * @brief Set the time unit of the server.
+ *
+ * @param game Pointer to the game structure where the time unit data will be set.
+ * @param client Pointer to the client structure setting the time unit.
+ */
+void set_time_unit(game_t* game, client_t* client);
 
-void get_all_player_positions(list_args_t* args);
-
+/**
+ * @brief Get the positions of all players in the game map.
+ *
+ * @param game Pointer to the game structure containing the player and map data.
+ * @param client Pointer to the client structure requesting the player positions.
+ */
+void get_all_player_positions(game_t* game);
 
 // ! Function Prototypes (Player):
 
 /**
-** @brief Forward the player in the game map.
-**
-** @param args list_args_t structure pointer with server data and client data.
-**/
-void forward(list_args_t* args);
+ * @brief Move the player forward in the game map.
+ *
+ * @param game Pointer to the game structure containing the player and map data.
+ * @param client Pointer to the client structure representing the player.
+ */
+void forward(game_t* game, client_t* client);
 
 /**
-** @brief Right the player in the game map.
-**
-** @param args list_args_t structure pointer with server data and client data.
-**
-**/
-void right(list_args_t* args);
+ * @brief Rotate the player to the right in the game map.
+ *
+ * @param game Pointer to the game structure containing the player data.
+ * @param client Pointer to the client structure representing the player.
+ */
+void right(game_t* game, client_t* client);
 
 /**
-** @brief Left the player in the game map.
-**
-** @param args list_args_t structure pointer with server data and client data.
-**/
-void left(list_args_t* args);
+ * @brief Rotate the player to the left in the game map.
+ *
+ * @param game Pointer to the game structure containing the player data.
+ * @param client Pointer to the client structure representing the player.
+ */
+void left(game_t* game, client_t* client);
 
 /**
-** @brief Look the player in the game map.
-**
-** @param args list_args_t structure pointer with server data and client data.
-**/
-void look(list_args_t* args);
+ * @brief Get the viewpoint of the player in the game map.
+ *
+ * @param game Pointer to the game structure containing the player and map data.
+ * @param client Pointer to the client structure representing the player.
+ */
+void look(game_t* game, client_t* client);
 
 /**
-** @brief Inventory the player in the game map.
-**
-** @param args list_args_t structure pointer with server data and client data.
-**/
-void inventory(list_args_t* args);
+ * @brief Retrieve the player's inventory in the game.
+ *
+ * @param game Pointer to the game structure containing the player data.
+ * @param client Pointer to the client structure representing the player.
+ */
+void inventory(game_t* game, client_t* client);
 
 /**
-** @brief Broadcast the player in the game map.
-**
-** @param args list_args_t structure pointer with server data and client data.
-**/
-
-void broadcast(list_args_t* args);
-/**
-** @brief Connect the player in the game map.
-**
-** @param args list_args_t structure pointer with server data and client data.
-**/
-void connect_nbr(list_args_t* args);
+ * @brief Broadcast a message to other players in the game map.
+ *
+ * @param game Pointer to the game structure containing the player data.
+ * @param client Pointer to the client structure representing the broadcasting player.
+ */
+void broadcast(game_t* game, client_t* client);
 
 /**
-** @brief Fork the player in the game map.
-**
-** @param args list_args_t structure pointer with server data and client data.
-**/
-void fork_player(list_args_t* args);
+ * @brief Connect the player to the game.
+ *
+ * @param game Pointer to the game structure.
+ * @param client Pointer to the client structure representing the connecting player.
+ */
+void connect_nbr(game_t* game, client_t* client);
 
 /**
-** @brief Eject the player in the game map.
-**
-** @param args list_args_t structure pointer with server data and client data.
-**/
-void eject(list_args_t* args);
+ * @brief Create a duplicate of the player in the game.
+ *
+ * @param game Pointer to the game structure containing the player data.
+ * @param client Pointer to the client structure representing the player to be duplicated.
+ */
+void fork_player(game_t* game, client_t* client);
 
 /**
-** @brief Take the player in the game map.
-**
-** @param args list_args_t structure pointer with server data and client data.
-**/
-void take(list_args_t* args);
+ * @brief Eject the player from the game map.
+ *
+ * @param game Pointer to the game structure containing the player data.
+ * @param client Pointer to the client structure representing the ejected player.
+ */
+void eject(game_t* game, client_t* client);
 
 /**
-** @brief Set the player in the game map.
-**
-** @param args list_args_t structure pointer with server data and client data.
-**/
-void set(list_args_t* args);
+ * @brief Have the player take an object from the game map.
+ *
+ * @param game Pointer to the game structure containing the player and map data.
+ * @param client Pointer to the client structure representing the player taking an object.
+ */
+void take(game_t* game, client_t* client);
 
 /**
-** @brief Incantation the player in the game map.
-**
-** @param args list_args_t structure pointer with server data and client data.
-**/
-void incantation(list_args_t* args);
+ * @brief Have the player set an object on the game map.
+ *
+ * @param game Pointer to the game structure containing the player and map data.
+ * @param client Pointer to the client structure representing the player setting an object.
+ */
+void set(game_t* game, client_t* client);
 
-void hatch(list_args_t* args);
+/**
+ * @brief Perform an incantation by the player in the game.
+ *
+ * @param game Pointer to the game structure containing the player data.
+ * @param client Pointer to the client structure representing the player performing the incantation.
+ */
+void incantation(game_t* game, client_t* client);
+
+/**
+ * @brief Hatch a new player in the game.
+ *
+ * @param game Pointer to the game structure.
+ * @param client Pointer to the client structure representing the new player.
+ */
+void hatch(game_t* game, client_t* client);
 
 // ! Function Prototypes (Utils):
 
-size_t find_player_command_index(char* command_name);
-size_t find_graphical_command_index(char* command_name);
+/**
+ * @brief Finds the index of a given player command.
+ *
+ * This function iterates over the array of player commands and returns the index of the command
+ * matching the provided name.
+ *
+ * @param command_name Name of the command to find.
+ * @return Index of the found command. If command not found, prints error message and returns FAILURE.
+ */
+int find_player_command_index(char* command_name);
+
+/**
+ * @brief Finds the index of a given graphical command.
+ *
+ * This function iterates over the array of graphical commands and returns the index of the command
+ * matching the provided name.
+ *
+ * @param command_name Name of the command to find.
+ * @return Index of the found command. If command not found, prints error message and returns FAILURE.
+ */
+int find_graphical_command_index(char* command_name);
 
 #endif /* !COMMANDS_H_ */

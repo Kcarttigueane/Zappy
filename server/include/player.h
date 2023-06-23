@@ -54,13 +54,5 @@
 
 // ! Function prototypes:
 
-void print_client_info(client_t* client);
-
-void update_player(list_args_t* args, char** inputs);
-bool is_team_name_valid(list_args_t* args, char** inputs);
-void handle_first_client_msg(list_args_t* args, char** inputs);
-void handle_client_command(list_args_t* args, char** inputs,
-char* input_buffer);
-void parse_client_input(list_args_t* args, char* received_buff);
 
 #endif /* !PLAYER_H_ */

@@ -46,7 +46,7 @@ Incantation : ❌
     -> [P] -> 'Elevation underway' | 'ko' | 'Current level: n'
     -> [GUI] -> 'pic' && 'pie' && 'bct' && 'plv'
 
-Death of a player : ❌
+Death of a player : ✅
     -> [P] -> 'dead'
     -> [GUI] -> 'pdi'
 

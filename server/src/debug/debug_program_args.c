@@ -11,7 +11,7 @@
 void debug_program_args(server_data_t* s)
 {
     fprintf(stdout, YELLOW "%s" RESET "\n",
-    "============  Start DEBUG program args ============");
+            "============  Start DEBUG program arguments ============");
 
     printf("PORT: %d\n", s->PORT);
     printf("WIDTH: %zu\n", s->game.width);
@@ -24,5 +24,5 @@ void debug_program_args(server_data_t* s)
         printf("TEAM_NAME: %s\n", s->game.team_names[i]);
 
     fprintf(stdout, YELLOW "%s" RESET "\n",
-    "=============  End DEBUG program args =============\n");
+            "=============  End DEBUG program arguments =============\n");
 }
