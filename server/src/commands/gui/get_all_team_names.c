@@ -13,7 +13,7 @@ void get_all_team_names(list_args_t* args)
 
     for (size_t i = 0; i < args->server_data->game.team_count; i++) {
         snprintf(response, sizeof(response), TNA_FORMAT,
-                 args->server_data->game.team_names[i]);
+        args->server_data->game.team_names[i]);
 
         append_to_gui_write_buffer(args->server_data, response);
     }

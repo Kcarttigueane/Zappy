@@ -40,7 +40,8 @@
     "functional": "c",
     "tuple": "c",
     "type_traits": "c",
-    "utility": "c"
+    "utility": "c",
+    "debug.h": "c"
   },
   "cSpell.words": [
     "deraumere",

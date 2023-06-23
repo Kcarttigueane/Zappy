@@ -16,12 +16,12 @@ void get_all_tiles_content(list_args_t* args)
 
     for (int y = 0; (size_t)y < height; y++) {
         for (int x = 0; (size_t)x < width; x++) {
-            tile_t* tile = get_tile(args->server_data->game.map, x, y);
+            tile_t* tile = &args->server_data->game.map[y][x];
             snprintf(response, sizeof(response), BCT_FORMAT, x, y,
-                     tile->quantity[FOOD], tile->quantity[LINEMATE],
-                     tile->quantity[DERAUMERE], tile->quantity[SIBUR],
-                     tile->quantity[MENDIANE], tile->quantity[PHIRAS],
-                     tile->quantity[THYSTAME]);
+            tile->quantity[FOOD], tile->quantity[LINEMATE],
+            tile->quantity[DERAUMERE], tile->quantity[SIBUR],
+            tile->quantity[MENDIANE], tile->quantity[PHIRAS],
+            tile->quantity[THYSTAME]);
 
             append_to_gui_write_buffer(args->server_data, response);
             memset(response, 0, sizeof(response));
