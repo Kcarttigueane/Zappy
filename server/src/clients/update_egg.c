@@ -17,6 +17,7 @@ void update_egg_player(game_t* game, client_t* client, char** inputs, egg_t* egg
     client->player->orientation = NORTH;
     client->player->inventory[FOOD] = 9;
     client->player->is_graphical = false;
+    client->player->is_frozen = false;
 
     int team_index = find_team_index(game, inputs[0]);
     if (team_index == FAILURE)

@@ -18,6 +18,7 @@ void update_player(game_t* game, client_t* client, char** inputs)
     client->player->inventory[FOOD] = 9;
     client->player->is_graphical = false;
     client->player->start_time = clock();
+    client->player->is_frozen = false;
 
     int team_index = find_team_index(game, inputs[0]);
     if (team_index == FAILURE)

@@ -41,6 +41,7 @@
     typedef struct player_s {
         bool is_graphical;
         size_t id;
+        bool is_frozen;
         coord_t pos;
         orientation_t orientation;
         size_t level;
