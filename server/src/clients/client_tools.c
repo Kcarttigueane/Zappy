@@ -7,11 +7,11 @@
 
 #include "server.h"
 
-player_t* find_player_by_id(server_data_t* s, int id)
+player_t* find_player_by_id(game_t* game, int id)
 {
-    client_t* client;
+    client_t *client, *temp;
 
-    LIST_FOREACH(client, &s->game.client_list, entries)
+    LIST_FOREACH_SAFE(client, &game->client_list, entries, temp)
     {
         if (client->player->id == (size_t)id) {
             return client->player;

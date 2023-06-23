@@ -7,26 +7,26 @@
 
 #include "server.h"
 
-void set(list_args_t* args)
+void set(game_t* game, client_t* client)
 {
-    game_t* game = &args->server_data->game;
-    player_t* player = args->player;
+    player_t* player = client->player;
+    char* command = peek_command(client);
 
-    char* object_name = split_str(args->command, " ")[1];
+    char* object_name = split_str(command, " ")[1];
 
     if (object_name == NULL) {
-        append_to_string(args->client->write_buf, KO_FORMAT);
+        append_to_string(client->write_buf, KO_FORMAT);
         return;
     }
 
     int object_index = find_object_index(object_name);
     if (object_index == FAILURE) {
-        append_to_string(args->client->write_buf, KO_FORMAT);
+        append_to_string(client->write_buf, KO_FORMAT);
         return;
     }
 
     if (player->inventory[object_index] <= 0) {
-        append_to_string(args->client->write_buf, KO_FORMAT);
+        append_to_string(client->write_buf, KO_FORMAT);
         return;
     }
 
@@ -38,29 +38,23 @@ void set(list_args_t* args)
 
     char response[256] = {0};
     sprintf(response, PDR_FORMAT, player->id, object_index);
-    append_to_gui_write_buffer(args->server_data, response);
+    append_to_gui_write_buffer(game, response);
 
     memset(response, 0, 256);
-    sprintf(response, PIN_FORMAT, player->id, player->pos.x, player->pos.y,
-            player->inventory[FOOD], player->inventory[LINEMATE],
-            player->inventory[DERAUMERE], player->inventory[SIBUR],
-            player->inventory[MENDIANE], player->inventory[PHIRAS],
-            player->inventory[THYSTAME]);
+    sprintf(response, PIN_FORMAT, player->id, player->pos.x, player->pos.y, player->inventory[FOOD],
+            player->inventory[LINEMATE], player->inventory[DERAUMERE], player->inventory[SIBUR],
+            player->inventory[MENDIANE], player->inventory[PHIRAS], player->inventory[THYSTAME]);
 
-    append_to_gui_write_buffer(args->server_data, response);
+    append_to_gui_write_buffer(game, response);
 
     memset(response, 0, 256);
 
-    sprintf(response, BCT_FORMAT, pos.x, pos.y,
-            game->map[pos.x][pos.y].quantity[FOOD],
-            game->map[pos.x][pos.y].quantity[LINEMATE],
-            game->map[pos.x][pos.y].quantity[DERAUMERE],
-            game->map[pos.x][pos.y].quantity[SIBUR],
-            game->map[pos.x][pos.y].quantity[MENDIANE],
-            game->map[pos.x][pos.y].quantity[PHIRAS],
-            game->map[pos.x][pos.y].quantity[THYSTAME]);
+    sprintf(response, BCT_FORMAT, pos.x, pos.y, game->map[pos.x][pos.y].quantity[FOOD],
+            game->map[pos.x][pos.y].quantity[LINEMATE], game->map[pos.x][pos.y].quantity[DERAUMERE],
+            game->map[pos.x][pos.y].quantity[SIBUR], game->map[pos.x][pos.y].quantity[MENDIANE],
+            game->map[pos.x][pos.y].quantity[PHIRAS], game->map[pos.x][pos.y].quantity[THYSTAME]);
 
-    append_to_gui_write_buffer(args->server_data, response);
+    append_to_gui_write_buffer(game, response);
 
-    append_to_string(args->client->write_buf, OK_FORMAT);
+    append_to_string(client->write_buf, OK_FORMAT);
 }

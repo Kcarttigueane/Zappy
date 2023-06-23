@@ -7,4 +7,4 @@
 
 #include "server.h"
 
-void hatch(__attribute_maybe_unused__ list_args_t* args) {}
+void hatch(__attribute_maybe_unused__ game_t* game, __attribute_maybe_unused__ client_t* client) {}

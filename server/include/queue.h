@@ -6,17 +6,17 @@
 */
 
 #ifndef QUEUE_H_
-    #define QUEUE_H_
+#define QUEUE_H_
 
-    #include "player.h"
-    #include "server.h"
+#include "player.h"
+#include "server.h"
 
-    typedef struct command_queue_s {
-        char commands[MAX_NB_COMMANDS][MAX_COMMANDS_LENGTH];
-        clock_t completion_time[MAX_NB_COMMANDS];
-        int front;
-        int rear;
-    } command_queue_t;
+typedef struct command_queue_s {
+    char commands[MAX_NB_COMMANDS][MAX_COMMANDS_LENGTH];
+    clock_t completion_time[MAX_NB_COMMANDS];
+    int front;
+    int rear;
+} command_queue_t;
 
 /**
  * @brief Removes the command at the front of the client's command queue.
@@ -72,5 +72,24 @@ bool is_command_queue_empty(client_t* client);
  * @return Returns true if the command queue is full, false otherwise.
  */
 bool is_command_queue_full(client_t* client);
+
+/**
+ * @brief Retrieves the command at the front of the command queue without removing it.
+ *
+ * @param client Pointer to the client structure.
+ *
+ * @return char* Returns the command at the front of the queue. If the queue is empty, returns NULL.
+ */
+char* peek_command(client_t* client);
+
+/**
+ * @brief Returns the completion time of the last command in the client's command queue.
+ *
+ * @param client The client whose command queue's last command completion time is to be retrieved.
+ *
+ * @return Returns the clock_t value representing the completion time of the last command.
+ *         If the queue is empty, returns -1.
+ */
+clock_t get_last_command_completion_time(client_t* client);
 
 #endif /* !QUEUE_H_ */

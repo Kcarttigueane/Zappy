@@ -7,20 +7,19 @@
 
 #include "server.h"
 
-void left(list_args_t* args)
+void left(game_t* game, client_t* client)
 {
-    player_t* player = args->client->player;
+    player_t* player = client->player;
 
     player->orientation--;
     if (player->orientation < NORTH)
         player->orientation = WEST;
 
-    append_to_string(args->client->write_buf, OK_FORMAT);
+    append_to_string(client->write_buf, OK_FORMAT);
 
     char response[24] = {0};
 
-    sprintf(response, PPO_FORMAT, player->id, player->pos.x, player->pos.y,
-            player->orientation);
+    sprintf(response, PPO_FORMAT, player->id, player->pos.x, player->pos.y, player->orientation);
 
-    append_to_gui_write_buffer(args->server_data, response);
+    append_to_gui_write_buffer(game, response);
 }

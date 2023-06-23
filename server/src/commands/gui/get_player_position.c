@@ -7,37 +7,37 @@
 
 #include "server.h"
 
-void get_player_position(list_args_t* args)
+void get_player_position(game_t* game, client_t* client)
 {
-    player_t* player = get_player_from_command(args);
+    char* command = peek_command(client);
+    player_t* player = get_player_from_command(game, command);
 
     if (player == NULL)
         return;
 
     char response[MAX_BUFFER] = {0};
 
-    sprintf(response, PPO_FORMAT, player->id, player->pos.x, player->pos.y,
-    player->orientation);
+    sprintf(response, PPO_FORMAT, player->id, player->pos.x, player->pos.y, player->orientation);
 
-    append_to_gui_write_buffer(args->server_data, response);
+    append_to_gui_write_buffer(game, response);
 }
 
-void get_all_player_positions(list_args_t* args)
+void get_all_player_positions(game_t* game)
 {
     char response[MAX_BUFFER] = {0};
 
-    client_t *client, *temp;
+    client_t *curr_client, *temp;
 
-    LIST_FOREACH_SAFE(client, &args->server_data->game.client_list, entries,
-    temp) {
-        if (client->player->is_graphical)
+    LIST_FOREACH_SAFE(curr_client, &game->client_list, entries, temp)
+    {
+        if (curr_client->player->is_graphical)
             continue;
 
-        sprintf(response, PNW_FORMAT, client->player->id, client->player->pos.x,
-        client->player->pos.y, client->player->orientation,
-        client->player->level, client->player->team_name);
+        sprintf(response, PNW_FORMAT, curr_client->player->id, curr_client->player->pos.x,
+                curr_client->player->pos.y, curr_client->player->orientation,
+                curr_client->player->level, curr_client->player->team_name);
 
-        append_to_gui_write_buffer(args->server_data, response);
+        append_to_gui_write_buffer(game, response);
 
         memset(response, 0, MAX_BUFFER);
     }

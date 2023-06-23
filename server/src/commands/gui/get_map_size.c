@@ -7,12 +7,11 @@
 
 #include "server.h"
 
-void get_map_size(list_args_t* args)
+void get_map_size(game_t* game, __attribute_maybe_unused__ client_t* client)
 {
     char response[MAX_BUFFER] = {0};
 
-    snprintf(response, sizeof(response), MSZ_FORMAT,
-    args->server_data->game.width, args->server_data->game.height);
+    snprintf(response, sizeof(response), MSZ_FORMAT, game->width, game->height);
 
-    append_to_gui_write_buffer(args->server_data, response);
+    append_to_gui_write_buffer(game, response);
 }

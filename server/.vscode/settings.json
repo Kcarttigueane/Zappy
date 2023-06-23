@@ -41,7 +41,8 @@
     "tuple": "c",
     "type_traits": "c",
     "utility": "c",
-    "debug.h": "c"
+    "debug.h": "c",
+    "random": "c"
   },
   "cSpell.words": [
     "deraumere",
@@ -50,6 +51,6 @@
     "phiras",
     "Repositery",
     "thystame"
-  ]
-  // "editor.formatOnSave": true
+  ],
+  "editor.formatOnSave": true
 }

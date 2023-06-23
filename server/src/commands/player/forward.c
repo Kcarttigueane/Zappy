@@ -7,11 +7,11 @@
 
 #include "server.h"
 
-void forward(list_args_t* args)
+void forward(game_t* game, client_t* client)
 {
-    player_t* player = args->client->player;
-    size_t board_width = args->server_data->game.width;
-    size_t board_height = args->server_data->game.height;
+    player_t* player = client->player;
+    size_t board_width = game->width;
+    size_t board_height = game->height;
 
     switch (player->orientation) {
         case NORTH:
@@ -36,12 +36,11 @@ void forward(list_args_t* args)
             break;
     }
 
-    append_to_string(args->client->write_buf, OK_FORMAT);
+    append_to_string(client->write_buf, OK_FORMAT);
 
     char response[24] = {0};
 
-    sprintf(response, PPO_FORMAT, player->id, player->pos.x, player->pos.y,
-            player->orientation);
+    sprintf(response, PPO_FORMAT, player->id, player->pos.x, player->pos.y, player->orientation);
 
-    append_to_gui_write_buffer(args->server_data, response);
+    append_to_gui_write_buffer(game, response);
 }

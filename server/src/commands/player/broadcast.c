@@ -92,14 +92,15 @@ int calculate_direction(int delta_x, int delta_y)
     return direction;
 }
 
-void broadcast(list_args_t* args)
+void broadcast(game_t* game, client_t* client)
 {
-    player_t* player = args->client->player;
+    player_t* player = client->player;
+    char* command = peek_command(client);
 
-    char* message = split_str(args->command, " ")[1];
+    char* message = split_str(command, " ")[1];
 
     if (message == NULL) {
-        append_to_string(args->client->write_buf, KO_FORMAT);
+        append_to_string(client->write_buf, KO_FORMAT);
         return;
     }
 
@@ -109,20 +110,16 @@ void broadcast(list_args_t* args)
     int delta_x;
     int delta_y;
 
-    client_t* client = NULL;
+    client_t *curr_client, *tmp;
 
-    LIST_FOREACH(client, &args->server_data->game.client_list, entries)
+    LIST_FOREACH_SAFE(curr_client, &game->client_list, entries, tmp)
     {
-        if (client->fd != args->client->fd &&
-            client->player->is_graphical == false) {
-            delta_x = shortest_delta_x(args->server_data->game.width, x,
-                                       client->player->pos.x);
-            delta_y = shortest_delta_y(args->server_data->game.height, y,
-                                       client->player->pos.y);
+        if (curr_client->fd != client->fd && curr_client->player->is_graphical == false) {
+            delta_x = shortest_delta_x(game->width, x, curr_client->player->pos.x);
+            delta_y = shortest_delta_y(game->height, y, curr_client->player->pos.y);
             direction = calculate_direction(delta_x, delta_y);
-            direction =
-                adjust_direction(direction, client->player->orientation);
-            dprintf(client->fd, "message %d, %s\n", direction, message);
+            direction = adjust_direction(direction, curr_client->player->orientation);
+            dprintf(curr_client->fd, "message %d, %s\n", direction, message);
         }
     }
 
@@ -130,7 +127,7 @@ void broadcast(list_args_t* args)
 
     sprintf(response, PBC_FORMAT, player->id, message);
 
-    append_to_gui_write_buffer(args->server_data, response);
+    append_to_gui_write_buffer(game, response);
 
-    append_to_string(args->client->write_buf, OK_FORMAT);
+    append_to_string(client->write_buf, OK_FORMAT);
 }

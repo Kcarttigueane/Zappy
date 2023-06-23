@@ -6,23 +6,23 @@
 */
 
 #ifndef TEAMS_H_
-    #define TEAMS_H_
+#define TEAMS_H_
 
-    #include "player.h"
+#include "player.h"
 
-    typedef struct egg_s {
-        size_t id;
-        coord_t pos;
-        LIST_ENTRY(egg_s) entries;
-    } egg_t;
+typedef struct egg_s {
+    size_t id;
+    coord_t pos;
+    LIST_ENTRY(egg_s) entries;
+} egg_t;
 
-    typedef struct team_s {
-        char* name;
-        size_t max_players;
-        size_t nb_players_connected;
-        egg_t* eggs;
-        LIST_HEAD(egg_head, egg_s) egg_list;
-    } team_t;
+typedef struct team_s {
+    char* name;
+    size_t max_players;
+    size_t nb_players_connected;
+    egg_t* eggs;
+    LIST_HEAD(egg_head, egg_s) egg_list;
+} team_t;
 
 // ! Function prototypes:
 
@@ -82,6 +82,24 @@ egg_t* find_egg_by_id(team_t* team, size_t id);
  */
 void remove_egg_by_id(team_t* team, size_t id);
 
-team_t* find_team_by_name(server_data_t* data, char* team_name);
+/**
+ * @brief Finds the index of a team by its name in the game structure.
+ *
+ * @param game Pointer to the game structure.
+ * @param team_name Name of the team for which the index is to be found.
+ * @return int Returns the index of the team if it is found, otherwise it returns FAILURE.
+ */
+int find_team_index(game_t* game, char* team_name);
+
+/**
+ * @brief Checks if a team name is valid by comparing it to existing teams in the game structure.
+ *
+ * @param game Pointer to the game structure.
+ * @param inputs Array of input strings, the first one is assumed to be the team name.
+ * @return bool Returns true if the team name is valid, otherwise returns false and prints an error message.
+ */
+bool is_team_name_valid(game_t* game, char** inputs);
+
+team_t* find_team_by_name(game_t* game, char* team_name);
 
 #endif /* !TEAMS_H_ */

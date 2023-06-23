@@ -35,20 +35,20 @@ void send_eject_message(client_t* client, int direction)
     memset(message, 0, sizeof(message));
 }
 
-void send_eject_response_gui(server_data_t* server_data, client_t* client)
+void send_eject_response_gui(game_t* game, client_t* client)
 {
     char gui_message[64] = {0};
     sprintf(gui_message, PEX_FORMAT, client->player->id);
-    append_to_gui_write_buffer(server_data, gui_message);
+    append_to_gui_write_buffer(game, gui_message);
     memset(gui_message, 0, sizeof(gui_message));
 }
 
-void destroy_eggs_on_tile(server_data_t* server_data, coord_t tile_pos)
+void destroy_eggs_on_tile(game_t* game, coord_t tile_pos)
 {
     char gui_message[64] = {0};
 
-    for (size_t i = 0; i < server_data->game.team_count; i++) {
-        team_t* team = &server_data->game.team[i];
+    for (size_t i = 0; i < game->team_count; i++) {
+        team_t* team = &game->team[i];
 
         egg_t *e, *temp;
 
@@ -56,7 +56,7 @@ void destroy_eggs_on_tile(server_data_t* server_data, coord_t tile_pos)
         {
             if (e->pos.x == tile_pos.x && e->pos.y == tile_pos.y) {
                 sprintf(gui_message, EDI_FORMAT, e->id);
-                append_to_gui_write_buffer(server_data, gui_message);
+                append_to_gui_write_buffer(game, gui_message);
                 memset(gui_message, 0, sizeof(gui_message));
                 LIST_REMOVE(e, entries);
                 free(e);
@@ -65,23 +65,19 @@ void destroy_eggs_on_tile(server_data_t* server_data, coord_t tile_pos)
     }
 }
 
-void eject(list_args_t* args)
+void eject(game_t* game, client_t* client)
 {
-    server_data_t* server_data = args->server_data;
-    client_t* client = args->client;
-
     client_t *cur_client, *temp;
 
-    LIST_FOREACH_SAFE(cur_client, &server_data->game.client_list, entries, temp)
+    LIST_FOREACH_SAFE(cur_client, &game->client_list, entries, temp)
     {
-        if (cur_client != client &&
-            cur_client->player->pos.x == client->player->pos.x &&
+        if (cur_client != client && cur_client->player->pos.x == client->player->pos.x &&
             cur_client->player->pos.y == client->player->pos.y) {
             move_client_based_on_orientation(cur_client);
             send_eject_message(cur_client, client->player->orientation);
-            send_eject_response_gui(server_data, cur_client);
+            send_eject_response_gui(game, cur_client);
         }
     }
 
-    destroy_eggs_on_tile(server_data, client->player->pos);
+    destroy_eggs_on_tile(game, client->player->pos);
 }

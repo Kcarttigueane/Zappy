@@ -7,13 +7,13 @@
 
 #include "server.h"
 
-size_t get_nbr_player_on_tile(server_data_t* s, coord_t pos)
+size_t get_nbr_player_on_tile(game_t* game, coord_t pos)
 {
     client_t *client, *temp;
 
     size_t count = 0;
 
-    LIST_FOREACH_SAFE(client, &s->game.client_list, entries, temp)
+    LIST_FOREACH_SAFE(client, &game->client_list, entries, temp)
     {
         if (client->player->pos.x == pos.x && client->player->pos.y == pos.y)
             count++;
@@ -31,9 +31,9 @@ int get_nb_element_on_tile(tile_t* tile)
     return nb;
 }
 
-char** get_objects_on_tile(server_data_t* s, tile_t* tile, coord_t pos)
+char** get_objects_on_tile(game_t* game, tile_t* tile, coord_t pos)
 {
-    size_t nb_players = get_nbr_player_on_tile(s, pos);
+    size_t nb_players = get_nbr_player_on_tile(game, pos);
 
     int nb_objects = get_nb_element_on_tile(tile) + nb_players;
 
@@ -71,19 +71,18 @@ char** get_objects_on_tile(server_data_t* s, tile_t* tile, coord_t pos)
     return objects;
 }
 
-void look(list_args_t* args)
+void look(game_t* game, client_t* client)
 {
-    server_data_t* s = args->server_data;
-    player_t* player = args->client->player;
+    player_t* player = client->player;
 
     int dx[4] = {0, 1, 0, -1};
     int dy[4] = {-1, 0, 1, 0};
     size_t level = 2;
     int d = player->orientation - 1;
     int x = player->pos.x, y = player->pos.y;
-    size_t width = s->game.width, height = s->game.height;
+    size_t width = game->width, height = game->height;
 
-    append_to_string(args->client->write_buf, "[");
+    append_to_string(client->write_buf, "[");
 
     for (int i = 0; i <= (int)level; ++i) {
         for (int j = -i; j <= i; ++j) {
@@ -92,19 +91,19 @@ void look(list_args_t* args)
 
             printf("tx: %d, ty: %d\n", tx, ty);
 
-            tile_t* tile = &s->game.map[ty][tx];
+            tile_t* tile = &game->map[ty][tx];
             debug_tile_content(tile);
-            char** objects = get_objects_on_tile(s, tile, (coord_t){tx, ty});
+            char** objects = get_objects_on_tile(game, tile, (coord_t){tx, ty});
 
             for (int k = 0; objects[k] != NULL; ++k) {
-                append_to_string(args->client->write_buf, objects[k]);
-                append_to_string(args->client->write_buf, " ");
+                append_to_string(client->write_buf, objects[k]);
+                append_to_string(client->write_buf, " ");
                 free(objects[k]);
             }
             free(objects);
 
-            append_to_string(args->client->write_buf, ",");
+            append_to_string(client->write_buf, ",");
         }
     }
-    append_to_string(args->client->write_buf, "]\n");
+    append_to_string(client->write_buf, "]\n");
 }

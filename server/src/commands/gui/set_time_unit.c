@@ -7,20 +7,23 @@
 
 #include "server.h"
 
-void set_time_unit(list_args_t* args)
+void set_time_unit(game_t* game, client_t* client)
 {
+    char* command = peek_command(client);
+
     int new_freq;
-    sscanf(args->command, "sst %i", &new_freq);
+    sscanf(command, "sst %i", &new_freq);
 
     if (new_freq < 2 || new_freq > 1000) {
-        append_to_gui_write_buffer(args->server_data, SBP_FORMAT);
+        append_to_gui_write_buffer(game, SBP_FORMAT);
         return;
     }
 
-    args->server_data->game.freq = new_freq;
+    game->freq = new_freq;
 
     char response[32] = {0};
 
-    sprintf(response, SGT_FORMAT, args->server_data->game.freq);
-    append_to_gui_write_buffer(args->server_data, response);
+    sprintf(response, SGT_FORMAT, game->freq);
+
+    append_to_gui_write_buffer(game, response);
 }

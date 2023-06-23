@@ -19,11 +19,11 @@ int append_to_player_write_buffer(client_t* client, const char* msg)
     return SUCCESS;
 }
 
-int append_to_gui_write_buffer(server_data_t* s, char* msg)
+int append_to_gui_write_buffer(game_t *game, char* msg)
 {
     client_t *client, *temp;
 
-    LIST_FOREACH_SAFE(client, &s->game.client_list, entries, temp)
+    LIST_FOREACH_SAFE(client, &game->client_list, entries, temp)
     {
         if (client->player->is_graphical) {
             append_to_string(client->write_buf, msg);
