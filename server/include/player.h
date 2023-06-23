@@ -56,4 +56,7 @@
 // ! Function prototypes:
 
 
+bool check_incantation_requirements(game_t* game, int index, coord_t* pos,
+                                    size_t player_level_to_match);
+
 #endif /* !PLAYER_H_ */
