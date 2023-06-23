@@ -131,8 +131,6 @@ static void process_command_buffer(list_args_t* args, char* command_buff)
 {
     char** split_command = split_str(command_buff, " ");
 
-    // debug_word_array(split_command);
-
     if (!split_command)
         return;
 
@@ -140,7 +138,6 @@ static void process_command_buffer(list_args_t* args, char* command_buff)
         handle_first_client_msg(args, split_command);
     else
         handle_client_command(args, split_command, command_buff);
-    print_command_queue(args->client);
 }
 
 void parse_client_input(list_args_t* args, char* received_buff)
@@ -153,8 +150,6 @@ void parse_client_input(list_args_t* args, char* received_buff)
     } else {
         printf("Buffer overflow\n");
     }
-
-    printf("Received: |%s|\n", args->client->read_buf);
 
     size_t size = strlen(args->client->read_buf);
 

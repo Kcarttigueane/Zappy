@@ -71,7 +71,4 @@ void enqueue_command(client_t* client, const char* command, int freq)
     printf("Enqueueing command: %s for client %d\n", command, client->fd);
     queue->completion_time[queue->rear] = clock() + (CLOCKS_PER_SEC * duration);
     print_command_enqueue(client, command, freq);
-
-    printf("rear: %d\n", queue->rear);
-    printf("front: %d\n", queue->front);
 }

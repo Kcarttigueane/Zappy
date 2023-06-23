@@ -40,10 +40,8 @@
     #define MAX_NB_PLAYERS 6
     #define MAX_COMMANDS_PER_CLIENT 10
     #define MAX_W_BUFFER_LENGTH 100000
-    #define MAX_R_BUFFER_LENGTH 100000
 
-
-    typedef struct coord_s {
+typedef struct coord_s {
         int x;
         int y;
     } coord_t;

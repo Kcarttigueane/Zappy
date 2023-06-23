@@ -93,6 +93,7 @@
     typedef struct list_args {
         server_data_t* server_data;
         client_t* client;
+        char *command;
     } list_args_t;
 
 // ! SERVER Functions:

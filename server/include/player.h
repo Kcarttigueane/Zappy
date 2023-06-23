@@ -45,7 +45,6 @@
         orientation_t orientation;
         size_t level;
         size_t inventory[MAX_NB_RESOURCES];
-        time_t last_eat_time;
         int life_units;
         time_t start_time;
         state_t state;

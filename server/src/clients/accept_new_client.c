@@ -53,7 +53,7 @@ void accept_new_connection(server_data_t* s)
         return;
     }
 
-    int new_socket = 0;
+    int new_socket;
     struct sockaddr_in address;
     int addrlen = sizeof(address);
 
