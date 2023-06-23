@@ -23,7 +23,17 @@ int validate_and_set_port(char* arg, server_data_t* s)
 
 int validate_and_set_width(char* arg, server_data_t* s)
 {
-    size_t width = strtoul(arg, NULL, 10);
+    size_t width = 0;
+    char* endptr;
+
+    errno = 0;
+    width = strtoul(arg, &endptr, 10);
+
+    if (errno != 0 || *endptr != '\0') {
+        fprintf(stderr, WRONG_WIDTH);
+        fprintf(stdout, SERVER_USAGE);
+        return FAILURE;
+    }
 
     if (width < 10 || width > 30) {
         fprintf(stderr, WRONG_WIDTH);
@@ -37,20 +47,41 @@ int validate_and_set_width(char* arg, server_data_t* s)
 
 int validate_and_set_height(char* arg, server_data_t* s)
 {
-    size_t height = strtoul(arg, NULL, 10);
+    size_t height = 0;
+    char* endptr;
+
+    errno = 0;
+    height = strtoul(arg, &endptr, 10);
+
+    if (errno != 0 || *endptr != '\0') {
+        fprintf(stderr, WRONG_HEIGHT);
+        fprintf(stdout, SERVER_USAGE);
+        return FAILURE;
+    }
 
     if (height < 10 || height > 30) {
         fprintf(stderr, WRONG_HEIGHT);
         fprintf(stdout, SERVER_USAGE);
         return FAILURE;
     }
+
     s->game.height = height;
     return SUCCESS;
 }
 
 int validate_and_set_clients_nb(char* arg, server_data_t* s)
 {
-    size_t clients_nb = strtoul(arg, NULL, 10);
+    size_t clients_nb = 0;
+    char* endptr;
+
+    errno = 0;
+    clients_nb = strtoul(arg, &endptr, 10);
+
+    if (errno != 0 || *endptr != '\0') {
+        fprintf(stderr, WRONG_CLIENTS_NB);
+        fprintf(stdout, SERVER_USAGE);
+        return FAILURE;
+    }
 
     if (clients_nb < 1) {
         fprintf(stderr, WRONG_CLIENTS_NB);
@@ -64,7 +95,17 @@ int validate_and_set_clients_nb(char* arg, server_data_t* s)
 
 int validate_and_set_freq(char* arg, server_data_t* s)
 {
-    size_t freq = strtoul(arg, NULL, 10);
+    size_t freq = 0;
+    char* endptr;
+
+    errno = 0;
+    freq = strtoul(arg, &endptr, 10);
+
+    if (errno != 0 || *endptr != '\0') {
+        fprintf(stderr, WRONG_FREQUENCY);
+        fprintf(stdout, SERVER_USAGE);
+        return FAILURE;
+    }
 
     if (freq < 2 || freq > 10000) {
         fprintf(stderr, WRONG_FREQUENCY);
