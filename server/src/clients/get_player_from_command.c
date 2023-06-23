@@ -9,11 +9,7 @@
 
 player_t* get_player_from_command(list_args_t* args)
 {
-    char* command_str =
-        args->client->player->command_queue
-            .commands[args->client->player->command_queue.front];
-
-    char** splits = split_str(command_str, " ");
+    char** splits = split_str(args->command, " ");
 
     if (get_size_word_array(splits) != 2) {
         append_to_gui_write_buffer(args->server_data, SBP_FORMAT);

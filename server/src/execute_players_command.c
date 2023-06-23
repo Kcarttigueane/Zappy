@@ -53,6 +53,7 @@ void execute_commands(server_data_t* s)
             list_args_t args = {
                 .server_data = s,
                 .client = client,
+                .player = client->player,
                 .command = command,
             };
 

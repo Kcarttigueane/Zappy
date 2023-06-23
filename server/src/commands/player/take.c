@@ -23,14 +23,10 @@ int find_object_index(char* object_name)
 
 void take(list_args_t* args)
 {
-    char* command_str =
-        args->client->player->command_queue
-            .commands[args->client->player->command_queue.front];
-
-    client_t* client = args->client;
     game_t* game = &args->server_data->game;
+    player_t* player = args->client->player;
 
-    char* object_name = split_str(command_str, " ")[1];
+    char* object_name = split_str(args->command, " ")[1];
 
     if (object_name == NULL) {
         append_to_string(args->client->write_buf, KO_FORMAT);
@@ -43,26 +39,23 @@ void take(list_args_t* args)
         return;
     }
 
-    coord_t pos = client->player->pos;
+    coord_t pos = args->player->pos;
 
     if (game->map[pos.x][pos.y].quantity[object_index] > 0) {
         game->map[pos.x][pos.y].quantity[object_index]--;
 
-        client->player->inventory[object_index]++;
+        player->inventory[object_index]++;
 
         char response[256] = {0};
-        sprintf(response, PGT_FORMAT, client->player->id, object_index);
+        sprintf(response, PGT_FORMAT, player->id, object_index);
         append_to_gui_write_buffer(args->server_data, response);
 
         memset(response, 0, 256);
-        sprintf(response, PIN_FORMAT, client->player->id, client->player->pos.x,
-                client->player->pos.y, client->player->inventory[FOOD],
-                client->player->inventory[LINEMATE],
-                client->player->inventory[DERAUMERE],
-                client->player->inventory[SIBUR],
-                client->player->inventory[MENDIANE],
-                client->player->inventory[PHIRAS],
-                client->player->inventory[THYSTAME]);
+        sprintf(response, PIN_FORMAT, player->id, player->pos.x, player->pos.y,
+                player->inventory[FOOD], player->inventory[LINEMATE],
+                player->inventory[DERAUMERE], player->inventory[SIBUR],
+                player->inventory[MENDIANE], player->inventory[PHIRAS],
+                player->inventory[THYSTAME]);
 
         append_to_gui_write_buffer(args->server_data, response);
 

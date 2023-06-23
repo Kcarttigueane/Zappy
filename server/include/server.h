@@ -83,7 +83,6 @@
     } game_t;
 
     typedef struct server_data {
-        int time_unit;
         game_t game;
         int PORT;
         int socket_fd;
@@ -94,6 +93,7 @@
     typedef struct list_args {
         server_data_t* server_data;
         client_t* client;
+        player_t* player;
         char *command;
     } list_args_t;
 

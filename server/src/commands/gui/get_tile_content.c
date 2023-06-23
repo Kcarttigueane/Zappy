@@ -28,12 +28,8 @@ static void send_resp(list_args_t* args, int x, int y)
 
 void get_tile_content(list_args_t* args)
 {
-    char* command_str =
-        args->client->player->command_queue
-            .commands[args->client->player->command_queue.front];
-
     int x, y = -1;
-    sscanf(command_str, "bct %i %i", &x, &y);
+    sscanf(args->command, "bct %i %i", &x, &y);
 
     size_t height = args->server_data->game.height;
     size_t width = args->server_data->game.width;
