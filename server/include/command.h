@@ -10,7 +10,7 @@
 
     #include <stddef.h>
 
-typedef void (*command_func_t)(list_args_t* args);
+    typedef void (*command_func_t)(list_args_t* args);
 
     typedef struct command_s {
         char* name;
@@ -18,6 +18,28 @@ typedef void (*command_func_t)(list_args_t* args);
         char* description;
         int action_time;
     } command_t;
+
+    typedef struct incantation_requirements_s {
+        size_t num_players;
+        size_t linemate;
+        size_t deraumere;
+        size_t sibur;
+        size_t mendiane;
+        size_t phiras;
+        size_t thystame;
+    } incantation_requirements_t;
+
+
+    static const incantation_requirements_t INCANTATION_REQUIREMENTS[] = {
+        {1, 1, 0, 0, 0, 0, 0},  // ! Level 1->2
+        {2, 1, 1, 1, 0, 0, 0},  // ! Level 2->3
+        {2, 2, 0, 1, 0, 2, 0},  // ! Level 3->4
+        {4, 1, 1, 2, 0, 1, 0},  // ! Level 4->5
+        {4, 1, 2, 1, 3, 0, 0},  // ! Level 5->6
+        {6, 1, 2, 3, 0, 1, 0},  // ! Level 6->7
+        {6, 2, 2, 2, 2, 2, 1},  // ! Level 7->8
+    };
+
 
 // ! Function Prototypes (GUI):
 
@@ -71,6 +93,14 @@ void get_player_inventory(list_args_t* args);
 void get_all_tiles_content(list_args_t* args);
 
 /**
+** @brief Start the incantation in the game.
+**
+** @param args list_args_t structure pointer with server data and client data.
+**/
+
+void start_incantation(list_args_t* args);
+
+/**
 ** @brief End the incantation in the game.
 **
 ** @param args list_args_t structure pointer with server data and client data.
@@ -91,6 +121,11 @@ void get_time_unit(list_args_t* args);
 **/
 void set_time_unit(list_args_t* args);
 
+/**
+** @brief Get all the players positions
+**
+** @param args list_args_t structure pointer with server data and client data.
+**/
 void get_all_player_positions(list_args_t* args);
 
 
@@ -179,7 +214,6 @@ void set(list_args_t* args);
 **
 ** @param args list_args_t structure pointer with server data and client data.
 **/
-void incantation(list_args_t* args);
 
 void hatch(list_args_t* args);
 

@@ -32,7 +32,8 @@ const command_t PLAYER_COMMANDS[] = {
     {"Eject", eject, "Eject player", 7},
     {"Take", take, "Take object", 7},
     {"Set", set, "Set object", 7},
-    {"Incantation", incantation, "Incantation", 300},
+    {"Incantation", start_incantation, "Start of incantation", 0},
+    {"End_of_incantation", end_incantation, "End of incantation", 300},
     {"Hatch", hatch, "Hatch", 0},
 };
 

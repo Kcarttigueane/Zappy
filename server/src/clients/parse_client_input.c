@@ -23,8 +23,11 @@ void update_player(list_args_t* args, char** inputs)
     args->client->player->level = 1;
     args->client->player->orientation = NORTH;
     args->client->player->inventory[FOOD] = 9;
+    args->client->player->inventory[LINEMATE] = 1;
+
     args->client->player->is_graphical = false;
     args->client->player->start_time = clock();
+    args->client->player->is_frozen = false;
 
     int team_index = find_team_index(args, inputs[0]);
     if (team_index == FAILURE)
@@ -50,6 +53,7 @@ void update_egg_player(list_args_t* args, char** inputs, egg_t* egg)
     args->client->player->orientation = NORTH;
     args->client->player->inventory[FOOD] = 9;
     args->client->player->is_graphical = false;
+    args->client->player->is_frozen = false;
 
     int team_index = find_team_index(args, inputs[0]);
     if (team_index == FAILURE)
@@ -64,6 +68,7 @@ void handle_first_client_msg(list_args_t* args, char** inputs)
     if (!strcmp(inputs[0], "GRAPHIC")) {
         args->client->player->is_graphical = true;
         args->client->player->state = ACTIVE;
+        args->client->player->is_frozen = false;
         get_map_size(args);
         get_time_unit(args);
         get_all_tiles_content(args);
