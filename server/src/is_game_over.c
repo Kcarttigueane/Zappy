@@ -31,7 +31,6 @@ bool is_game_over(server_data_t* s)
             append_to_gui_write_buffer(s, response);
             return true;
         }
-        players_at_max_level = 0;
     }
 
     return false;

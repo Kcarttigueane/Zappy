@@ -85,7 +85,7 @@ void look(list_args_t* args)
 
     append_to_string(args->client->write_buf, "[");
 
-    for (int i = 0; i <= level; ++i) {
+    for (int i = 0; i <= (int)level; ++i) {
         for (int j = -i; j <= i; ++j) {
             int tx = (x + j * dx[(d + 3) % 4] + i * dx[d] + width) % width;
             int ty = (y + j * dy[(d + 3) % 4] + i * dy[d] + height) % height;

@@ -46,7 +46,5 @@
         "[ food %ld, linemate %ld, deraumere %ld, sibur %ld, mendiane %ld, " \
         "phiras %ld, "                                                       \
         "thystame %ld ]\n"
-    #define VIEW_FORMAT "[ %s, %s, %s ]\n"  // Example for a level 1 view
-    #define CONNECT_NBR_FORMAT "%d\n"
 
 #endif /* !RESPONSES_FORMAT_H_ */

@@ -13,7 +13,7 @@ void print_command_enqueue(client_t* client, const char* command, int freq)
     int action_time = 0;
     command_queue_t* queue = &client->player->command_queue;
 
-    for (int i = 0; i < PLAYER_COMMANDS_SIZE; i++) {
+    for (size_t i = 0; i < PLAYER_COMMANDS_SIZE; i++) {
         if (!strcmp(command, PLAYER_COMMANDS[i].name)) {
             action_time = PLAYER_COMMANDS[i].action_time;
             break;
@@ -50,7 +50,7 @@ void enqueue_command(client_t* client, const char* command, int freq)
         queue->rear = (queue->rear + 1) % MAX_COMMANDS_PER_CLIENT;
     }
 
-    for (int i = 0; i < PLAYER_COMMANDS_SIZE; i++) {
+    for (size_t i = 0; i < PLAYER_COMMANDS_SIZE; i++) {
         if (!strcmp(command, PLAYER_COMMANDS[i].name)) {
             action_time = PLAYER_COMMANDS[i].action_time;
             break;
@@ -71,7 +71,4 @@ void enqueue_command(client_t* client, const char* command, int freq)
     printf("Enqueueing command: %s for client %d\n", command, client->fd);
     queue->completion_time[queue->rear] = clock() + (CLOCKS_PER_SEC * duration);
     print_command_enqueue(client, command, freq);
-
-    printf("rear: %d\n", queue->rear);
-    printf("front: %d\n", queue->front);
 }

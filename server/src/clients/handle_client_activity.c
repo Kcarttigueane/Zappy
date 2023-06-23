@@ -23,8 +23,8 @@ static void handle_client_disconnection(
 static void handle_received_data(list_args_t* args, char* buffer)
 {
     buffer[strlen(buffer)] = '\0';
-    fprintf(stderr, BLUE, "Client %d send the message '%s'\n", RESET,
-    args->client->fd, buffer);
+    fprintf(stderr, BLUE "Client %d send the message '%s'\n" RESET,
+            args->client->fd, buffer);
     parse_client_input(args, buffer);
 }
 

@@ -40,7 +40,7 @@ void print_total_resources(tile_t** map, size_t height, size_t width);
 tile_t** init_map(size_t width, size_t height);
 void shuffle(int* array, size_t n);
 void distribute_resources(tile_t** map, int total_resources[], size_t height,
-                          size_t width);
+size_t width);
 
 void spawning_resources(server_data_t* data, int* total_resources);
 void free_map(tile_t** map, size_t width);

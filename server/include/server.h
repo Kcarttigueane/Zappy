@@ -29,7 +29,8 @@
     enum ErrorCodes { SUCCESS = 0, FAILURE = -1, ERROR = 84 };
 
     #define SERVER_USAGE \
-        "./zappy_server -p port -x width -y height -n name1 name2 ... -c clientsNb\
+        "./zappy_server -p port -x width -y height -n name1 name2 ... \
+        -c clientsNb\
             -f freq\n\
         \tport\t\t is the port number\n\
         \twidth\t\t is the width of the world\n\
@@ -82,7 +83,6 @@
     } game_t;
 
     typedef struct server_data {
-        int time_unit;
         game_t game;
         int PORT;
         int socket_fd;
@@ -93,6 +93,8 @@
     typedef struct list_args {
         server_data_t* server_data;
         client_t* client;
+        player_t* player;
+        char *command;
     } list_args_t;
 
 // ! SERVER Functions:

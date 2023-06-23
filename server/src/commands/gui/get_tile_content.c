@@ -7,28 +7,16 @@
 
 #include "server.h"
 
-tile_t* get_tile(tile_t** map, int x, int y)
+static bool is_valid_tile(int x, int y, size_t height, size_t width)
 {
-    return &(map[y][x]);
+    return x >= 0 && (size_t)x < width && y >= 0 && (size_t)y < height;
 }
 
-void get_tile_content(list_args_t* args)
+static void send_resp(list_args_t* args, int x, int y)
 {
-    char* command_str =
-        args->client->player->command_queue
-            .commands[args->client->player->command_queue.front];
-
-    int x, y;
-    sscanf(command_str, "bct %i %i", &x, &y);
-
-    if (x < 0 || (size_t)x >= args->server_data->game.width || y < 0 ||
-        (size_t)y >= args->server_data->game.height) {
-        append_to_gui_write_buffer(args->server_data, SBP_FORMAT);
-        return;
-    }
-    tile_t* tile = get_tile(args->server_data->game.map, x, y);
-
     char response[MAX_BUFFER] = {0};
+
+    tile_t* tile = &args->server_data->game.map[y][x];
 
     sprintf(response, BCT_FORMAT, x, y, tile->quantity[FOOD],
             tile->quantity[LINEMATE], tile->quantity[DERAUMERE],
@@ -36,4 +24,20 @@ void get_tile_content(list_args_t* args)
             tile->quantity[PHIRAS], tile->quantity[THYSTAME]);
 
     append_to_gui_write_buffer(args->server_data, response);
+}
+
+void get_tile_content(list_args_t* args)
+{
+    int x, y = -1;
+    sscanf(args->command, "bct %i %i", &x, &y);
+
+    size_t height = args->server_data->game.height;
+    size_t width = args->server_data->game.width;
+
+    if (!is_valid_tile(x, y, height, width)) {
+        append_to_gui_write_buffer(args->server_data, SBP_FORMAT);
+        return;
+    }
+
+    send_resp(args, x, y);
 }

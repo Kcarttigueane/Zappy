@@ -21,7 +21,7 @@ void forward(list_args_t* args)
             break;
         case SOUTH:
             player->pos.y++;
-            if (player->pos.y >= board_height)
+            if (player->pos.y >= (int)board_height)
                 player->pos.y = 0;
             break;
         case WEST:
@@ -31,7 +31,7 @@ void forward(list_args_t* args)
             break;
         case EAST:
             player->pos.x++;
-            if (player->pos.x >= board_width)
+            if (player->pos.x >= (int)board_width)
                 player->pos.x = 0;
             break;
     }

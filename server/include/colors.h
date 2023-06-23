@@ -9,7 +9,6 @@
     #define COLORS_H
 
     #define RED "\033[1;31m"
-    #define BLACK "\033[1;30m"
     #define GRAY "\033[1;90m"
     #define GREEN "\033[1;32m"
     #define YELLOW "\033[1;33m"

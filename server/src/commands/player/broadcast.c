@@ -94,13 +94,9 @@ int calculate_direction(int delta_x, int delta_y)
 
 void broadcast(list_args_t* args)
 {
-    char* command_str =
-        args->client->player->command_queue
-            .commands[args->client->player->command_queue.front];
-
     player_t* player = args->client->player;
 
-    char* message = split_str(command_str, " ")[1];
+    char* message = split_str(args->command, " ")[1];
 
     if (message == NULL) {
         append_to_string(args->client->write_buf, KO_FORMAT);

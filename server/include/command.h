@@ -10,9 +10,7 @@
 
     #include <stddef.h>
 
-    #define MAX_ARGS 5
-
-    typedef void (*command_func_t)(list_args_t* args);
+typedef void (*command_func_t)(list_args_t* args);
 
     typedef struct command_s {
         char* name;
@@ -184,7 +182,6 @@ void set(list_args_t* args);
 void incantation(list_args_t* args);
 
 void hatch(list_args_t* args);
-void fake_end(list_args_t* args);
 
 // ! Function Prototypes (Utils):
 
