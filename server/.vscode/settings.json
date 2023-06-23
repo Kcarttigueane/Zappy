@@ -51,6 +51,6 @@
     "phiras",
     "Repositery",
     "thystame"
-  ],
-  "editor.formatOnSave": true
+  ]
+  // "editor.formatOnSave": true
 }

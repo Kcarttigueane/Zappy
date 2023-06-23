@@ -7,18 +7,6 @@
 
 #include "server.h"
 
-int append_to_player_write_buffer(client_t* client, const char* msg)
-{
-    if (strlen(client->write_buf) + strlen(msg) + 1 > MAX_W_BUFFER_LENGTH) {
-        return FAILURE;
-    }
-
-    strncat(client->write_buf, msg,
-            MAX_W_BUFFER_LENGTH - strlen(client->write_buf) - 1);
-
-    return SUCCESS;
-}
-
 int append_to_gui_write_buffer(game_t *game, char* msg)
 {
     client_t *client, *temp;

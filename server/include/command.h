@@ -6,18 +6,18 @@
 */
 
 #ifndef COMMANDS_H_
-#define COMMANDS_H_
+    #define COMMANDS_H_
 
-#include <stddef.h>
+    #include <stddef.h>
 
-typedef void (*command_func_t)(game_t* game, client_t* client);
+    typedef void (*command_func_t)(game_t* game, client_t* client);
 
-typedef struct command_s {
-    char* name;
-    command_func_t function;
-    char* description;
-    int action_time;
-} command_t;
+    typedef struct command_s {
+        char* name;
+        command_func_t function;
+        char* description;
+        int action_time;
+    } command_t;
 
 // ! Function Prototypes (GUI):
 

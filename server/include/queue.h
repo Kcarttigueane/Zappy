@@ -6,17 +6,17 @@
 */
 
 #ifndef QUEUE_H_
-#define QUEUE_H_
+    #define QUEUE_H_
 
-#include "player.h"
-#include "server.h"
+    #include "player.h"
+    #include "server.h"
 
-typedef struct command_queue_s {
-    char commands[MAX_NB_COMMANDS][MAX_COMMANDS_LENGTH];
-    clock_t completion_time[MAX_NB_COMMANDS];
-    int front;
-    int rear;
-} command_queue_t;
+    typedef struct command_queue_s {
+        char commands[MAX_NB_COMMANDS][MAX_COMMANDS_LENGTH];
+        clock_t completion_time[MAX_NB_COMMANDS];
+        int front;
+        int rear;
+    } command_queue_t;
 
 /**
  * @brief Removes the command at the front of the client's command queue.

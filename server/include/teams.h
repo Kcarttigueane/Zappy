@@ -6,23 +6,23 @@
 */
 
 #ifndef TEAMS_H_
-#define TEAMS_H_
+    #define TEAMS_H_
 
-#include "player.h"
+    #include "player.h"
 
-typedef struct egg_s {
-    size_t id;
-    coord_t pos;
-    LIST_ENTRY(egg_s) entries;
-} egg_t;
+    typedef struct egg_s {
+        size_t id;
+        coord_t pos;
+        LIST_ENTRY(egg_s) entries;
+    } egg_t;
 
-typedef struct team_s {
-    char* name;
-    size_t max_players;
-    size_t nb_players_connected;
-    egg_t* eggs;
-    LIST_HEAD(egg_head, egg_s) egg_list;
-} team_t;
+    typedef struct team_s {
+        char* name;
+        size_t max_players;
+        size_t nb_players_connected;
+        egg_t* eggs;
+        LIST_HEAD(egg_head, egg_s) egg_list;
+    } team_t;
 
 // ! Function prototypes:
 
