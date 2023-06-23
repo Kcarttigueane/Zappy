@@ -55,6 +55,7 @@ void update_life(player_t* player, int freq)
 void player_lifetime(server_data_t* s)
 {
     client_t *client, *temp;
+    char response[1024] = {0};
 
     LIST_FOREACH_SAFE(client, &s->game.client_list, entries, temp)
     {
@@ -68,6 +69,8 @@ void player_lifetime(server_data_t* s)
             }
 
             if (client->player->life_units <= 0) {
+                sprintf(response, PDI_FORMAT, client->player->id);
+                memset(client->write_buf, 0, sizeof(client->write_buf));
                 printf("Player %ld died\n", client->player->id);
             }
         }
