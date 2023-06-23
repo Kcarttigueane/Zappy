@@ -51,8 +51,8 @@ typedef struct coord_s {
 
 #ifndef LIST_FOREACH_SAFE
     #define LIST_FOREACH_SAFE(var, head, field, tvar) \
-      for ((var) = LIST_FIRST((head));              \
-           (var) && ((tvar) = LIST_NEXT((var), field), 1); (var) = (tvar))
+        for ((var) = LIST_FIRST((head));              \
+            (var) && ((tvar) = LIST_NEXT((var), field), 1); (var) = (tvar))
 #endif /* !LIST_FOREACH_SAFE */
 
 #endif /* !COMMON_H_ */

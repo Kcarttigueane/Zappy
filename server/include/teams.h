@@ -24,7 +24,6 @@
         LIST_HEAD(egg_head, egg_s) egg_list;
     } team_t;
 
-
 // ! Function prototypes:
 
 /**
@@ -86,4 +85,3 @@ void remove_egg_by_id(team_t* team, size_t id);
 team_t* find_team_by_name(server_data_t* data, char* team_name);
 
 #endif /* !TEAMS_H_ */
- 

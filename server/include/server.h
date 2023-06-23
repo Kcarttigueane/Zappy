@@ -29,7 +29,8 @@
     enum ErrorCodes { SUCCESS = 0, FAILURE = -1, ERROR = 84 };
 
     #define SERVER_USAGE \
-        "./zappy_server -p port -x width -y height -n name1 name2 ... -c clientsNb\
+        "./zappy_server -p port -x width -y height -n name1 name2 ... \
+        -c clientsNb\
             -f freq\n\
         \tport\t\t is the port number\n\
         \twidth\t\t is the width of the world\n\
