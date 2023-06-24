@@ -75,7 +75,7 @@ std::string Display::receiveData()
 void Display::threadRecieveData()
 {
     while (1) {
-        char buffer[14096] = {0};
+        char buffer[34096] = {0};
         int flags = fcntl(clientSocket, F_GETFL, 0);
         if (flags == -1)
             continue;
