@@ -9,13 +9,18 @@
 
 void Display::setData(std::string newData)
 {
-    std::lock_guard<std::mutex> lock(_mtx);
-    _data = newData;
+    std::unique_lock<std::mutex> lock(_mtx);
+    if (_thread_seen == 1)
+        _data = newData;
+    else
+        _data += newData;
+    _thread_seen = 0;
 }
 
 std::string Display::getData()
 {
-    std::lock_guard<std::mutex> lock(_mtx);
+    std::unique_lock<std::mutex> lock(_mtx);
+    _thread_seen = 1;
     return _data;
 }
 

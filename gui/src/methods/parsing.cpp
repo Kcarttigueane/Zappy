@@ -92,14 +92,19 @@ void Display::parseServerInfo(std::string response)
             }
         } else if (command == "ppo") {
             int playerNumber, x, y, dir;
+            int found = 0;
             if (linestream >> playerNumber >> x >> y >> dir) {
                 for (size_t i = 0; i < _entities.size(); i++) {
                     if (_entities[i]._playerNumber == playerNumber) {
+                        found = 1;
                         _entities[i]._move = 1;
                         _entities[i]._objX = float(x);
                         _entities[i]._objY = float(_mapHeight) - float(y) - 1.0;
                         _entities[i]._direction = dir;
                     }
+                }
+                if (!found) {
+                    
                 }
             }
         } else if (command == "pdi") {
