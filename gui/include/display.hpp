@@ -63,6 +63,7 @@ class Display {
         void drawUI();
         void drawSlider();
         void drawsideUI();
+        void drawWin();
         void drawBroadcast();
         void drawEgg();
         void animateEntity(Entity *entity);
@@ -180,15 +181,11 @@ class Display {
         int _totalPhiras = 0;
         int _totalThystame = 0;
         int _selectedTeam = 0;
-        int _teamtotalplayers = 0;
-        int _teamlvl1 = 0;
-        int _teamlvl2 = 0;
-        int _teamlvl3 = 0;
-        int _teamlvl4 = 0;
-        int _teamlvl5 = 0;
-        int _teamlvl6 = 0;
-        int _teamlvl7 = 0;
-        int _teamlvl8 = 0;
+        int _teamTotalPlayers = 0;
+        int _teamlvl[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+        int _win = 0;
+        int _winAlpha = 0;
+        std::string _winningTeam;
 };
 
 

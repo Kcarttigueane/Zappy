@@ -149,6 +149,7 @@ void Display::parseServerInfo(std::string response)
                         break;
                     }
             }
+            checkTotalLvls();
         } else if (command == "pbc") {
             int playerNumber;
             std::string message;
@@ -201,6 +202,12 @@ void Display::parseServerInfo(std::string response)
                     if (_entities[i]._incantation && player_x == x && player_y == y)
                         _entities[i]._incantation = 0;
                 }
+            }
+        } else if (command == "seg") {
+            std::string teamName;
+            if (linestream >> teamName) {
+                _win = 1;
+                _winningTeam = teamName;
             }
         }
     }
