@@ -18,6 +18,7 @@ void Display::draw()
     drawSlider();
     drawUI();
     drawsideUI();
+    drawWin();
     _window->display();
 }
 
@@ -29,14 +30,12 @@ void Display::drawTileMap()
     rect.height = ASSET_HEIGHT;
     rect.width = ASSET_WIDHT;
 
-    _sprite->setTexture(*_cubeTexture);
-    _sprite->setScale(sf::Vector2f(_scale, _scale));
-    _sprite->setTextureRect(rect);
+    _cubeSprite->setScale(sf::Vector2f(_scale, _scale));
 
     for (int i = -EXTRA_TILES; i < EXTRA_TILES + _mapWidth; i++) {
         for (int j = -EXTRA_TILES; j < EXTRA_TILES + _mapHeight; j++) {
             createIsometricCube(i, j, _scale, rect, isMapCube(i, j));
-            _window->draw(*_sprite);
+            _window->draw(*_cubeSprite);
         }
     }
 }
@@ -65,7 +64,7 @@ void Display::createIsometricCube(float x, float y, float scale, sf::IntRect rec
     
     if (int(x) == int(_mouseGridCoords.x) && int(y) == int(_mouseGridCoords.y) && isCenterCube) {
         pos.y -= 30 * _scale;
-        _sprite->setColor(sf::Color::Yellow);
+        _cubeSprite->setColor(sf::Color::Yellow);
     }
     if (!isCenterCube) {
         Tile tile = _tileMovement[(int(y) + EXTRA_TILES) * (EXTRA_TILES * 2 + 1) + (int(x) + EXTRA_TILES)];
@@ -75,12 +74,12 @@ void Display::createIsometricCube(float x, float y, float scale, sf::IntRect rec
         tile.offset *= OFFSET_SCALE;
         pos.y += (tile.offset * _scale) + 20;
     }   
-    _sprite->setColor(color_multi(colors[int(isCenterCube)][oddeven], color_offset));
+    _cubeSprite->setColor(color_multi(colors[int(isCenterCube)][oddeven], color_offset));
     if (int(x) == int(_mouseGridCoords.x) && int(y) == int(_mouseGridCoords.y) && isCenterCube) {
         pos.y -= 30 * _scale;
-        _sprite->setColor(sf::Color::Yellow);
+        _cubeSprite->setColor(sf::Color::Yellow);
     }
-    _sprite->setPosition(pos);
+    _cubeSprite->setPosition(pos);
 }
 
 void Display::drawUI()
@@ -108,17 +107,12 @@ void Display::drawUI()
         _window->draw(text);
     }
     //Tile ui
-    sf::Vector2u size = _uiTexture->getSize();
-    _sprite->setTexture(*_uiTexture);
-    _sprite->setTextureRect(sf::IntRect(0, 0, size.x, size.y));
-    _sprite->setScale(0.773, 1);
-    _sprite->setPosition(_uiPosition);
-    _sprite->setColor(sf::Color::White);
+    _uiSprite->setPosition(_uiPosition);
     if (_uiAnimationPoint && _uiPosition.y > 800)
         _uiPosition.y -= 10;
     if (!_uiAnimationPoint && _uiPosition.y < 1080)
         _uiPosition.y += 10;;
-    _window->draw(*_sprite);
+    _window->draw(*_uiSprite);
 
     char buffer[100];
     Tile tile = _tiles[(_mapHeight - int(_lastClickedCoords.y) - 1) * _mapWidth + int(_lastClickedCoords.x)];
@@ -135,8 +129,8 @@ void Display::drawUI()
         _uiPlayerPosition.y += 10;
     if (!_uiPlayerPoint && _uiPlayerPosition.y > -200)
         _uiPlayerPosition.y -= 10;
-    _sprite->setPosition(_uiPlayerPosition);
-    _window->draw(*_sprite);
+    _uiSprite->setPosition(_uiPlayerPosition);
+    _window->draw(*_uiSprite);
 
     if (_notFirstSelect) {
         int entityIndex = findEntity(_entities, _selectedPlayerNumber);
@@ -152,9 +146,6 @@ void Display::drawUI()
 void Display::drawBroadcast()
 {
     size_t size = _broadcasts.size();
-    _sprite->setTexture(*_speechTexture);
-    _sprite->setTextureRect(sf::IntRect(0, 0, 1012, 558));
-    _sprite->setColor(sf::Color::White);
     sf::Text text;
     text.setFont(*_font);
     text.setFillColor(sf::Color::Black);
@@ -176,15 +167,15 @@ void Display::drawBroadcast()
         sf::Vector2f isometricPos = getIsometricPos(selectedPlayerPos.x, selectedPlayerPos.y, _scale, rect, _x_offset, _y_offset);
         isometricPos.x += 200 * _scale;
         isometricPos.y -= 590 * _scale;
-        _sprite->setPosition(isometricPos);
+        _speechSprite->setPosition(isometricPos);
         int offset = int(broadcast.message.length()) - 12;
         double x_scale_push = std::max(0.0, double(offset)) * 0.1 * _scale;
-        _sprite->setScale(sf::Vector2f(_scale + x_scale_push, _scale));
+        _speechSprite->setScale(sf::Vector2f(_scale + x_scale_push, _scale));
         isometricPos.x += 250 * (_scale + x_scale_push);
         isometricPos.y += 180 * _scale;
         text.setPosition(isometricPos);
         text.setString(broadcast.message);
-        _window->draw(*_sprite);
+        _window->draw(*_speechSprite);
         _window->draw(text);
     }
 }
@@ -193,9 +184,7 @@ void Display::drawBroadcast()
 void Display::drawEgg()
 {
     size_t size = _eggs.size();
-    _sprite->setTexture(*_eggTexture);
-    _sprite->setTextureRect(sf::IntRect(0, 0, 289, 253));
-    _sprite->setScale(_scale * 0.7, _scale * 0.7);
+    _eggSprite->setScale(_scale * 0.7, _scale * 0.7);
     sf::IntRect rect;
     rect.left = 183;
     rect.top = 42;
@@ -212,9 +201,9 @@ void Display::drawEgg()
         if (egg.x == int(_mouseGridCoords.x) && egg.y == int(_mouseGridCoords.y)) {
             isometricPos.y -= 50 * _scale;
         }
-        _sprite->setColor(sf::Color(egg.r, egg.g, egg.b, 255));
-        _sprite->setPosition(isometricPos);
-        _window->draw(*_sprite);
+        _eggSprite->setColor(sf::Color(egg.r, egg.g, egg.b, 255));
+        _eggSprite->setPosition(isometricPos);
+        _window->draw(*_eggSprite);
     }
 }
 
@@ -243,12 +232,9 @@ void Display::drawSlider()
 void Display::drawsideUI()
 {
     sf::IntRect rects[2] = {sf::IntRect(0, 0, 320, 1080), sf::IntRect(320, 0, 320, 1080)};
-    _sprite->setTexture(*_sideUITexture);
-    _sprite->setTextureRect(rects[_sideUIState]);
-    _sprite->setPosition(sf::Vector2f(_sideUI_x, 0));
-    _sprite->setScale(1.f, 1.f);
-    _sprite->setColor(sf::Color::White);
-    _window->draw(*_sprite);
+    _sideUISprite->setTextureRect(rects[_sideUIState]);
+    _sideUISprite->setPosition(sf::Vector2f(_sideUI_x, 0));
+    _window->draw(*_sideUISprite);
 
     sf::Text text;
     text.setFont(*_font);
@@ -266,6 +252,14 @@ void Display::drawsideUI()
     _window->draw(text);
 
 
+    if (int(_teamColors.size()) >= _selectedTeam + 1) {
+        text.setFillColor(_teamColors[_selectedTeam]);
+        text.setPosition(float(_sideUI_x) + 20.f, 550.f);
+        std::sprintf(buffer, "  Team %s\n\nTotal players: %d\n\n  Lvl 1: %d\n\n  Lvl 2: %d\n\n  Lvl 3: %d\n\n  Lvl 4: %d\n\n  Lvl 5: %d\n\n  Lvl 6: %d\n\n  Lvl 7: %d\n\n  Lvl 8: %d\n\n\n<-Toggle Teams->", _teamNames[_selectedTeam].c_str(), _teamTotalPlayers, _teamlvl[0], _teamlvl[1], _teamlvl[2], _teamlvl[3], _teamlvl[4], _teamlvl[5], _teamlvl[6], _teamlvl[7]);
+        text.setString(buffer);
+        _window->draw(text);
+    }
+
     if (_sideUIState == 0 && _sideUI_x > -245) {
         _sideUI_x -= 10;
         if (_sideUI_x < -245)
@@ -278,8 +272,26 @@ void Display::drawsideUI()
     }
 }
 
-    /// \param rectLeft   Left coordinate of the rectangle
-    /// \param rectTop    Top coordinate of the rectangle
-    /// \param rectWidth  Width of the rectangle
-    /// \param rectHeight Height of the rectangle
-    ///
+
+void Display::drawWin()
+{
+    if (_win) {
+        sf::RectangleShape rect(sf::Vector2f(1920.f, 1080.f));
+        rect.setFillColor(sf::Color(0, 0, 0, _winAlpha));
+        rect.setPosition(0, 0);
+        _window->draw(rect);
+        sf::Text text;
+        text.setFont(*_font);
+        text.setFillColor(sf::Color::White);
+        text.setCharacterSize(50);
+        text.setPosition(sf::Vector2f(600.f, 400.f));
+        char buffer[50];
+        std::sprintf(buffer, "%s's Team Wins!", _winningTeam.c_str());
+        text.setString(buffer);
+        _window->draw(text);
+        if (_winAlpha < 255)
+            _winAlpha += 5;
+        if (_winAlpha > 255)
+            _winAlpha = 255;
+    }
+}

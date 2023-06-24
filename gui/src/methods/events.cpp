@@ -25,6 +25,14 @@ void Display::handleEvents()
                 _y_offset = ISOMETRIC_Y_OFFSET;
                 _scale = SCALE;
             }
+            if (_event->key.code == sf::Keyboard::Left) {
+                _selectedTeam = (_selectedTeam - 1) % _teamNames.size();
+                checkTotalLvls();
+            }
+            if (_event->key.code == sf::Keyboard::Right) {
+                _selectedTeam = (_selectedTeam + 1) % _teamNames.size();
+                checkTotalLvls();
+            }
         } else if (_event->type == sf::Event::Closed) {
             _displayLoop = 0;
         } else if (_event->type == sf::Event::MouseWheelScrolled) {

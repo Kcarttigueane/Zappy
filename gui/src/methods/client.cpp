@@ -21,7 +21,8 @@ bool Display::connectToServer()
         std::cerr << "Invalid address/Address not supported" << std::endl;
         return false;
     }
-    if (connect(clientSocket, reinterpret_cast<sockaddr*>(&serverAddress), sizeof(serverAddress)) < 0) {
+    if (connect(clientSocket, reinterpret_cast<sockaddr*>(&serverAddress), sizeof(serverAddress)) <
+        0) {
         std::cerr << "Connection failed" << std::endl;
         return false;
     }
@@ -71,25 +72,17 @@ std::string Display::receiveData()
     return std::string(buffer);
 }
 
-
 void Display::threadRecieveData()
 {
+    fd_set readSet;
     while (1) {
-        char buffer[14096] = {0};
-        int flags = fcntl(clientSocket, F_GETFL, 0);
-        if (flags == -1)
-            continue;
-        if (fcntl(clientSocket, F_SETFL, flags | O_NONBLOCK) == -1)
-            continue;
-
-        fd_set readSet;
+        char buffer[54096] = {0};
         FD_ZERO(&readSet);
         FD_SET(clientSocket, &readSet);
 
-        int selectResult = select(clientSocket + 1, &readSet, NULL, NULL, NULL);
-
-        if (selectResult == -1)
-            continue;
+        if (select(FD_SETSIZE, &readSet, NULL, NULL, NULL) < 0 && errno != EINTR) {
+            return;
+        }
 
         if (FD_ISSET(clientSocket, &readSet)) {
             int recvResult = recv(clientSocket, buffer, sizeof(buffer), 0);

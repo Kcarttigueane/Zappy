@@ -64,12 +64,6 @@ void Display::parseServerInfo(std::string response)
                 _tiles[y * _mapWidth + x] = tile;
                 checkTotalResources();
             }
-        } else if (command == "sgt") {
-            // int time;
-            // if (linestream >> time && _serverTime == -1) {
-            //     _serverTime = time;
-
-            // }
         } else if (command == "tna") {
             std::vector<std::string> names;
             std::string name;
@@ -98,14 +92,19 @@ void Display::parseServerInfo(std::string response)
             }
         } else if (command == "ppo") {
             int playerNumber, x, y, dir;
+            int found = 0;
             if (linestream >> playerNumber >> x >> y >> dir) {
                 for (size_t i = 0; i < _entities.size(); i++) {
                     if (_entities[i]._playerNumber == playerNumber) {
+                        found = 1;
                         _entities[i]._move = 1;
                         _entities[i]._objX = float(x);
                         _entities[i]._objY = float(_mapHeight) - float(y) - 1.0;
                         _entities[i]._direction = dir;
                     }
+                }
+                if (!found) {
+                    
                 }
             }
         } else if (command == "pdi") {
@@ -149,6 +148,7 @@ void Display::parseServerInfo(std::string response)
                         break;
                     }
             }
+            checkTotalLvls();
         } else if (command == "pbc") {
             int playerNumber;
             std::string message;
@@ -201,6 +201,12 @@ void Display::parseServerInfo(std::string response)
                     if (_entities[i]._incantation && player_x == x && player_y == y)
                         _entities[i]._incantation = 0;
                 }
+            }
+        } else if (command == "seg") {
+            std::string teamName;
+            if (linestream >> teamName) {
+                _win = 1;
+                _winningTeam = teamName;
             }
         }
     }

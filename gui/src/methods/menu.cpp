@@ -147,12 +147,8 @@ void Display::drawMenu()
     text.setFont(*_font);
     text.setFillColor(sf::Color::White);
     text.setCharacterSize(10);
-
-    _sprite->setTexture(*_titleTexture);
-    _sprite->setPosition(sf::Vector2f(750, 60));
-    _sprite->setTextureRect(sf::IntRect(0, 0, 415, 146));
-    _sprite->setScale(sf::Vector2f(1.0, 1.0));
-    _window->draw(*_sprite);
+    
+    _window->draw(*_titleSprite);
 
     text.setPosition(805.f, 375.f);
     text.setString("Server IP:");
