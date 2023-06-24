@@ -12,11 +12,10 @@ void update_egg_player(game_t* game, client_t* client, char** inputs, egg_t* egg
     // TODO : This should be checked to avoid duplication of data
 
     client->player->team_name = strdup(inputs[0]);
-    client->player->state = ACTIVE;
+    client->player->state = PLAYER;
     client->player->level = 1;
     client->player->orientation = NORTH;
     client->player->inventory[FOOD] = 9;
-    client->player->is_graphical = false;
     client->player->is_frozen = false;
 
     int team_index = find_team_index(game, inputs[0]);

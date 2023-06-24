@@ -15,7 +15,7 @@ int check_nb_players_same_level(game_t* game, coord_t* pos, size_t plv_to_match)
 
     LIST_FOREACH_SAFE(client, &game->client_list, entries, temp)
     {
-        if (client->player->is_graphical)
+        if (client->player->state == GRAPHICAL)
             continue;
         if (client->player->pos.x == pos->x && client->player->pos.y == pos->y) {
             if (client->player->level == plv_to_match) {

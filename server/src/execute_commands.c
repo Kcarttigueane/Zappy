@@ -23,7 +23,7 @@ static void execute_graphical_command(game_t* game, client_t* client, char* comm
     dequeue_command(client);
 }
 
-static void  execute_player_command(game_t* game, client_t* client, char* command,
+static void execute_player_command(game_t* game, client_t* client, char* command,
                                    time_t current_time)
 {
     clock_t completion_time = get_last_command_completion_time(client);
@@ -50,10 +50,12 @@ void execute_commands(server_data_t* s)
 
     LIST_FOREACH_SAFE(client, &s->game.client_list, entries, temp)
     {
+        if (client->player->state == NONE)
+            continue;
         if (!is_command_queue_empty(client)) {
             char* command = peek_command(client);
 
-            if (client->player->is_graphical)
+            if (client->player->state == GRAPHICAL)
                 execute_graphical_command(&s->game, client, command);
             else
                 execute_player_command(&s->game, client, command, current_time);

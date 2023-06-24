@@ -24,8 +24,9 @@
     typedef enum state_s {
         NONE,
         EGG,
-        ACTIVE,
-        DEAD,
+        PLAYER,
+        DEAD_PLAYER,
+        GRAPHICAL,
     } state_t;
 
     typedef enum inventory_s {
@@ -39,7 +40,6 @@
     } inventory_t;
 
     typedef struct player_s {
-        bool is_graphical;
         size_t id;
         bool is_frozen;
         coord_t pos;

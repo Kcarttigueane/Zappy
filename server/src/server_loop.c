@@ -59,7 +59,7 @@ void player_lifetime(server_data_t* s)
 
     LIST_FOREACH_SAFE(client, &s->game.client_list, entries, temp)
     {
-        if (client->player && !client->player->is_graphical && client->player->state == ACTIVE) {
+        if (client->player && client->player->state == PLAYER && client->player->state == PLAYER) {
             update_life(client->player, s->game.freq);
 
             if (client->player->inventory[FOOD] > 0) {
@@ -70,8 +70,9 @@ void player_lifetime(server_data_t* s)
 
             if (client->player->life_units <= 0) {
                 sprintf(response, PDI_FORMAT, client->player->id);
-                memset(client->write_buf, 0, sizeof(client->write_buf));
+                append_to_gui_write_buffer(&s->game, response);
                 printf("Player %ld died\n", client->player->id);
+                memset(client->write_buf, 0, sizeof(client->write_buf));
             }
         }
     }

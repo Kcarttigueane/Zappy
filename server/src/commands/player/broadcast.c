@@ -114,7 +114,7 @@ void broadcast(game_t* game, client_t* client)
 
     LIST_FOREACH_SAFE(curr_client, &game->client_list, entries, tmp)
     {
-        if (curr_client->fd != client->fd && curr_client->player->is_graphical == false) {
+        if (curr_client->fd != client->fd && curr_client->player->state == PLAYER) {
             delta_x = shortest_delta_x(game->width, x, curr_client->player->pos.x);
             delta_y = shortest_delta_y(game->height, y, curr_client->player->pos.y);
             direction = calculate_direction(delta_x, delta_y);

@@ -33,6 +33,8 @@ void remove_client_by_fd(game_t* game, int fd)
     {
         if (client->fd == fd) {
             LIST_REMOVE(client, entries);
+            free(client->player->team_name);
+            free(client->player);
             free(client);
             return;
         }
