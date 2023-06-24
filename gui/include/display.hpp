@@ -14,6 +14,7 @@
 #define SCALE 0.2
 #define ISOMETRIC_X_OFFSET 930.0
 #define ISOMETRIC_Y_OFFSET 400.0
+#define SLIDER_OFFSET 1640.0
 #define EXTRA_TILES 30
 class Display {
     public:
@@ -27,11 +28,13 @@ class Display {
             _speechTexture = new sf::Texture;
             _titleTexture = new sf::Texture;
             _eggTexture = new sf::Texture;
+            _sideUITexture = new sf::Texture;
             _sprite = new sf::Sprite;
             _font = new sf::Font;
             _event = new sf::Event;
             _playerTexture->loadFromFile("./assets/players_scaled.png");
             _eggTexture->loadFromFile("./assets/egg_scaled.png");
+            _sideUITexture->loadFromFile("./assets/side_ui.png");
             _cubeTexture->loadFromFile("./assets/white_inv_cube.png");
             _uiTexture->loadFromFile("./assets/custompanel.png");
             _speechTexture->loadFromFile("./assets/speech.png");
@@ -48,6 +51,7 @@ class Display {
             delete _uiTexture;
             delete _titleTexture;
             delete _speechTexture;
+            delete _sideUITexture;
             delete _sprite;
             delete _font;
         }
@@ -57,6 +61,8 @@ class Display {
         void drawTileMap();
         void drawEntities();
         void drawUI();
+        void drawSlider();
+        void drawsideUI();
         void drawBroadcast();
         void drawEgg();
         void animateEntity(Entity *entity);
@@ -70,6 +76,9 @@ class Display {
         void setupTiles();
         void draw();
         void parseServerInfo(std::string response);
+
+        void checkTotalResources();
+        void checkTotalLvls();
 
 
         void handleMenu();
@@ -99,6 +108,7 @@ class Display {
         sf::Texture *_eggTexture;
         sf::Texture *_titleTexture;
         sf::Texture *_speechTexture;
+        sf::Texture *_sideUITexture;
         sf::Event *_event;
         sf::Sprite *_sprite;
         sf::Font *_font;
@@ -139,6 +149,8 @@ class Display {
         int clientSocket;
         std::string serverIP;
         int serverPort;
+        int _serverTime = 20;
+        int _oldServerTime = 20;
         long _frame = 0;
         std::vector<Broadcast> _broadcasts;
         std::vector<Egg> _eggs;
@@ -152,6 +164,31 @@ class Display {
         int _clickedBox = -1;
         std::string _serverResponse = "";
         int _errorServer = 0;
+
+        //UI
+        sf::RectangleShape _sliderBackground;
+        sf::RectangleShape _sliderFill;
+        sf::CircleShape _sliderHandle;
+        bool _sliderDrag = false;
+        int _sideUIState = 0;
+        int _sideUI_x = -245;
+        int _totalFood = 0;
+        int _totalLinemate = 0;
+        int _totalDeraumere = 0;
+        int _totalSibur = 0;
+        int _totalMendiane = 0;
+        int _totalPhiras = 0;
+        int _totalThystame = 0;
+        int _selectedTeam = 0;
+        int _teamtotalplayers = 0;
+        int _teamlvl1 = 0;
+        int _teamlvl2 = 0;
+        int _teamlvl3 = 0;
+        int _teamlvl4 = 0;
+        int _teamlvl5 = 0;
+        int _teamlvl6 = 0;
+        int _teamlvl7 = 0;
+        int _teamlvl8 = 0;
 };
 
 

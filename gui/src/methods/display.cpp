@@ -15,7 +15,9 @@ void Display::draw()
     drawEgg();
     drawEntities();
     drawBroadcast();
+    drawSlider();
     drawUI();
+    drawsideUI();
     _window->display();
 }
 
@@ -215,3 +217,69 @@ void Display::drawEgg()
         _window->draw(*_sprite);
     }
 }
+
+void Display::drawSlider()
+{
+    _window->draw(_sliderBackground);
+    _window->draw(_sliderFill);
+    _window->draw(_sliderHandle);
+    sf::Text text;
+    text.setFont(*_font);
+    text.setFillColor(sf::Color::White);
+    text.setCharacterSize(15);
+    if (_sliderDrag) {
+        sf::Vector2f handlePos = _sliderHandle.getPosition();
+        handlePos.y -= 30.f;
+        text.setPosition(handlePos);
+        std::string val = std::to_string(_serverTime);
+        text.setString(val);
+        _window->draw(text);
+    }
+    text.setPosition(SLIDER_OFFSET + 15.0, 430.f);
+    text.setString("Server Time");
+    _window->draw(text);
+}
+
+void Display::drawsideUI()
+{
+    sf::IntRect rects[2] = {sf::IntRect(0, 0, 320, 1080), sf::IntRect(320, 0, 320, 1080)};
+    _sprite->setTexture(*_sideUITexture);
+    _sprite->setTextureRect(rects[_sideUIState]);
+    _sprite->setPosition(sf::Vector2f(_sideUI_x, 0));
+    _sprite->setScale(1.f, 1.f);
+    _sprite->setColor(sf::Color::White);
+    _window->draw(*_sprite);
+
+    sf::Text text;
+    text.setFont(*_font);
+    text.setCharacterSize(13);
+    text.setPosition(float(_sideUI_x) + 60.f, 210.f);
+    text.setFillColor(sf::Color::Black);
+    text.setString("Map Info");
+    _window->draw(text);
+    text.setCharacterSize(13);
+    text.setPosition(float(_sideUI_x) + 20.f, 240.f);
+    char buffer[200];
+    std::sprintf(buffer, "    W: %d\n\n    H: %d\n\n\n\nTotal Resources:\n\n  Food      %d\n\n  Linemate  %d\n\n  Deraumere %d\n\n  Sibur     %d\n\n  Mendiane  %d\n\n  Phiras    %d\n\n  Thystame  %d"
+    , _mapWidth, _mapHeight, _totalFood, _totalLinemate, _totalDeraumere, _totalSibur, _totalMendiane, _totalPhiras, _totalThystame);
+    text.setString(buffer);
+    _window->draw(text);
+
+
+    if (_sideUIState == 0 && _sideUI_x > -245) {
+        _sideUI_x -= 10;
+        if (_sideUI_x < -245)
+            _sideUI_x = -245;
+    }
+    if (_sideUIState == 1 && _sideUI_x < 0) {
+        _sideUI_x += 10;
+        if (_sideUI_x > 0)
+            _sideUI_x = 0;
+    }
+}
+
+    /// \param rectLeft   Left coordinate of the rectangle
+    /// \param rectTop    Top coordinate of the rectangle
+    /// \param rectWidth  Width of the rectangle
+    /// \param rectHeight Height of the rectangle
+    ///

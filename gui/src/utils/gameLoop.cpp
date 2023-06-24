@@ -14,7 +14,7 @@ void gameLoop(Display *display)
     while (display->_displayLoop) {
         std::string serverData = display->getData();
         if (serverData != old_data) {
-            printf("%s\n", serverData.c_str());
+            printf("NEW INFO:\n%s\n", serverData.c_str());
             old_data = serverData;
             display->parseServerInfo(serverData);
         }

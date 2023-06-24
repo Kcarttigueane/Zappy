@@ -42,6 +42,25 @@ void Display::setupMenu()
     button.setOutlineColor(sf::Color::Black);
     button.setPosition(900.f, 800.f);
     _playButton = button;
+
+
+    sf::RectangleShape sliderBackground(sf::Vector2f(200.0f, 12.0f));
+    sliderBackground.setPosition(SLIDER_OFFSET, 400.f);
+    sliderBackground.setFillColor(sf::Color(155,155,155));
+
+    sf::RectangleShape sliderFill;
+    sliderFill.setPosition(SLIDER_OFFSET, 400.f);
+    sliderFill.setFillColor(sf::Color::White);
+    _sliderFill = sliderFill;
+
+    sf::CircleShape sliderHandle(12.f);
+    sliderHandle.setFillColor(sf::Color::White);
+    _sliderBackground = sliderBackground;
+    _sliderHandle = sliderHandle;
+
+    _sliderHandle.setPosition(float(_serverTime) + SLIDER_OFFSET, 394.f);
+    _sliderFill.setSize(sf::Vector2f(float(_serverTime) + 5.0, 12.f));
+
 }
 
 void Display::handleMenuEvents()
@@ -52,6 +71,16 @@ void Display::handleMenuEvents()
             if (_event->key.code == sf::Keyboard::Escape) {
                 _menuLoop = 0;
                 _quit = 1;
+            }
+            if (_event->key.code == sf::Keyboard::Enter) {
+                _clickedBox = 0;
+                serverIP = _menuIpString;
+                serverPort = atoi(_menuPortString.c_str()); 
+                _serverResponse = handleClient();
+                if (_serverResponse != "")
+                    _menuLoop = 0;
+                else
+                    _errorServer = 1;
             }
         } else if (_event->type == sf::Event::Closed) {
             _menuLoop = 0;
@@ -85,9 +114,9 @@ void Display::handleMenuEvents()
                     else if (_clickedBox == 2 && !_menuPortString.empty())
                         _menuPortString.erase(_menuPortString.length() - 1);
                 } else if (_event->text.unicode != '\b') {
-                    if (_clickedBox == 1)
+                    if (_clickedBox == 1 && _menuIpString.length() < 20)
                         _menuIpString += static_cast<char>(_event->text.unicode);
-                    else
+                    else if (_menuPortString.length() < 20)
                         _menuPortString += static_cast<char>(_event->text.unicode);
                 }
             }

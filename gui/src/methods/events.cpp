@@ -7,6 +7,8 @@
 
 #include "../../include/display.hpp"
 
+// left : 0 top: 434 width: 67  Height: 170
+// 
 void Display::handleEvents()
 {
     static bool isDragging = false;
@@ -45,6 +47,7 @@ void Display::handleEvents()
                 currentMousePosition = dragStartPosition;
                 if (_mouseGridCoords.x >= 0 && _mouseGridCoords.x < _mapWidth && _mouseGridCoords.y >= 0 && _mouseGridCoords.y < _mapHeight) {
                     _lastClickedCoords = _mouseGridCoords;
+                    _sideUIState = 0;
                     _tileClicked = true;
                     _uiAnimationPoint = 1;
                     for (size_t i = 0; i < _entities.size(); i++) {
@@ -60,6 +63,14 @@ void Display::handleEvents()
                         }
                     }
                 }
+                if (_sliderHandle.getGlobalBounds().contains(_event->mouseButton.x, _event->mouseButton.y)) {
+                    _sliderDrag = true;
+                    isDragging = false;
+                }
+                sf::FloatRect sideUIRect(_sideUI_x + 245, 434, 67, 170);
+                if (sideUIRect.contains(_event->mouseButton.x, _event->mouseButton.y)) {
+                    _sideUIState = !_sideUIState;
+                }
             }
         } else if (_event->type == sf::Event::MouseMoved) {
             if (isDragging) {
@@ -70,9 +81,43 @@ void Display::handleEvents()
                 _y_offset += deltaY;
                 dragStartPosition = newMousePosition;
             }
+            if (_sliderDrag) {
+                int sliderx = _event->mouseMove.x - SLIDER_OFFSET - 15.0;
+                if (sliderx < -5) {
+                    sliderx = -5;
+                }
+                if (sliderx > 181) {
+                    sliderx = 181;
+                }
+                sf::Vector2f sliderFillSize = _sliderFill.getSize();
+                sliderFillSize.x = float(sliderx) + 5.0;
+                _sliderFill.setSize(sliderFillSize);
+                sf::Vector2f sliderPos = _sliderHandle.getPosition();
+                sliderPos.x = float(sliderx) + SLIDER_OFFSET;
+                _sliderHandle.setPosition(sliderPos);
+                int outputMin = log(2);
+                int outputMax = log(10000);
+                int inputMin = -5;
+                int inputMax = 181;
+                int inputRange = inputMax - inputMin;
+                int outputRange = outputMax - outputMin;
+                double power = 1.2;
+                double mappedValue = exp((((sliderx - inputMin) * outputRange) / inputRange) + outputMin);
+                mappedValue = pow(mappedValue, power);
+                _serverTime = int(mappedValue);
+                _serverTime = std::min(10000, _serverTime);
+                _serverTime = std::max(2, _serverTime);
+                if (_serverTime != _oldServerTime) {
+                    char buffer[50];
+                    std::sprintf(buffer, "sst %d\n", _serverTime);
+                    sendData(buffer);
+                }
+            }
         } else if (_event->type == sf::Event::MouseButtonReleased) {
-            if (_event->mouseButton.button == sf::Mouse::Left)
+            if (_event->mouseButton.button == sf::Mouse::Left) {
                 isDragging = false;
+                _sliderDrag = false;
+            }
         }
     }
 }

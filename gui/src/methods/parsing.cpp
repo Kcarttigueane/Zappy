@@ -62,7 +62,14 @@ void Display::parseServerInfo(std::string response)
                 tile.phiras = phiras;
                 tile.thystame = thystame;
                 _tiles[y * _mapWidth + x] = tile;
+                checkTotalResources();
             }
+        } else if (command == "sgt") {
+            // int time;
+            // if (linestream >> time && _serverTime == -1) {
+            //     _serverTime = time;
+
+            // }
         } else if (command == "tna") {
             std::vector<std::string> names;
             std::string name;
@@ -179,11 +186,15 @@ void Display::parseServerInfo(std::string response)
                 while (linestream >> playerNumber) {
                     int index = findEntity(_entities, playerNumber);
                     _entities[index]._incantation = 1;
+                    char buffer[20];
+                    std::sprintf(buffer, "ppo %d\n", _entities[index]._playerNumber);
+                    sendData(buffer);
                 }
             }
         } else if (command == "pie") {
             int x, y, result;
             if (linestream >> x >> y >> result) {
+                y = _mapHeight - y - 1.0;
                 for (size_t i = 0; i < _entities.size(); i++) {
                     int player_x = int(_entities[i]._x + 0.05);
                     int player_y = int(_entities[i]._y + 0.05);
