@@ -1,0 +1,107 @@
+Forward : [Kevin: ✅]
+    -> Normal usage: Player moves forward in their current direction.
+    -> Edge case: Player is at the edge of the world, moves forward, and wraps around to the opposite edge.
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> 'ppo'
+
+
+Right : [Kevin: ✅]
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> 'ppo'
+
+
+Left : [Kevin: ✅]
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> 'ppo'
+
+
+Look : ❌
+    -> Normal usage: Player looks around, reports correct terrain details.
+    -> Edge case: Player is at the edge of the world, should still report correct terrain details.
+    -> [P] -> [ player , object - on - tile1 , ... , object - on - tileP ,...]
+    -> [GUI] -> nothing
+
+
+Inventory : ❌
+    -> Normal usage: Reports correct number of each object in inventory.
+    -> Empty inventory: Reports zero for each object.
+    -> [P] -> [ food n , linemate n , deraumere n , sibur n , mendiane n , phiras n , thystame n ]
+    -> [GUI] -> nothing
+
+
+Broadcast : ❌
+    -> Normal usage: Other players should receive the broadcasted message.
+    -> No players in range: Nothing should happen.
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> 'pbc'
+
+
+Connect_nbr : ❌
+    - Normal usage: Reports correct number of free slots.
+    - No free slots: Reports zero.
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> nothing
+
+
+Fork : ❌ (Need to implement the logic when the team is full and so the client should be disconnected)
+    -> Normal usage: Creates a new player.
+    -> Max players reached: Should fail gracefully.
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> 'pfk' && 'enw'
+
+
+Eject : ❌ (not tested)
+    -> Normal usage: Ejects player in facing direction.
+    -> Edge case: Ejects player at the edge of the world, player wraps around to the opposite edge.
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> 'pex'
+
+    Death of an Egg ❌
+        -> [P] -> 'dead'
+        -> [GUI] -> 'edi'
+
+
+Take object : ❌
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> 'pgt' && 'pin' && 'bct'
+
+
+Set object : ❌
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> 'pdr' && 'pin' && 'bct'
+
+
+Incantation : ❌ (not tested)
+    -> Normal usage: Performs incantation correctly, upgrades player level and removes stones.
+    -> Not enough players of the same level: Should fail gracefully.
+    -> Not enough stones on the terrain: Should fail gracefully.
+    -> Checks before and after incantation: Make sure the requirements are met both times.
+    -> [P] -> 'Elevation underway' | 'ko' | 'Current level: n'
+    -> [GUI] -> 'pic' && 'pie' && 'bct' && 'plv'
+
+
+Death of a player : ❌
+    -> [P] -> 'dead'
+    -> [GUI] -> 'pdi'
+
+
+Connection to an Egg : ❌
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> 'ebo'
+
+
+End of the game : ❌
+    -> [P] -> 'seg'
+    -> [GUI] -> 'seg'
+
+
+Time unit modification -> SST T\n : ❌
+    -> [P] -> nothing
+    -> [GUI] -> 'sgt'
+
+    -> Slider to check the time unit
+
+When a new player can connect to an egg send eht
+
+✅ -> Tested
+❌ -> Not tested

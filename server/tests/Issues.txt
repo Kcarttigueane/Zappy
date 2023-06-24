@@ -1,0 +1,3 @@
+- When connecting then disconnecting by using Ctrl + C, I don't send pdi so the player is not dead in the graphic, and the teams is full
+- When a client connect it's already display but it did not enter is team yet
+
