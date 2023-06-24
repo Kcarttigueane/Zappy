@@ -18,6 +18,7 @@ void Display::draw()
     drawSlider();
     drawUI();
     drawsideUI();
+    drawWin();
     _window->display();
 }
 
@@ -266,6 +267,14 @@ void Display::drawsideUI()
     _window->draw(text);
 
 
+    if (int(_teamColors.size()) >= _selectedTeam + 1) {
+        text.setFillColor(_teamColors[_selectedTeam]);
+        text.setPosition(float(_sideUI_x) + 20.f, 550.f);
+        std::sprintf(buffer, "  Team %s\n\nTotal players: %d\n\n  Lvl 1: %d\n\n  Lvl 2: %d\n\n  Lvl 3: %d\n\n  Lvl 4: %d\n\n  Lvl 5: %d\n\n  Lvl 6: %d\n\n  Lvl 7: %d\n\n  Lvl 8: %d\n\n\n<-Toggle Teams->", _teamNames[_selectedTeam].c_str(), _teamTotalPlayers, _teamlvl[0], _teamlvl[1], _teamlvl[2], _teamlvl[3], _teamlvl[4], _teamlvl[5], _teamlvl[6], _teamlvl[7]);
+        text.setString(buffer);
+        _window->draw(text);
+    }
+
     if (_sideUIState == 0 && _sideUI_x > -245) {
         _sideUI_x -= 10;
         if (_sideUI_x < -245)
@@ -278,8 +287,26 @@ void Display::drawsideUI()
     }
 }
 
-    /// \param rectLeft   Left coordinate of the rectangle
-    /// \param rectTop    Top coordinate of the rectangle
-    /// \param rectWidth  Width of the rectangle
-    /// \param rectHeight Height of the rectangle
-    ///
+
+void Display::drawWin()
+{
+    if (_win) {
+        sf::RectangleShape rect(sf::Vector2f(1920.f, 1080.f));
+        rect.setFillColor(sf::Color(0, 0, 0, _winAlpha));
+        rect.setPosition(0, 0);
+        _window->draw(rect);
+        sf::Text text;
+        text.setFont(*_font);
+        text.setFillColor(sf::Color::White);
+        text.setCharacterSize(50);
+        text.setPosition(sf::Vector2f(600.f, 400.f));
+        char buffer[50];
+        std::sprintf(buffer, "%s's Team Wins!", _winningTeam.c_str());
+        text.setString(buffer);
+        _window->draw(text);
+        if (_winAlpha < 255)
+            _winAlpha += 5;
+        if (_winAlpha > 255)
+            _winAlpha = 255;
+    }
+}

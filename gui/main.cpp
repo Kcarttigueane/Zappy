@@ -8,23 +8,6 @@
 #include <cstdlib>
 #include "include/gui.hpp"
 
-std::string handle_client(Display *client)
-{
-    if (client->connectToServer()) {
-        std::string response = client->receiveData();
-        if (!response.empty())
-            std::cout << response << std::endl;
-        std::string message = "GRAPHIC\n";
-        if (client->sendData(message)) {
-            std::string response = client->receiveData();
-            if (!response.empty()) {
-                return response;
-            }
-        }
-    }
-    return nullptr;
-}
-
 int main(int argc, char* argv[])
 {
     srand(time(NULL));

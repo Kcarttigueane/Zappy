@@ -64,12 +64,6 @@ void Display::parseServerInfo(std::string response)
                 _tiles[y * _mapWidth + x] = tile;
                 checkTotalResources();
             }
-        } else if (command == "sgt") {
-            // int time;
-            // if (linestream >> time && _serverTime == -1) {
-            //     _serverTime = time;
-
-            // }
         } else if (command == "tna") {
             std::vector<std::string> names;
             std::string name;
@@ -149,6 +143,7 @@ void Display::parseServerInfo(std::string response)
                         break;
                     }
             }
+            checkTotalLvls();
         } else if (command == "pbc") {
             int playerNumber;
             std::string message;
@@ -201,6 +196,12 @@ void Display::parseServerInfo(std::string response)
                     if (_entities[i]._incantation && player_x == x && player_y == y)
                         _entities[i]._incantation = 0;
                 }
+            }
+        } else if (command == "seg") {
+            std::string teamName;
+            if (linestream >> teamName) {
+                _win = 1;
+                _winningTeam = teamName;
             }
         }
     }

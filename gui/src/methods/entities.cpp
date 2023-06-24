@@ -135,5 +135,10 @@ void Display::drawEntities()
         _sprite->setScale(sf::Vector2f(_scale, _scale));
         _sprite->setTextureRect(_entities[i].getRect());
         _window->draw(*_sprite);
+        if (_frame % 60 == 0) {
+            char buffer[10];
+            std::sprintf(buffer, "ppo %d\n", _entities[i]._playerNumber);
+            sendData(buffer);
+        }
     }
 }
