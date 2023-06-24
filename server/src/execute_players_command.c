@@ -23,7 +23,7 @@ static void execute_graphical_command(game_t* game, client_t* client, char* comm
     dequeue_command(client);
 }
 
-static void execute_player_command(game_t* game, client_t* client, char* command,
+static void  execute_player_command(game_t* game, client_t* client, char* command,
                                    time_t current_time)
 {
     clock_t completion_time = get_last_command_completion_time(client);
