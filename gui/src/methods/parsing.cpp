@@ -64,12 +64,6 @@ void Display::parseServerInfo(std::string response)
                 _tiles[y * _mapWidth + x] = tile;
                 checkTotalResources();
             }
-        } else if (command == "sgt") {
-            // int time;
-            // if (linestream >> time && _serverTime == -1) {
-            //     _serverTime = time;
-
-            // }
         } else if (command == "tna") {
             std::vector<std::string> names;
             std::string name;

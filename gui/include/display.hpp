@@ -121,6 +121,9 @@ class Display {
         std::vector<Entity> _entities;
         std::vector<std::string> _teamNames;
         std::vector<sf::Color> _teamColors;
+        int _win = 0;
+        int _winAlpha = 0;
+        std::string _winningTeam;
         int _displayLoop = 1;
         int _quit = 0;
         int _menuLoop = 1;
@@ -183,9 +186,6 @@ class Display {
         int _selectedTeam = 0;
         int _teamTotalPlayers = 0;
         int _teamlvl[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-        int _win = 0;
-        int _winAlpha = 0;
-        std::string _winningTeam;
 };
 
 

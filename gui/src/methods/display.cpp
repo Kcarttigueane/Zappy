@@ -290,25 +290,26 @@ void Display::drawsideUI()
 
 void Display::drawWin()
 {
-    if (!_win)
-        return;
-    sf::RectangleShape rect(sf::Vector2f(1920.f, 1080.f));
-    rect.setFillColor(sf::Color(0, 0, 0, _winAlpha));
-    rect.setPosition(0, 0);
-    _window->draw(rect);
-    sf::Text text;
-    text.setFont(*_font);
-    text.setFillColor(sf::Color::White);
-    text.setCharacterSize(50);
-    text.setPosition(sf::Vector2f(600.f, 400.f));
-    char buffer[50];
-    std::sprintf(buffer, "%s's Team Wins!", _winningTeam.c_str());
-    text.setString(buffer);
-    _window->draw(text);
-    if (_winAlpha < 255)
-        _winAlpha += 5;
-    if (_winAlpha > 255)
-        _winAlpha = 255;
+    if (_win) {
+        printf("Win: %d\n", _win);
+        sf::RectangleShape rect(sf::Vector2f(1920.f, 1080.f));
+        rect.setFillColor(sf::Color(0, 0, 0, _winAlpha));
+        rect.setPosition(0, 0);
+        _window->draw(rect);
+        sf::Text text;
+        text.setFont(*_font);
+        text.setFillColor(sf::Color::White);
+        text.setCharacterSize(50);
+        text.setPosition(sf::Vector2f(600.f, 400.f));
+        char buffer[50];
+        std::sprintf(buffer, "%s's Team Wins!", _winningTeam.c_str());
+        text.setString(buffer);
+        _window->draw(text);
+        if (_winAlpha < 255)
+            _winAlpha += 5;
+        if (_winAlpha > 255)
+            _winAlpha = 255;
+    }
 }
 
     /// \param rectLeft   Left coordinate of the rectangle
