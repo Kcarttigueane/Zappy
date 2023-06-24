@@ -10,6 +10,7 @@
 void sigint_handler(__attribute_maybe_unused__ int sig)
 {
     printf("\nSIGINT received, shutting down server...\n");
+    stop_server = true;
 }
 
 int setup_signal_handler(void)

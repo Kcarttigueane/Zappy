@@ -9,7 +9,8 @@
 
 char* my_strcat(char* s1, char* s2)
 {
-    int sum_len = strlen(s1) + strlen(s2);
+    size_t sum_len = strlen(s1) + strlen(s2);
+
     char* result = malloc(sizeof(char) * (sum_len + 1));
     int i;
     int j;
