@@ -1,0 +1,10 @@
+# ! Development
+.vscode
+.idea
+
+# ! Binary files
+
+zappy_server
+zappy_server.bin
+zappy_ai
+zappy_gui

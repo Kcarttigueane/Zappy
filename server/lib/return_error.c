@@ -6,15 +6,16 @@
 */
 
 #include "../include/lib.h"
+#include "../include/colors.h"
 
 int handle_error(const char* msg)
 {
-    fprintf(stdout, "%s\n", msg);
+    fprintf(stderr, RED "%s" RESET "\n", msg);
     return 84;
 }
 
 int handle_failure(const char* msg)
 {
-    fprintf(stdout, "%s\n", msg);
+    fprintf(stderr, RED "%s" RESET "\n", msg);
     return -1;
 }
