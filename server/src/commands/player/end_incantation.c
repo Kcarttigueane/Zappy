@@ -22,6 +22,7 @@ void update_player_level_and_inventory(game_t* game, coord_t* pos)
             append_to_string(client->write_buf, response);
             memset(response, 0, MAX_BUFFER);
             sprintf(response, PLV_FORMAT, client->player->id, client->player->level);
+            memset(response, 0, MAX_BUFFER);
         }
     }
 }
@@ -53,15 +54,19 @@ void end_incantation(game_t* game, client_t* client)
 
     player_t* player = client->player;
 
+    char gui_response[256] = {0};
+
     printf("Ending incantation\n");
     coord_t* p_pos = &client->player->pos;
 
     if (!check_incantation_requirements(game, player->level - 1, p_pos, player->level)) {
+        sprintf(gui_response, PIE_FORMAT, p_pos->x, p_pos->y, 0);
         append_to_string(client->write_buf, KO_FORMAT);
         return;
+    } else {
+        update_player_level_and_inventory(game, p_pos);
+
+        update_tile_content(game, *p_pos, INCANTATION_REQUIREMENTS[player->level - 1]);
+        sprintf(gui_response, PIE_FORMAT, p_pos->x, p_pos->y, 1);
     }
-
-    update_player_level_and_inventory(game, p_pos);
-
-    update_tile_content(game, *p_pos, INCANTATION_REQUIREMENTS[player->level - 1]);
 }

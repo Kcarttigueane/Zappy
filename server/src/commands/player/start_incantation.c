@@ -10,15 +10,16 @@
 void start_incantation(game_t* game, client_t* client)
 {
     coord_t* p_pos = &client->player->pos;
+    int requirement_index = client->player->level - 1;
 
-    if (!check_incantation_requirements(game, client->player->level - 1, p_pos,
-                                        client->player->level)) {
+    if (!check_incantation_requirements(game, requirement_index, p_pos, client->player->level)) {
         append_to_string(client->write_buf, KO_FORMAT);
         return;
     }
 
     // The requirements are met, freeze the player and start the incantation
     client_t *curr_client, *temp;
+
     char gui_response[256] = {0};
     sprintf(gui_response, "pic %d %d %ld ", p_pos->x, p_pos->y, client->player->level);
 
