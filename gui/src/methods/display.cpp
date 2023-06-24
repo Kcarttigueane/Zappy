@@ -291,7 +291,6 @@ void Display::drawsideUI()
 void Display::drawWin()
 {
     if (_win) {
-        printf("Win: %d\n", _win);
         sf::RectangleShape rect(sf::Vector2f(1920.f, 1080.f));
         rect.setFillColor(sf::Color(0, 0, 0, _winAlpha));
         rect.setPosition(0, 0);
@@ -311,9 +310,3 @@ void Display::drawWin()
             _winAlpha = 255;
     }
 }
-
-    /// \param rectLeft   Left coordinate of the rectangle
-    /// \param rectTop    Top coordinate of the rectangle
-    /// \param rectWidth  Width of the rectangle
-    /// \param rectHeight Height of the rectangle
-    ///
