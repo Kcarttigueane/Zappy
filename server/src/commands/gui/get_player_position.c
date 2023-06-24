@@ -30,7 +30,7 @@ void get_all_player_positions(game_t* game)
 
     LIST_FOREACH_SAFE(curr_client, &game->client_list, entries, temp)
     {
-        if (curr_client->player->state == GRAPHICAL)
+        if (curr_client->player->state == GRAPHICAL || curr_client->player->state == NONE)
             continue;
         sprintf(response, PNW_FORMAT, curr_client->player->id, curr_client->player->pos.x,
                 curr_client->player->pos.y, curr_client->player->orientation,

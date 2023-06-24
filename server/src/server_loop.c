@@ -82,6 +82,7 @@ int server_loop(server_data_t* s)
 {
     int total_tiles = s->game.width * s->game.height;
     int total_resources[MAX_NB_RESOURCES] = CALC_TOTAL_RESOURCES(total_tiles);
+    spawning_resources(s, total_resources);
 
     time_t start, current;
 
