@@ -12,21 +12,45 @@
 #include <SFML/System/String.hpp>
 #include <iostream>
 #include <string>
+#include <cstdio>
 #include <algorithm>
+#include <sstream>
+#include <thread>
+#include <cmath>
+#include <mutex>
+#include <cstring>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <random>
+#include <sys/select.h>
+#include <fcntl.h>
+
+#include "tile.hpp"
+#include "broadcasts.hpp"
 
 #define PLAYER_TYPE 0
 #define ROCK_TYPE 1
 #define DIR_STOP 0
-#define DIR_LEFT 1
-#define DIR_RIGHT 2
-#define DIR_UP 3
-#define DIR_DOWN 4
+#define DIR_NORTH 1
+#define DIR_EAST 2
+#define DIR_SOUTH 3
+#define DIR_WEST 4
 
 class Entity {
     public:
-        Entity(sf::Texture *texture, int entityType) {
+        Entity(sf::Texture *texture, int playerNumber, int x, int y, int direction, int lvl, std::string teamName) {
             _texture = texture;
-            _entityType = entityType;
+            _playerNumber = playerNumber;
+            _x = float(x);
+            _y = float(y);
+            _objX = _x;
+            _objY = _y;
+            _direction = direction;
+            _lvl = lvl;
+            _teamName = teamName;
+            Tile tile = {10, 0, 0, 0, 0, 0, 0, 0, 0.0f};
+            _inventory = tile;
         }
         void setPosition(float x, float y) {
             _x = x;
@@ -54,18 +78,25 @@ class Entity {
             return _texture;
         }
 
-        int getEntityType() {
-            return _entityType;
-        }
-
         int _direction = DIR_STOP;
         int _animationPoint = 0;
         int _inverseScale = 1;
-    
-    protected:
         float _x;
         float _y;
+        float _objX;
+        float _objY;
+        int _playerNumber;
+        int _lvl = 1;
+        size_t _teamNumb = 0;
+        int _dead = 0;
+        int _move = 0;
+        int _inv = 255;
+        int _incantation = 0;
+        int _incantationColor = 0;
+        Tile _inventory;
+        std::string _teamName;
         sf::Texture *_texture;
         sf::IntRect _rect;
-        int _entityType;
 };
+
+int findEntity(std::vector<Entity> entities, int playerNumber);

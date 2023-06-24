@@ -8,3 +8,5 @@
 #pragma once
 
 #include "display.hpp"
+
+void gameLoop(Display *display);
