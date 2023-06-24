@@ -63,7 +63,4 @@ fclean: clean
 
 re: fclean all
 
-# tests_run:
-# 	make -C ./tests all
-
-.PHONY: all clean fclean re tests_run
+.PHONY: all clean fclean re
