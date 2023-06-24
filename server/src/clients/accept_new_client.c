@@ -24,6 +24,7 @@ int initialize_players(server_data_t* s, client_t* client)
     client->player->level = 1;
     memset(client->player->inventory, 0, sizeof(client->player->inventory));
     client->player->life_units = 10;
+    client->player->is_frozen = false;
 
     client->player->state = NONE;
     init_command_queue(client);

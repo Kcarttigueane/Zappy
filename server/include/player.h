@@ -41,6 +41,7 @@
     typedef struct player_s {
         bool is_graphical;
         size_t id;
+        bool is_frozen;
         coord_t pos;
         orientation_t orientation;
         size_t level;
@@ -54,5 +55,8 @@
 
 // ! Function prototypes:
 
+
+bool check_incantation_requirements(game_t* game, int index, coord_t* pos,
+                                    size_t player_level_to_match);
 
 #endif /* !PLAYER_H_ */

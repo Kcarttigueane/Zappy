@@ -39,8 +39,7 @@ void handle_client_activity(server_data_t* s)
                     handle_client_disconnection(s, client);
                     break;
                 default:
-                    fprintf(stderr, BLUE "Client %d send the message '%s'\n" RESET, client->fd,
-                            buffer);
+                    fprintf(stderr, BLUE "Client %d send message '%s'\n" RESET, client->fd, buffer);
                     buffer[strlen(buffer)] = '\0';
                     parse_client_input(s, client, buffer);
                     break;
