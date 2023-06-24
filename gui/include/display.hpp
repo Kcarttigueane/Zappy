@@ -30,6 +30,12 @@ class Display {
             _eggTexture = new sf::Texture;
             _sideUITexture = new sf::Texture;
             _sprite = new sf::Sprite;
+            _cubeSprite = new sf::Sprite;
+            _uiSprite = new sf::Sprite;
+            _speechSprite = new sf::Sprite;
+            _eggSprite = new sf::Sprite;
+            _sideUISprite = new sf::Sprite;
+            _titleSprite = new sf::Sprite;
             _font = new sf::Font;
             _event = new sf::Event;
             _playerTexture->loadFromFile("./assets/players_scaled.png");
@@ -39,9 +45,25 @@ class Display {
             _uiTexture->loadFromFile("./assets/custompanel.png");
             _speechTexture->loadFromFile("./assets/speech.png");
             _titleTexture->loadFromFile("./assets/ZAPPY.png");
+            _cubeSprite->setTexture(*_cubeTexture);
+            _eggSprite->setTexture(*_eggTexture);
+            _uiSprite->setTexture(*_uiTexture);
+            _titleSprite->setTexture(*_titleTexture);
+            _speechSprite->setTexture(*_speechTexture);
+            _sideUISprite->setTexture(*_sideUITexture);
             _uiPosition = sf::Vector2f(100, 1080);
             _uiPlayerPosition = sf::Vector2f(100, -200);
             _font->loadFromFile("./assets/font.ttf");
+            _cubeSprite->setTextureRect(sf::IntRect(183, 42, ASSET_WIDHT, ASSET_HEIGHT));
+            _uiSprite->setTextureRect(sf::IntRect(0, 0, _uiTexture->getSize().x, _uiTexture->getSize().y));
+            _uiSprite->setScale(0.773, 1.f);
+            _uiSprite->setColor(sf::Color::White);
+            _speechSprite->setTextureRect(sf::IntRect(0, 0, 1012, 558));
+            _eggSprite->setTextureRect(sf::IntRect(0, 0, 289, 253));
+            _titleSprite->setPosition(sf::Vector2f(750, 60));
+            _titleSprite->setTextureRect(sf::IntRect(0, 0, 415, 146));
+            _titleSprite->setScale(sf::Vector2f(1.0, 1.0));
+
         }
         ~Display() {
             delete _window;
@@ -52,6 +74,12 @@ class Display {
             delete _titleTexture;
             delete _speechTexture;
             delete _sideUITexture;
+            delete _cubeSprite;
+            delete _eggSprite;
+            delete _uiSprite;
+            delete _titleSprite;
+            delete _speechSprite;
+            delete _sideUISprite;
             delete _sprite;
             delete _font;
         }
@@ -112,6 +140,12 @@ class Display {
         sf::Texture *_sideUITexture;
         sf::Event *_event;
         sf::Sprite *_sprite;
+        sf::Sprite *_cubeSprite;
+        sf::Sprite *_uiSprite;
+        sf::Sprite *_speechSprite;
+        sf::Sprite *_eggSprite;
+        sf::Sprite *_sideUISprite;
+        sf::Sprite *_titleSprite;
         sf::Font *_font;
         sf::Vector2f _mouseGridCoords;
         bool _tileClicked = false;
