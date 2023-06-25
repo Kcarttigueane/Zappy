@@ -12,7 +12,7 @@ void debug_tile_content(tile_t* tile, coord_t pos)
 {
     fprintf(stdout, GREEN "%s" RESET "\n", "============  Start DEBUG tile content ============");
 
-    printf("X: %d\n", pos.x);
+    printf("Tile at pos x: %d y: %d\n", pos.x, pos.y);
     printf("FOOD: %zu\n", tile->quantity[FOOD]);
     printf("LINEMATE: %zu\n", tile->quantity[LINEMATE]);
     printf("DERAUMERE: %zu\n", tile->quantity[DERAUMERE]);

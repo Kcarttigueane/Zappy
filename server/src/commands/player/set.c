@@ -7,9 +7,9 @@
 
 #include "server.h"
 
-void set_update_gui_with_player_action(game_t* game, player_t* player, int object_index, coord_t pos)
+void set_update_gui_with_player_action(game_t* game, player_t* player, int object_index, coord_t *pos)
 {
-    tile_t* tile = &game->map[pos.x][pos.y];
+    tile_t* tile = &game->map[pos->x][pos->y];
 
     char response[256] = {0};
     sprintf(response, PDR_FORMAT, player->id, object_index);
@@ -24,7 +24,7 @@ void set_update_gui_with_player_action(game_t* game, player_t* player, int objec
 
     memset(response, 0, 256);
 
-    sprintf(response, BCT_FORMAT, pos.x, pos.y, tile->quantity[FOOD], tile->quantity[LINEMATE],
+    sprintf(response, BCT_FORMAT, pos->x, pos->y, tile->quantity[FOOD], tile->quantity[LINEMATE],
             tile->quantity[DERAUMERE], tile->quantity[SIBUR], tile->quantity[MENDIANE],
             tile->quantity[PHIRAS], tile->quantity[THYSTAME]);
 
@@ -67,7 +67,7 @@ void set(game_t* game, client_t* client)
 
     tile->quantity[object_index]++;
 
-    set_update_gui_with_player_action(game, player, object_index, pos);
+    set_update_gui_with_player_action(game, player, object_index, &pos);
 
     append_to_string(client->write_buf, OK_FORMAT);
 
