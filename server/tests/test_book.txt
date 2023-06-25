@@ -21,6 +21,14 @@ Look : ❌
     -> [P] -> [ player , object - on - tile1 , ... , object - on - tileP ,...]
     -> [GUI] -> nothing
 
+    -> Level 1 -> ❌
+    -> Level 2 -> ❌
+    -> Level 3 -> ❌
+    -> Level 4 -> ❌
+    -> Level 5 -> ❌
+    -> Level 6 -> ❌
+    -> Level 7 -> ❌
+    -> Level 8 -> ❌
 
 Inventory : ❌
     -> Normal usage: Reports correct number of each object in inventory.
@@ -95,7 +103,7 @@ End of the game : ❌
     -> [GUI] -> 'seg'
 
 
-Time unit modification -> SST T\n : ❌
+Time unit modification -> SST T\n : ✅
     -> [P] -> nothing
     -> [GUI] -> 'sgt'
 
@@ -105,3 +113,5 @@ When a new player can connect to an egg send eht
 
 ✅ -> Tested
 ❌ -> Not tested
+
+TOTAL NUMBER OF COMMANDS: 4 / 17

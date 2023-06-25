@@ -47,7 +47,7 @@ bool check_incantation_requirements(game_t* game, int index, coord_t* pos, size_
 
     size_t total_qty[MAX_NB_RESOURCES] = {0};
 
-    debug_tile_content(tile);
+    debug_tile_content(tile, *pos);
 
     for (size_t i; i < MAX_NB_RESOURCES; i++) {
         total_qty[i] = tile->quantity[i];

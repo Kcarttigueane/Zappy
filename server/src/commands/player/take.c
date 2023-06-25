@@ -7,18 +7,28 @@
 
 #include "server.h"
 
-int find_object_index(char* object_name)
+void take_update_gui_with_player_action(game_t* game, player_t* player, int object_index, coord_t pos)
 {
-    int object_index = FAILURE;
+    tile_t* tile = &game->map[pos.x][pos.y];
 
-    for (int i = 0; i < MAX_NB_RESOURCES; i++) {
-        if (strcmp(inventory_names[i], object_name) == 0) {
-            object_index = i;
-            break;
-        }
-    }
+    char response[256] = {0};
+    sprintf(response, PGT_FORMAT, player->id, object_index);
+    append_to_gui_write_buffer(game, response);
 
-    return object_index;
+    memset(response, 0, 256);
+    sprintf(response, PIN_FORMAT, player->id, player->pos.x, player->pos.y, player->inventory[FOOD],
+            player->inventory[LINEMATE], player->inventory[DERAUMERE], player->inventory[SIBUR],
+            player->inventory[MENDIANE], player->inventory[PHIRAS], player->inventory[THYSTAME]);
+
+    append_to_gui_write_buffer(game, response);
+
+    memset(response, 0, 256);
+
+    sprintf(response, BCT_FORMAT, pos.x, pos.y, tile->quantity[FOOD], tile->quantity[LINEMATE],
+            tile->quantity[DERAUMERE], tile->quantity[SIBUR], tile->quantity[MENDIANE],
+            tile->quantity[PHIRAS], tile->quantity[THYSTAME]);
+
+    append_to_gui_write_buffer(game, response);
 }
 
 void take(game_t* game, client_t* client)
@@ -28,6 +38,7 @@ void take(game_t* game, client_t* client)
 
     char** command_args = split_str(command, " ");
     char* object_name = command_args[1];
+    printf("object_name: %s\n", object_name);
 
     if (object_name == NULL) {
         append_to_string(client->write_buf, KO_FORMAT);
@@ -35,6 +46,7 @@ void take(game_t* game, client_t* client)
     }
 
     int object_index = find_object_index(object_name);
+    printf("object_index: %d\n", object_index);
     if (object_index == FAILURE) {
         append_to_string(client->write_buf, KO_FORMAT);
         free_word_array(command_args);
@@ -43,32 +55,16 @@ void take(game_t* game, client_t* client)
 
     coord_t pos = player->pos;
 
-    if (game->map[pos.x][pos.y].quantity[object_index] > 0) {
-        game->map[pos.x][pos.y].quantity[object_index]--;
+    tile_t* tile = &game->map[pos.x][pos.y];
+
+    debug_tile_content(tile, pos);
+
+    if (tile->quantity[object_index] > 0) {
+        tile->quantity[object_index]--;
 
         player->inventory[object_index]++;
 
-        char response[256] = {0};
-        sprintf(response, PGT_FORMAT, player->id, object_index);
-        append_to_gui_write_buffer(game, response);
-
-        memset(response, 0, 256);
-        sprintf(response, PIN_FORMAT, player->id, player->pos.x, player->pos.y,
-                player->inventory[FOOD], player->inventory[LINEMATE], player->inventory[DERAUMERE],
-                player->inventory[SIBUR], player->inventory[MENDIANE], player->inventory[PHIRAS],
-                player->inventory[THYSTAME]);
-
-        append_to_gui_write_buffer(game, response);
-
-        memset(response, 0, 256);
-
-        sprintf(
-            response, BCT_FORMAT, pos.x, pos.y, game->map[pos.x][pos.y].quantity[FOOD],
-            game->map[pos.x][pos.y].quantity[LINEMATE], game->map[pos.x][pos.y].quantity[DERAUMERE],
-            game->map[pos.x][pos.y].quantity[SIBUR], game->map[pos.x][pos.y].quantity[MENDIANE],
-            game->map[pos.x][pos.y].quantity[PHIRAS], game->map[pos.x][pos.y].quantity[THYSTAME]);
-
-        append_to_gui_write_buffer(game, response);
+        take_update_gui_with_player_action(game, player, object_index, pos);
 
         append_to_string(client->write_buf, OK_FORMAT);
     } else {

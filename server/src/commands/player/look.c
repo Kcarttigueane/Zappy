@@ -92,7 +92,7 @@ void look(game_t* game, client_t* client)
             printf("tx: %d, ty: %d\n", tx, ty);
 
             tile_t* tile = &game->map[ty][tx];
-            debug_tile_content(tile);
+            debug_tile_content(tile, (coord_t){tx, ty});
             char** objects = get_objects_on_tile(game, tile, (coord_t){tx, ty});
 
             for (int k = 0; objects[k] != NULL; ++k) {
