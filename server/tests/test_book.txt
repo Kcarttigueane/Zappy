@@ -30,7 +30,7 @@ Look : ❌
     -> Level 7 -> ❌
     -> Level 8 -> ❌
 
-Inventory : ❌
+Inventory : [Kevin: ✅]
     -> Normal usage: Reports correct number of each object in inventory.
     -> Empty inventory: Reports zero for each object.
     -> [P] -> [ food n , linemate n , deraumere n , sibur n , mendiane n , phiras n , thystame n ]
@@ -69,12 +69,12 @@ Eject : ❌ (not tested)
         -> [GUI] -> 'edi'
 
 
-Take object : ❌
+Take object : [Kevin: ✅]
     -> [P] -> 'ok' | 'ko'
     -> [GUI] -> 'pgt' && 'pin' && 'bct'
 
 
-Set object : ❌
+Set object : [Kevin: ✅]
     -> [P] -> 'ok' | 'ko'
     -> [GUI] -> 'pdr' && 'pin' && 'bct'
 
@@ -114,4 +114,4 @@ When a new player can connect to an egg send eht
 ✅ -> Tested
 ❌ -> Not tested
 
-TOTAL NUMBER OF COMMANDS: 4 / 17
+TOTAL NUMBER OF COMMANDS: 7 / 17
