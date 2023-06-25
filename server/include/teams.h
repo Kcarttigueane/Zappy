@@ -56,7 +56,7 @@ egg_t* create_and_add_egg(team_t* team, coord_t pos);
  *
  * \param team The team whose egg list should be freed.
  */
-void free_list(team_t* team);
+void free_egg_lists(game_t* game);
 
 /**
  * \brief Prints the team's list of eggs.

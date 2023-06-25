@@ -48,7 +48,7 @@ void destroy_eggs_on_tile(game_t* game, coord_t tile_pos)
     char gui_message[64] = {0};
 
     for (size_t i = 0; i < game->team_count; i++) {
-        team_t* team = &game->team[i];
+        team_t* team = &game->teams[i];
 
         egg_t *e, *temp;
 

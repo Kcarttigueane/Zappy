@@ -22,6 +22,6 @@ void update_egg_player(game_t* game, client_t* client, char** inputs, egg_t* egg
     if (team_index == FAILURE)
         return;
 
-    remove_egg_by_id(&game->team[team_index], egg->id);
-    game->team[team_index].nb_players_connected++;
+    remove_egg_by_id(&game->teams[team_index], egg->id);
+    game->teams[team_index].nb_players_connected++;
 }

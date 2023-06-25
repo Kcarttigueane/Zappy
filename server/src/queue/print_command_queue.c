@@ -22,8 +22,7 @@ void print_command_queue(client_t* client)
         int order = 1;
         printf("Front -> ");
         while (current != queue->rear && order <= MAX_COMMANDS_PER_CLIENT) {
-            printf("Command order: %d.  name: %s -> ", order++,
-                   queue->commands[current]);
+            printf("Command order: %d.  name: %s -> ", order++, queue->commands[current]);
             printf("Enqueued at: %.2f seconds\n",
                    (double)queue->completion_time[current] / CLOCKS_PER_SEC);
             current = (current + 1) % MAX_COMMANDS_PER_CLIENT;

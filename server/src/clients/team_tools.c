@@ -32,7 +32,7 @@ team_t* find_team_by_name(game_t* game, char* team_name)
 {
     for (size_t i = 0; i < game->team_count; i++) {
         if (!strcmp(game->team_names[i], team_name))
-            return &game->team[i];
+            return &game->teams[i];
     }
     return NULL;
 }

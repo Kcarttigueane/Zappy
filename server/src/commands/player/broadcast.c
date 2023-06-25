@@ -97,7 +97,8 @@ void broadcast(game_t* game, client_t* client)
     player_t* player = client->player;
     char* command = peek_command(client);
 
-    char* message = split_str(command, " ")[1];
+    char** command_split = split_str(command, " ");
+    char* message = command_split[1];
 
     if (message == NULL) {
         append_to_string(client->write_buf, KO_FORMAT);
@@ -130,4 +131,6 @@ void broadcast(game_t* game, client_t* client)
     append_to_gui_write_buffer(game, response);
 
     append_to_string(client->write_buf, OK_FORMAT);
+
+    free_word_array(command_split);
 }

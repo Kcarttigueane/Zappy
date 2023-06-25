@@ -43,6 +43,8 @@ void remove_client_by_fd(game_t* game, int fd)
 
 void free_player(player_t* player)
 {
+    if (player->team_name)
+        free(player->team_name);
     free(player);
 }
 

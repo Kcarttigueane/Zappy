@@ -129,6 +129,7 @@ void set_time_unit(game_t* game, client_t* client);
  */
 void get_all_player_positions(game_t* game);
 
+
 // ! Function Prototypes (Player):
 
 /**
@@ -242,6 +243,7 @@ void end_incantation(game_t* game, client_t* client);
  * @param client Pointer to the client structure representing the new player.
  */
 void hatch(game_t* game, client_t* client);
+
 
 // ! Function Prototypes (Utils):
 

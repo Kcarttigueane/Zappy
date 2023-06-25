@@ -25,7 +25,7 @@ static void handle_client_disconnection(server_data_t* s, client_t* client)
         if (team_index == FAILURE)
             return;
 
-        s->game.team[team_index].nb_players_connected--;
+        s->game.teams[team_index].nb_players_connected--;
     }
 
     sprintf(response, PDI_FORMAT, client->player->id);

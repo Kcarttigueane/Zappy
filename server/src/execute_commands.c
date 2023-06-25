@@ -10,7 +10,8 @@
 
 static void execute_graphical_command(game_t* game, client_t* client, char* command)
 {
-    char* command_name = split_str(command, " ")[0];
+    char** split_command = split_str(command, " ");
+    char* command_name = split_command[0];
 
     int index = find_graphical_command_index(command_name);
 
@@ -21,6 +22,8 @@ static void execute_graphical_command(game_t* game, client_t* client, char* comm
     }
 
     dequeue_command(client);
+
+    free_word_array(split_command);
 }
 
 static void execute_player_command(game_t* game, client_t* client, char* command,
@@ -30,7 +33,8 @@ static void execute_player_command(game_t* game, client_t* client, char* command
 
     if (current_time >= completion_time) {
 
-        char* command_name = split_str(command, " ")[0];
+        char** split_command = split_str(command, " ");
+        char* command_name = split_command[0];
 
         int index = find_player_command_index(command_name);
 
@@ -40,6 +44,8 @@ static void execute_player_command(game_t* game, client_t* client, char* command
             PLAYER_COMMANDS[index].function(game, client);
         }
         dequeue_command(client);
+
+        free_word_array(split_command);
     }
 }
 

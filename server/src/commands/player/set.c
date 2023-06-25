@@ -12,7 +12,8 @@ void set(game_t* game, client_t* client)
     player_t* player = client->player;
     char* command = peek_command(client);
 
-    char* object_name = split_str(command, " ")[1];
+    char** command_args = split_str(command, " ");
+    char* object_name = command_args[1];
 
     if (object_name == NULL) {
         append_to_string(client->write_buf, KO_FORMAT);
@@ -22,11 +23,13 @@ void set(game_t* game, client_t* client)
     int object_index = find_object_index(object_name);
     if (object_index == FAILURE) {
         append_to_string(client->write_buf, KO_FORMAT);
+        free_word_array(command_args);
         return;
     }
 
     if (player->inventory[object_index] <= 0) {
         append_to_string(client->write_buf, KO_FORMAT);
+        free_word_array(command_args);
         return;
     }
 
@@ -57,4 +60,6 @@ void set(game_t* game, client_t* client)
     append_to_gui_write_buffer(game, response);
 
     append_to_string(client->write_buf, OK_FORMAT);
+
+    free_word_array(command_args);
 }

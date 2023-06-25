@@ -55,8 +55,8 @@
 
 // ! Function prototypes:
 
-
-bool check_incantation_requirements(game_t* game, int index, coord_t* pos,
-                                    size_t player_level_to_match);
+bool check_incantation_requirements(game_t* game, int index, coord_t* pos, size_t plv_to_match);
+void update_player_life(player_t* player, int freq);
+void player_lifetime(server_data_t* s);
 
 #endif /* !PLAYER_H_ */

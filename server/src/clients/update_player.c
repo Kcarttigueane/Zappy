@@ -9,8 +9,6 @@
 
 void update_normal_player(game_t* game, client_t* client, char** inputs)
 {
-    // TODO : This should be checked to avoid duplication of data
-
     client->player->team_name = strdup(inputs[0]);
     client->player->state = PLAYER;
     client->player->level = 1;
@@ -30,5 +28,5 @@ void update_normal_player(game_t* game, client_t* client, char** inputs)
     if (team_index == FAILURE)
         return;
 
-    game->team[team_index].nb_players_connected++;
+    game->teams[team_index].nb_players_connected++;
 }

@@ -94,4 +94,6 @@ void process_command_order(game_t* game, client_t* client, char* command_buff)
         handle_first_client_msg(game, client, split_command);
     else
         handle_client_command(game, client, split_command, command_buff);
+
+    free_word_array(split_command);
 }

@@ -34,17 +34,89 @@
 
 // ! MAP FUNCTIONS !
 
-void print_resources_location(tile_t** map, size_t height, size_t width);
+/**
+ * \brief Adds the quantities of resources on a given map tile to the current resources array.
+ *
+ * \param[in,out] map 2D array representing the game map.
+ * \param[in,out] current_resources Array to store the current amount of each resource.
+ * \param[in] i X-coordinate of the map tile.
+ * \param[in] j Y-coordinate of the map tile.
+ */
+void add_current_resources(tile_t** map, int current_resources[], size_t i, size_t j);
+
+/**
+ * \brief Calculates the total number of each resource on the game map.
+ *
+ * \param[in,out] map 2D array representing the game map.
+ * \param[in,out] current_resources Array to store the current amount of each resource.
+ * \param[in] height The height of the game map.
+ * \param[in] width The width of the game map.
+ */
+void calculate_current_resources(tile_t** map, int current_resources[], size_t height,
+                                        size_t width);
+
+/**
+ * \brief Spawns resources on the game map.
+ *
+ * \param[in,out] map 2D array representing the game map.
+ * \param[in] total_resources Array representing the total number of each resource.
+ * \param[in] height The height of the game map.
+ * \param[in] width The width of the game map.
+ */
+void spawning_resources(tile_t** map, int total_resources[], size_t height, size_t width);
+
+/**
+ * \brief Initializes a game map of given dimensions.
+ *
+ * \param[in] width The width of the game map.
+ * \param[in] height The height of the game map.
+ *
+ * \return Pointer to the initialized map.
+ */
+tile_t** init_map(size_t width, size_t height);
+
+/**
+ * \brief Shuffles an array of integers in-place.
+ *
+ * \param[in,out] array The array to be shuffled.
+ * \param[in] n The length of the array.
+ */
+void shuffle(int* array, size_t n);
+
+/**
+ * \brief Frees the memory allocated for a game map.
+ *
+ * \param[in] map 2D array representing the game map.
+ * \param[in] width The width of the game map.
+ */
+void free_tiles_map(tile_t** map, size_t width);
+
+/**
+ * \brief Calculates the total number of each resource on a given map tile and adds them to the total resources array.
+ *
+ * \param[in] tile A map tile.
+ * \param[in,out] totals Array to store the total amount of each resource.
+ */
+void calculate_resource_totals(tile_t* tile, size_t* totals);
+
+/**
+ * \brief Prints the total number of each resource on the game map.
+ *
+ * \param[in] map 2D array representing the game map.
+ * \param[in] height The height of the game map.
+ * \param[in] width The width of the game map.
+ */
 void print_total_resources(tile_t** map, size_t height, size_t width);
 
-tile_t** init_map(size_t width, size_t height);
-void shuffle(int* array, size_t n);
-void distribute_resources(tile_t** map, int total_resources[], size_t height,
-size_t width);
+// ! DEBUG FUNCTIONS !
 
-void spawning_resources(server_data_t* data, int* total_resources);
-void free_map(tile_t** map, size_t width);
-
-tile_t* get_tile(tile_t** map, int x, int y);
+/**
+ * \brief Prints the locations and quantities of resources on the game map.
+ *
+ * \param[in] map 2D array representing the game map.
+ * \param[in] height The height of the game map.
+ * \param[in] width The width of the game map.
+ */
+void print_resources_location(tile_t** map, size_t height, size_t width);
 
 #endif /* !MAP_H_ */
