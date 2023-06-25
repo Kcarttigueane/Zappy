@@ -129,6 +129,7 @@ class Display {
     void setupMenu();
 
     std::string handleClient();
+    sf::Color getRandomColor();
 
     //Thread
     void startClientThread();
@@ -151,10 +152,10 @@ class Display {
     sf::Texture* _speechTexture;
     sf::Texture* _sideUITexture;
     sf::Event* _event;
+    sf::Sprite* _speechSprite;
     sf::Sprite* _sprite;
     sf::Sprite* _cubeSprite;
     sf::Sprite* _uiSprite;
-    sf::Sprite* _speechSprite;
     sf::Sprite* _eggSprite;
     sf::Sprite* _sideUISprite;
     sf::Sprite* _titleSprite;
@@ -167,6 +168,7 @@ class Display {
     std::vector<Entity> _entities;
     std::vector<std::string> _teamNames;
     std::vector<sf::Color> _teamColors;
+    std::vector<int> _usedColorIndexes;
     int _win = 0;
     int _winAlpha = 0;
     std::string _winningTeam;
@@ -192,6 +194,7 @@ class Display {
     int _notFirstSelect = 0;
     int _selectedPlayerNumber = 0;
     int _highlightedPlayerNumber = -1;
+    std::vector<int> _highlightedPlayerNumbers;
     std::string _data = "";
     int _thread_seen = -1;
     std::mutex _mtx;

@@ -92,13 +92,15 @@ void Display::threadRecieveData()
                 else
                     continue;
             } else if (recvResult == 0)
-                continue;
-        } else
-            continue;
+                return;
+        } else {
+            std::cout << "Server connection closed." << std::endl;
+            return;
+        }
         std::istringstream iss(buffer);
         std::string command;
         if (iss >> command && command == "suc")
-            break;
+            return;
         setData(buffer);
     }
 }

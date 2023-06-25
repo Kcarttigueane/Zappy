@@ -87,10 +87,16 @@ void Display::drawUI()
     sf::Text text;
     text.setFont(*_font);
 
-    if (_highlightedPlayerNumber != -1) {
-        int entityIndex = findEntity(_entities, _highlightedPlayerNumber);
-        std::string lvl = std::to_string(_entities[entityIndex]._lvl);
-        text.setString(lvl);
+    if (_highlightedPlayerNumbers.size() != 0) {
+        std::string lvl;
+        std::string totalLvl = "";
+        int entityIndex;
+        for (size_t i = 0; i < _highlightedPlayerNumbers.size(); i++) {
+            entityIndex = findEntity(_entities, _highlightedPlayerNumbers[i]);
+            lvl = std::to_string(_entities[entityIndex]._lvl);
+            totalLvl += lvl + " ";
+        }
+        text.setString(totalLvl);
         text.setFillColor(sf::Color::Red);
         text.setCharacterSize(100);
         sf::Vector2f selectedPlayerPos = _entities[entityIndex].getPosition();
@@ -100,8 +106,9 @@ void Display::drawUI()
         rect.height = ASSET_HEIGHT;
         rect.width = ASSET_WIDHT;
         sf::Vector2f isometricPos = getIsometricPos(selectedPlayerPos.x, selectedPlayerPos.y, _scale, rect, _x_offset, _y_offset);
-        isometricPos.x += 140 * _scale;
-        isometricPos.y -= 220 * _scale;
+        float x_offset = ((totalLvl.length() / 2) - 1) * 100;
+        isometricPos.x += (140.f - x_offset) * _scale;
+        isometricPos.y -= 300.f * _scale;
         text.setScale(sf::Vector2f(_scale, _scale));
         text.setPosition(isometricPos);
         _window->draw(text);
@@ -175,6 +182,7 @@ void Display::drawBroadcast()
         isometricPos.y += 180 * _scale;
         text.setPosition(isometricPos);
         text.setString(broadcast.message);
+        _speechSprite->setColor(sf::Color(255, 255, 255, 120));
         _window->draw(*_speechSprite);
         _window->draw(text);
     }
@@ -255,11 +263,16 @@ void Display::drawsideUI()
     if (int(_teamColors.size()) >= _selectedTeam + 1) {
         text.setFillColor(_teamColors[_selectedTeam]);
         text.setPosition(float(_sideUI_x) + 20.f, 550.f);
-        std::sprintf(buffer, "  Team %s\n\nTotal players: %d\n\n  Lvl 1: %d\n\n  Lvl 2: %d\n\n  Lvl 3: %d\n\n  Lvl 4: %d\n\n  Lvl 5: %d\n\n  Lvl 6: %d\n\n  Lvl 7: %d\n\n  Lvl 8: %d\n\n\n<-Toggle Teams->", _teamNames[_selectedTeam].c_str(), _teamTotalPlayers, _teamlvl[0], _teamlvl[1], _teamlvl[2], _teamlvl[3], _teamlvl[4], _teamlvl[5], _teamlvl[6], _teamlvl[7]);
+        std::sprintf(buffer, "  Team %s", _teamNames[_selectedTeam].c_str());
+        text.setString(buffer);
+        _window->draw(text);
+        text.setFillColor(sf::Color::Black);
+        text.setPosition(float(_sideUI_x) + 20.f, 580.f);
+        std::sprintf(buffer, "Total players: %d\n\n  Lvl 1: %d\n\n  Lvl 2: %d\n\n  Lvl 3: %d\n\n  Lvl 4: %d\n\n  Lvl 5: %d\n\n  Lvl 6: %d\n\n  Lvl 7: %d\n\n  Lvl 8: %d\n\n\n<-Toggle Teams->", _teamTotalPlayers, _teamlvl[0], _teamlvl[1], _teamlvl[2], _teamlvl[3], _teamlvl[4], _teamlvl[5], _teamlvl[6], _teamlvl[7]);
         text.setString(buffer);
         _window->draw(text);
     }
-
+    //\n\nTotal players: %d\n\n  Lvl 1: %d\n\n  Lvl 2: %d\n\n  Lvl 3: %d\n\n  Lvl 4: %d\n\n  Lvl 5: %d\n\n  Lvl 6: %d\n\n  Lvl 7: %d\n\n  Lvl 8: %d\n\n\n<-Toggle Teams->
     if (_sideUIState == 0 && _sideUI_x > -245) {
         _sideUI_x -= 10;
         if (_sideUI_x < -245)
@@ -289,9 +302,9 @@ void Display::drawWin()
         std::sprintf(buffer, "%s's Team Wins!", _winningTeam.c_str());
         text.setString(buffer);
         _window->draw(text);
-        if (_winAlpha < 255)
+        if (_winAlpha < 150)
             _winAlpha += 5;
-        if (_winAlpha > 255)
-            _winAlpha = 255;
+        if (_winAlpha > 150)
+            _winAlpha = 150;
     }
 }
