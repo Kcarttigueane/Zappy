@@ -30,8 +30,8 @@ static void player_first_command(game_t* game, client_t* client, char** split_co
     team_t* team = find_team_by_name(game, split_command[0]);
 
     if (team->nb_players_connected >= team->max_players) {
-        printf("Team is full\n");
-        // disconnect_client(game, client);
+        printf("No slots available for the team %s\n", team->name);
+        append_to_string(client->write_buf, KO_FORMAT);
         return;
     }
 
