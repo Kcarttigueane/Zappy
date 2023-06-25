@@ -12,21 +12,55 @@ bool in_range(int a, int b, int dif)
     return (a > b - (dif / 2) && a < b + (dif / 2));
 }
 
-sf::Color getRandomColor(std::vector<sf::Color> colors)
-{
-    size_t size = 0;
-    int too_close = 1;
-    sf::Color color(rand() % 255 + 100, rand() % 255 + 100, rand() % 255 + 100, 255);
-    int stop = 0;
+// sf::Color getRandomColor(std::vector<sf::Color> colors)
+// {
+//     size_t size = 0;
+//     int too_close = 1;
+//     sf::Color color(rand() % 255 + 100, rand() % 255 + 100, rand() % 255 + 100, 255);
+//     int stop = 0;
 
-    while (too_close && stop < 100) {
-        too_close = 0;
-        color = sf::Color(rand() % 255 + 100, rand() % 255 + 100, rand() % 255 + 100, 255);
-        for (size_t i = 0; i < size; i++)
-            if (in_range(color.r, colors[i].r, 50) && in_range(color.r, colors[i].r, 50) && in_range(color.r, colors[i].r, 50))
-                too_close = 1;
-        stop++;
+//     while (too_close && stop < 100) {
+//         too_close = 0;
+//         color = sf::Color(rand() % 255 + 100, rand() % 255 + 100, rand() % 255 + 100, 255);
+//         for (size_t i = 0; i < size; i++)
+//             if (in_range(color.r, colors[i].r, 50) && in_range(color.r, colors[i].r, 50) && in_range(color.r, colors[i].r, 50))
+//                 too_close = 1;
+//         stop++;
+//     }
+//     return color;
+// }
+
+sf::Color Display::getRandomColor()
+{
+    sf::Color colorList[10] = {
+        sf::Color(255, 0, 0),         // Red
+        sf::Color(255, 165, 0),       // Orange
+        sf::Color(255, 255, 0),       // Yellow
+        sf::Color(0, 255, 0),         // Green
+        sf::Color(0, 255, 255),       // Cyan
+        sf::Color(0, 0, 255),         // Blue
+        sf::Color(128, 0, 128),       // Purple
+        sf::Color(255, 0, 255),       // Magenta
+        sf::Color(255, 105, 180),     // Pink
+        sf::Color(0, 255, 0)          // Lime
+    };
+    int foundColor = 0;
+    int randIndex = rand() % 10;
+    int halt = 0;
+    while (!foundColor) {
+        foundColor = 1;
+        for (size_t i = 0; i < _usedColorIndexes.size(); i++) {
+            if (_usedColorIndexes[i] == randIndex) {
+                foundColor = 0;
+                randIndex = rand() % 10;
+            }
+        }
+        halt++;
+        if (halt > 300)
+            break;
     }
+    _usedColorIndexes.push_back(randIndex);
+    sf::Color color = colorList[randIndex];
     return color;
 }
 
@@ -69,7 +103,7 @@ void Display::parseServerInfo(std::string response)
             std::string name;
             while (linestream >> name) {
                 _teamNames.push_back(name);
-                _teamColors.push_back(getRandomColor(_teamColors));
+                _teamColors.push_back(getRandomColor());
             }
         }
         if (command == "pnw") {
@@ -155,7 +189,15 @@ void Display::parseServerInfo(std::string response)
             if (linestream >> playerNumber) {
                 std::getline(linestream >> std::ws, message);
                 Broadcast broadcast = {playerNumber, message, 300};
-                _broadcasts.push_back(broadcast);
+                bool prevMessage = false;
+                for (size_t i  = 0; i < _broadcasts.size(); i++) {
+                    if (_broadcasts[i].message == message) {
+                        _broadcasts[i].frames = 300;
+                        prevMessage = true;
+                    }
+                }
+                if (!prevMessage)
+                    _broadcasts.push_back(broadcast);
             }
             
         } else if (command == "enw") {

@@ -72,12 +72,6 @@ void Display::animateEntity(Entity *entity)
     rect.width = 168;
     rect.height = 207;
     int top_anim[3] = {271, 271 + 291, 271 + (291 * 2)}; 
-    // if (!entity->_move) {
-    //     rect.left = 809;
-    //     rect.top = 271 + 291;
-    //     entity->setRect(rect);
-    //     return;
-    // }
     if (entity->_direction == DIR_SOUTH) {
         rect.left = 1010;
     } else if (entity->_direction == DIR_NORTH) {
@@ -88,9 +82,11 @@ void Display::animateEntity(Entity *entity)
         rect.left = 612;
     }
     rect.top = top_anim[entity->_animationPoint % 3];
-    entity->setRect(rect);
     if (entity->_move)
         entity->_animationPoint += 1;
+    else
+        rect.top = 271 + 291;
+    entity->setRect(rect);
 }
 
 

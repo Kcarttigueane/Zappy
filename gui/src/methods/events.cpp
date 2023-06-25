@@ -53,6 +53,14 @@ void Display::handleEvents()
                 isDragging = true;
                 dragStartPosition = sf::Mouse::getPosition(*_window);
                 currentMousePosition = dragStartPosition;
+                if (_sliderHandle.getGlobalBounds().contains(_event->mouseButton.x, _event->mouseButton.y)) {
+                    _sliderDrag = true;
+                    isDragging = false;
+                }
+                sf::FloatRect sideUIRect(_sideUI_x + 245, 434, 67, 170);
+                if (sideUIRect.contains(_event->mouseButton.x, _event->mouseButton.y)) {
+                    _sideUIState = !_sideUIState;
+                }
                 if (_mouseGridCoords.x >= 0 && _mouseGridCoords.x < _mapWidth && _mouseGridCoords.y >= 0 && _mouseGridCoords.y < _mapHeight) {
                     _lastClickedCoords = _mouseGridCoords;
                     _sideUIState = 0;
@@ -70,14 +78,6 @@ void Display::handleEvents()
                             sendData(buffer);
                         }
                     }
-                }
-                if (_sliderHandle.getGlobalBounds().contains(_event->mouseButton.x, _event->mouseButton.y)) {
-                    _sliderDrag = true;
-                    isDragging = false;
-                }
-                sf::FloatRect sideUIRect(_sideUI_x + 245, 434, 67, 170);
-                if (sideUIRect.contains(_event->mouseButton.x, _event->mouseButton.y)) {
-                    _sideUIState = !_sideUIState;
                 }
             }
         } else if (_event->type == sf::Event::MouseMoved) {
@@ -138,13 +138,13 @@ void Display::getMousePosition()
     int mouseY = mousePosition.y;
     _mouseGridCoords = getGridCoordinates(float(mouseX), float(mouseY), _scale, _x_offset, _y_offset);
 
-    _highlightedPlayerNumber = -1;
+    std::vector<int> highlightedPlayerNumbers;
     for (size_t i = 0; i < _entities.size(); i++) {
         int x = int(_entities[i]._x + 0.05);
         int y = int(_entities[i]._y + 0.05);
         if (int(x) == int(_mouseGridCoords.x) && int(y) == int(_mouseGridCoords.y) && !_entities[i]._dead) {
-            _highlightedPlayerNumber = _entities[i]._playerNumber;
-            break;
+            highlightedPlayerNumbers.push_back(_entities[i]._playerNumber);
         }
     }
+    _highlightedPlayerNumbers = highlightedPlayerNumbers;
 }
