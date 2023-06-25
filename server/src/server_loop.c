@@ -43,7 +43,7 @@ int server_loop(server_data_t* s)
 {
     int total_tiles = s->game.width * s->game.height;
     int total_resources[MAX_NB_RESOURCES] = CALC_TOTAL_RESOURCES(total_tiles);
-    spawning_resources(s->game.map, total_resources, s->game.height, s->game.width);
+    spawning_resources(&s->game, total_resources, s->game.height, s->game.width);
 
     time_t start, current;
 
@@ -75,7 +75,7 @@ int server_loop(server_data_t* s)
         int elapsed_time = difftime(current, start);
 
         if (elapsed_time >= TIMER_INTERVAL) {
-            spawning_resources(s->game.map, total_resources, s->game.height, s->game.width);
+            spawning_resources(&s->game, total_resources, s->game.height, s->game.width);
             time(&start);
         }
         execute_commands(s);

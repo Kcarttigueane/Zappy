@@ -58,12 +58,12 @@ void calculate_current_resources(tile_t** map, int current_resources[], size_t h
 /**
  * \brief Spawns resources on the game map.
  *
- * \param[in,out] map 2D array representing the game map.
+ * \param[in,out] game
  * \param[in] total_resources Array representing the total number of each resource.
  * \param[in] height The height of the game map.
  * \param[in] width The width of the game map.
  */
-void spawning_resources(tile_t** map, int total_resources[], size_t height, size_t width);
+void spawning_resources(game_t *game, int total_resources[], size_t height, size_t width);
 
 /**
  * \brief Initializes a game map of given dimensions.

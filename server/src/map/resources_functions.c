@@ -24,14 +24,15 @@ void calculate_current_resources(tile_t** map, int current_resources[], size_t h
     }
 }
 
-void spawning_resources(tile_t** map, int total_resources[], size_t height, size_t width)
+void spawning_resources(game_t *game, int total_resources[], size_t height, size_t width)
 {
     printf("Spawning resources...\n");
 
     int current_resources[MAX_NB_RESOURCES];
     size_t total_tiles = width * height;
     int* tiles = malloc(total_tiles * sizeof(int));
-    calculate_current_resources(map, current_resources, height, width);
+    calculate_current_resources(game->map, current_resources, height, width);
+    tile_t **map = game->map;
 
     for (size_t i = 0; i < total_tiles; i++)
         tiles[i] = i;
@@ -47,5 +48,6 @@ void spawning_resources(tile_t** map, int total_resources[], size_t height, size
             map[x][y].quantity[resource]++;
         }
     }
+    get_all_tiles_content(game, NULL);
     free(tiles);
 }

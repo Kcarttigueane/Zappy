@@ -69,5 +69,5 @@ void enqueue_command(client_t* client, char* command, int freq)
 
     strncpy(queue->commands[queue->rear], command, MAX_COMMANDS_LENGTH);
     queue->completion_time[queue->rear] = clock() + (CLOCKS_PER_SEC * duration);
-    print_command_enqueue(client, command, freq, action_time);
+    // print_command_enqueue(client, command, freq, action_time);
 }
