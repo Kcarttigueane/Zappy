@@ -41,3 +41,8 @@ void fork_player(game_t* game, client_t* client)
 
     printf("New egg created with id %ld\n", player->id);
 }
+
+void end_fork(game_t* game, client_t* client)
+{
+
+}

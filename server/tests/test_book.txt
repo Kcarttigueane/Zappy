@@ -58,7 +58,7 @@ Fork : ❌ (Need to implement the logic when the team is full and so the client 
     -> [GUI] -> 'pfk' && 'enw'
 
 
-Eject : ❌ (not tested)
+Eject : [Kevin: ✅]
     -> Normal usage: Ejects player in facing direction.
     -> Edge case: Ejects player at the edge of the world, player wraps around to the opposite edge.
     -> [P] -> 'ok' | 'ko'
