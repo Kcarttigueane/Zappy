@@ -242,3 +242,4 @@ sf::Vector2f getGridCoordinates(float x, float y, double scale, double x_offset,
 sf::Vector2f getIsometricPos(float x, float y, float scale, sf::IntRect rect, double x_offset,
                              double y_offset);
 void setupDisplay(Display* display, std::string response);
+std::string getIntFormatedString(int nb, int spaces);

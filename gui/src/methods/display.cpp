@@ -123,7 +123,7 @@ void Display::drawUI()
 
     char buffer[100];
     Tile tile = _tiles[(_mapHeight - int(_lastClickedCoords.y) - 1) * _mapWidth + int(_lastClickedCoords.x)];
-    std::sprintf(buffer, "    %d     %d     %d     %d     %d     %d     %d", tile.food, tile.linemate, tile.deraumere, tile.sibur, tile.mendiane, tile.phiras, tile.thystame);
+    std::sprintf(buffer, "    %s%s%s%s%s%s%s", getIntFormatedString(tile.food, 5).c_str(), getIntFormatedString(tile.linemate, 5).c_str(), getIntFormatedString(tile.deraumere, 5).c_str(), getIntFormatedString(tile.sibur, 5).c_str(), getIntFormatedString(tile.mendiane, 5).c_str(), getIntFormatedString(tile.phiras, 5).c_str(), getIntFormatedString(tile.thystame, 5).c_str());
     text.setScale(1, 1);
     text.setString(buffer);
     text.setFillColor(sf::Color::Black);
@@ -142,9 +142,13 @@ void Display::drawUI()
     if (_notFirstSelect) {
         int entityIndex = findEntity(_entities, _selectedPlayerNumber);
         tile = _entities[entityIndex]._inventory;
-        std::sprintf(buffer, "    %d     %d     %d     %d     %d     %d     %d", tile.food, tile.linemate, tile.deraumere, tile.sibur, tile.mendiane, tile.phiras, tile.thystame);
+        std::sprintf(buffer, "    %s%s%s%s%s%s%s", getIntFormatedString(tile.food, 5).c_str(), getIntFormatedString(tile.linemate, 5).c_str(), getIntFormatedString(tile.deraumere, 5).c_str(), getIntFormatedString(tile.sibur, 5).c_str(), getIntFormatedString(tile.mendiane, 5).c_str(), getIntFormatedString(tile.phiras, 5).c_str(), getIntFormatedString(tile.thystame, 5).c_str());
         text.setString(buffer);
         text.setPosition(sf::Vector2f(_uiPlayerPosition.x, _uiPlayerPosition.y + 70));
+        if (_frame % 15 == 0) {
+            std::sprintf(buffer, "pin %d\n", _selectedPlayerNumber);
+            sendData(buffer);
+        }
         _window->draw(text);
     }
 }

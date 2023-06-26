@@ -8,8 +8,17 @@
 #include <cstdlib>
 #include "include/gui.hpp"
 
+#define USAGE_MESSAGE "USAGE: ./zappy_ai port machine\n" \
+                      "\tport is the port number\n" \
+                      "\tmachine is the name of the machine; localhost by default\n"
+
 int main(int argc, char* argv[])
 {
+    if (argc == 2 && !strcmp("-h", argv[1])) {
+        printf(USAGE_MESSAGE);
+        return EXIT_SUCCESS;
+    }
+
     srand(time(NULL));
     Display display(1920, 1080, "Zappy");
     display._deltaTime = display._clock.restart();

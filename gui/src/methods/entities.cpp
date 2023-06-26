@@ -30,13 +30,13 @@ void Display::entitySelect(Entity *entity, sf::Vector2f *pos)
 
 void Display::teleportEntity(Entity *e)
 {
-    if (e->_objX == _mapWidth - 1 && e->_direction == DIR_WEST)
+    if (e->_objX == _mapWidth - 1 && ((e->_direction == DIR_WEST || e->_direction == DIR_EAST) && int(e->_x + 0.05) != _mapWidth - 2))
         e->_x = _mapWidth - 1;
-    if (e->_objX == 0 && e->_direction == DIR_EAST)
+    if (e->_objX == 0 && ((e->_direction == DIR_EAST || e->_direction == DIR_WEST) && int(e->_x + 0.05) != 1))
         e->_x = 0;
-    if (e->_objY == _mapHeight - 1 && e->_direction == DIR_NORTH)
+    if (e->_objY == _mapHeight - 1 && ((e->_direction == DIR_NORTH || e->_direction == DIR_SOUTH) && int(e->_y + 0.05) != _mapHeight - 2))
         e->_y = _mapHeight - 1;
-    if (e->_objY == 0 && e->_direction == DIR_SOUTH)
+    if (e->_objY == 0 && ((e->_direction == DIR_NORTH || e->_direction == DIR_SOUTH) && int(e->_y + 0.05) != 1))
         e->_y = 0;
 }
 
