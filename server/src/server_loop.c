@@ -63,7 +63,7 @@ int server_loop(server_data_t* s)
             break;
 
         if (is_game_over(s)) {
-            stop_server = true;
+            sleep(10);
             break;
         }
 

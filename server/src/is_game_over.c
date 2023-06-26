@@ -27,9 +27,15 @@ bool is_game_over(server_data_t* s)
         }
 
         if (players_at_max_level >= WINNING_PLAYERS) {
-            sprintf(response, SEG_FORMAT, game->team_names[i]);
-            append_to_gui_write_buffer(&s->game, response);
-            return true;
+            client_t *client, *temp;
+
+            LIST_FOREACH_SAFE(client, &s->game.client_list, entries, temp)
+            {
+                if (client->player->state == GRAPHICAL) {
+                    dprintf(client->fd, SEG_FORMAT, game->team_names[i]);
+                    return true;
+                }
+            }
         }
     }
 

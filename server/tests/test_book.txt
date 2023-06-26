@@ -21,14 +21,15 @@ Look : ❌
     -> [P] -> [ player , object - on - tile1 , ... , object - on - tileP ,...]
     -> [GUI] -> nothing
 
-    -> Level 1 -> ❌
-    -> Level 2 -> ❌
-    -> Level 3 -> ❌
-    -> Level 4 -> ❌
-    -> Level 5 -> ❌
+    -> Level 1 -> [Kevin: ✅]
+    -> Level 2 -> [Kevin: ✅]
+    -> Level 3 -> [Kevin: ✅]
+    -> Level 4 -> [Kevin: ✅]
+    -> Level 5 -> [Kevin: ✅]
     -> Level 6 -> ❌
     -> Level 7 -> ❌
     -> Level 8 -> ❌
+
 
 Inventory : [Kevin: ✅]
     -> Normal usage: Reports correct number of each object in inventory.
@@ -98,7 +99,7 @@ Connection to an Egg : [Kevin: ✅]
     -> [GUI] -> 'ebo'
 
 
-End of the game : ❌
+End of the game : [Kevin: ✅]
     -> [P] -> 'seg'
     -> [GUI] -> 'seg'
 
@@ -114,7 +115,7 @@ When a new player can connect to an egg send eht
 ✅ -> Tested
 ❌ -> Not tested
 
-TOTAL NUMBER OF COMMANDS: 13 / 17
+TOTAL NUMBER OF COMMANDS: 14 / 17
 
 /* ----------------------- ISSUES --------------------------- ! */
 
@@ -137,7 +138,7 @@ Jules:
 
 Yang:
 
-- Probleme lors de l'ejection lorque le joueur qui eject en dehors de la map il ne se teleporte pas mais marche dans la direction de son orientation
-- For YannL = fix incantion on player lvls
+- Probleme lors de l'ejection lorque le joueur qui ejec ==> ✅
+- For YannL = fix incantion on player lvls ==> ✅
 
 */ ! ----------------------- ISSUES --------------------------- ! */
