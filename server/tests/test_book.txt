@@ -125,10 +125,10 @@ Kevin:
 - When a client connect it's already display but it did not enter is team yet ==> ✅
 - When a player died because of food send to the corresponding player "dead" but don't kill the terminal ==> ✅
 - Need to fix the spawning_resources of elements in the map ==> ❌
-- Need to fix the Look command ==> ❌
+- Need to fix the Look command ==> ✅
 - Need to fix the Incantation command ==> ❌
 - Need to fix the Broadcast command ==> ❌
-- Test the end of game ==> ❌
+- Test the end of game ==> ✅
 
 Jules:
 
