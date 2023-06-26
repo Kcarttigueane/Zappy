@@ -33,6 +33,13 @@ void Display::handleEvents()
                 _selectedTeam = (_selectedTeam + 1) % _teamNames.size();
                 checkTotalLvls();
             }
+            if (_event->key.code == sf::Keyboard::M) {
+                _mute = !_mute;
+                if (_mute == 0)
+                    _music->setVolume(50);
+                else
+                    _music->setVolume(0);
+            }
         } else if (_event->type == sf::Event::Closed) {
             _displayLoop = 0;
         } else if (_event->type == sf::Event::MouseWheelScrolled) {
