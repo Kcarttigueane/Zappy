@@ -83,6 +83,8 @@ class Entity {
         int _inverseScale = 1;
         float _x;
         float _y;
+        int _incantationX = -1;
+        int _incantationY = -1;
         float _objX;
         float _objY;
         int _playerNumber;

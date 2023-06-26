@@ -135,7 +135,6 @@ void Display::parseServerInfo(std::string response)
                         _entities[i]._objX = float(x);
                         _entities[i]._objY = float(_mapHeight) - float(y) - 1.0;
                         _entities[i]._direction = dir;
-                        _entities[i]._incantation = 0;
                     }
                 }
                 if (!found) {
@@ -229,6 +228,8 @@ void Display::parseServerInfo(std::string response)
                 while (linestream >> playerNumber) {
                     int index = findEntity(_entities, playerNumber);
                     _entities[index]._incantation = 1;
+                    _entities[index]._incantationX = x;
+                    _entities[index]._incantationY = y;
                     char buffer[20];
                     std::sprintf(buffer, "ppo %d\n", _entities[index]._playerNumber);
                     sendData(buffer);
@@ -242,6 +243,8 @@ void Display::parseServerInfo(std::string response)
                     int player_x = int(_entities[i]._x + 0.05);
                     int player_y = int(_entities[i]._y + 0.05);
                     if (_entities[i]._incantation && player_x == x && player_y == y)
+                        _entities[i]._incantation = 0;
+                    if (_entities[i]._incantationX == x && _entities[i]._incantationY == y)
                         _entities[i]._incantation = 0;
                 }
             }

@@ -140,6 +140,16 @@ void Display::handleMenuEvents()
     }
 }
 
+bool containsOnlyNumbers(const std::string& str) {
+    for (char c : str) {
+        if (!std::isdigit(c)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
 void Display::drawMenu()
 {
     _window->clear(sf::Color(0, 50, 70));
@@ -170,6 +180,11 @@ void Display::drawMenu()
         text.setPosition(820.f, 900.f);
         text.setString("Failed to connect to server.");
         _window->draw(text);
+        if (!containsOnlyNumbers(_menuPortString)) {
+            text.setPosition(770.f, 925.f);
+            text.setString("Server Port should only contain numbers");
+            _window->draw(text);
+        }
     }
 
 
