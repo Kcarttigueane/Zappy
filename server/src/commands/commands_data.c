@@ -18,6 +18,7 @@ const command_t GRAPHICAL_COMMANDS[] = {
     {"pin", get_player_inventory, "Provide a player’s inventory.", 0},
     {"sgt", get_time_unit, "Request the time unit.", 0},
     {"sst", set_time_unit, "Set the time unit.", 0},
+    {"BAD_COMMAND", NULL, "Bad command", 0},
 };
 
 const command_t PLAYER_COMMANDS[] = {
