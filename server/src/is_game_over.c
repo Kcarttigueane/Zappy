@@ -10,7 +10,6 @@
 bool is_game_over(server_data_t* s)
 {
     game_t* game = &s->game;
-    char response[MAX_BUFFER] = {0};
 
     for (size_t i = 0; i < s->game.team_count; i++) {
         int players_at_max_level = 0;

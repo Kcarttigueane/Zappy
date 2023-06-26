@@ -36,8 +36,6 @@ void get_objects_on_tile(game_t* game, client_t* client, tile_t* tile, coord_t p
 {
     size_t nb_players = get_nbr_player_on_tile(game, pos);
 
-    int nb_objects = get_nb_element_on_tile(tile) + nb_players;
-
     for (size_t i = 0; i < nb_players; ++i) {
         append_to_string(client->write_buf, "player");
         append_to_string(client->write_buf, " ");
