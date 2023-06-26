@@ -42,7 +42,7 @@ Set object : ✅
     -> [P] -> 'ok' | 'ko'
     -> [GUI] -> 'pdr' && 'pin' && 'bct'
 
-Incantation : ❌
+Incantation : ✅ (not tested)
     -> [P] -> 'Elevation underway' | 'ko' | 'Current level: n'
     -> [GUI] -> 'pic' && 'pie' && 'bct' && 'plv'
 

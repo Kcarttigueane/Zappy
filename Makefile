@@ -12,7 +12,7 @@ GUI =	gui/
 COLOR_RESET   = \033[0m
 COLOR_TITLE   = \033[01;31m
 
-all: server
+all: server ai gui
 
 server:
 	@printf "$(COLOR_TITLE)[COMPILING SERVER...]$(COLOR_RESET)\n"
@@ -38,12 +38,6 @@ fclean:
 	@make fclean -C $(AI) -s
 	@make fclean -C $(GUI) -s
 
-re:
-	@printf "$(COLOR_TITLE)[RE SERVER...]$(COLOR_RESET)\n"
-	@make re -C $(SERVER) -s
-	@printf "$(COLOR_TITLE)[RE AI...]$(COLOR_RESET)\n"
-	@make re -C $(AI) -s
-	@printf "$(COLOR_TITLE)[RE GUI...]$(COLOR_RESET)\n"
-	@make re -C $(GUI) -s
+re: fclean all
 
-.PHONY: all server ai clean fclean re
+.PHONY: all server ai gui clean fclean re

@@ -36,19 +36,7 @@ void shuffle(int* array, size_t n)
     }
 }
 
-
-void spawning_resources(server_data_t* data, int* total_resources)
-{
-    printf("Spawning resources\n");
-
-    distribute_resources(data->game.map, total_resources,
-                         data->game.height, data->game.width);
-
-    // print_total_resources(data->game.map, data->game.height, data->game.width);
-}
-
-
-void free_map(tile_t** map, size_t width)
+void free_tiles_map(tile_t** map, size_t width)
 {
     for (size_t i = 0; i < width; i++) {
         free(map[i]);

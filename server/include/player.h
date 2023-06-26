@@ -24,8 +24,9 @@
     typedef enum state_s {
         NONE,
         EGG,
-        ACTIVE,
-        DEAD,
+        PLAYER,
+        DEAD_PLAYER,
+        GRAPHICAL,
     } state_t;
 
     typedef enum inventory_s {
@@ -39,8 +40,8 @@
     } inventory_t;
 
     typedef struct player_s {
-        bool is_graphical;
         size_t id;
+        bool is_frozen;
         coord_t pos;
         orientation_t orientation;
         size_t level;
@@ -54,5 +55,8 @@
 
 // ! Function prototypes:
 
+bool check_incantation_requirements(game_t* game, int index, coord_t* pos, size_t plv_to_match);
+void update_player_life(player_t* player, int freq);
+void player_lifetime(server_data_t* s);
 
 #endif /* !PLAYER_H_ */

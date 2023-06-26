@@ -35,6 +35,7 @@ size_t count_tokens(const char* str, const char* delimiter);
 **/
 char** split_str(char* str, char* delimiter);
 
+
 // ! WORD ARRAY functions:
 
 /**
@@ -66,6 +67,7 @@ void free_word_array(char** map);
  ** @param word_array The word array to debug.
 **/
 void debug_word_array(char** word_array);
+
 
 // ! STRING functions:
 
@@ -114,21 +116,3 @@ bool regex_match(const char* pattern, const char* string);
 ** @see memmove, strlen
 **/
 void append_to_string(char* dest, char* src);
-
-// ! TIME functions:
-
-/**
- ** @brief Converts a timestamp to a string.
- **
- ** @param timestamp The timestamp to convert.
- ** @return A string representing the timestamp.
-**/
-char* timestamp_to_string(time_t timestamp);
-
-/**
- ** @brief Converts a string to a timestamp.
- **
- ** @param str The string to convert.
- ** @return The resulting timestamp.
-**/
-time_t string_to_timestamp(char* str);

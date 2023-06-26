@@ -32,7 +32,7 @@ void dequeue_command(client_t* client);
  * @param command The command that is being enqueued.
  * @param freq The frequency with which the command is executed.
  */
-void print_command_enqueue(client_t* client, const char* command, int freq);
+void print_command_enqueue(client_t* client, char* command, int freq, int action_time);
 
 /**
  * @brief Adds a new command to the client's command queue.
@@ -41,7 +41,7 @@ void print_command_enqueue(client_t* client, const char* command, int freq);
  * @param command The command that is being enqueued.
  * @param freq The frequency with which the command is executed.
  */
-void enqueue_command(client_t* client, const char* command, int freq);
+void enqueue_command(client_t* client, char* command, int freq);
 
 /**
  * @brief Prints the current state of the command queue for a given client.

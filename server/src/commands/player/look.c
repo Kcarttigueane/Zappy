@@ -5,6 +5,7 @@
 ** look.c
 */
 
+#include "colors.h"
 #include "server.h"
 
 size_t get_nbr_player_on_tile(game_t* game, coord_t pos)
@@ -31,78 +32,70 @@ int get_nb_element_on_tile(tile_t* tile)
     return nb;
 }
 
-char** get_objects_on_tile(game_t* game, tile_t* tile, coord_t pos)
+void get_objects_on_tile(game_t* game, client_t* client, tile_t* tile, coord_t pos)
 {
     size_t nb_players = get_nbr_player_on_tile(game, pos);
 
-    int nb_objects = get_nb_element_on_tile(tile) + nb_players;
-
-    char** objects = (char**)calloc(nb_objects, sizeof(char*));
-
-    if (!objects) {
-        perror("Failed to allocate memory for objects");
-        return NULL;
-    }
-
-    size_t i = 0;
-
-    for (; i < nb_players; ++i) {
-        objects[i] = strdup("player");
+    for (size_t i = 0; i < nb_players; ++i) {
+        append_to_string(client->write_buf, "player");
+        append_to_string(client->write_buf, " ");
     }
 
     for (size_t j = 0; j < MAX_NB_RESOURCES; j++) {
         if (tile->quantity[j] > 0) {
             printf("inventory_name: %s\n", inventory_names[j]);
-            for (size_t k = 0; k < tile->quantity[j]; ++k, ++i) {
-                objects[i] = strdup(inventory_names[j]);
-                if (!objects[i]) {
-                    perror("Failed to allocate memory for object name");
-                    for (size_t j = 0; j < i; ++j)
-                        free(objects[j]);
-                    free(objects);
-                    return NULL;
-                }
+            for (size_t k = 0; k < tile->quantity[j]; ++k) {
+                append_to_string(client->write_buf, inventory_names[j]);
+                append_to_string(client->write_buf, " ");
             }
         }
     }
-
-    debug_word_array(objects);
-
-    return objects;
 }
 
 void look(game_t* game, client_t* client)
 {
+    printf("look\n");
     player_t* player = client->player;
-
-    int dx[4] = {0, 1, 0, -1};
-    int dy[4] = {-1, 0, 1, 0};
-    size_t level = 2;
-    int d = player->orientation - 1;
+    int level = player->level;
+    int dx = 0, dy = 0;
     int x = player->pos.x, y = player->pos.y;
-    size_t width = game->width, height = game->height;
+
+    switch (player->orientation) {
+        case NORTH:
+            dy = 1;
+            break;
+        case SOUTH:
+            dy = -1;
+            break;
+        case EAST:
+            dx = 1;
+            break;
+        case WEST:
+            dx = -1;
+            break;
+    }
 
     append_to_string(client->write_buf, "[");
-
-    for (int i = 0; i <= (int)level; ++i) {
+    for (int i = 0; i <= level; ++i) {
         for (int j = -i; j <= i; ++j) {
-            int tx = (x + j * dx[(d + 3) % 4] + i * dx[d] + width) % width;
-            int ty = (y + j * dy[(d + 3) % 4] + i * dy[d] + height) % height;
-
-            printf("tx: %d, ty: %d\n", tx, ty);
-
-            tile_t* tile = &game->map[ty][tx];
-            debug_tile_content(tile);
-            char** objects = get_objects_on_tile(game, tile, (coord_t){tx, ty});
-
-            for (int k = 0; objects[k] != NULL; ++k) {
-                append_to_string(client->write_buf, objects[k]);
-                append_to_string(client->write_buf, " ");
-                free(objects[k]);
+            int look_x, look_y;
+            if (player->orientation == NORTH || player->orientation == SOUTH) {
+                look_x = x + j;
+                look_y = y + i * dy;
+            } else {  // EAST or WEST
+                look_x = x + i * dx;
+                look_y = y + j;
             }
-            free(objects);
 
-            append_to_string(client->write_buf, ",");
+            // wrap around map if out of bounds
+            look_x = (look_x + game->width) % game->width;
+            look_y = (look_y + game->height) % game->height;
+
+            tile_t* tile = &game->map[look_y][look_x];
+            coord_t pos = {look_x, look_y};
+            debug_tile_content(tile, pos);
+            get_objects_on_tile(game, client, tile, pos);
+            append_to_string(client->write_buf, ", ");
         }
     }
     append_to_string(client->write_buf, "]\n");

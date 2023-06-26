@@ -22,14 +22,12 @@ static int parse_teams_names(int argc, char** argv, int i, server_data_t* s)
     i++;
 
     while (i < argc && argv[i][0] != '-') {
-        if (is_unique_team_name(argv[i], s->game.team_names,
-                                s->game.team_count) == FAILURE) {
+        if (is_unique_team_name(argv[i], s->game.team_names, s->game.team_count) == FAILURE) {
             fprintf(stderr, UNIQUE_TEAM_NAMES);
             fprintf(stdout, SERVER_USAGE);
             return FAILURE;
         }
-        s->game.team_names = realloc(s->game.team_names,
-        (s->game.team_count + 1) * sizeof(char*));
+        s->game.team_names = realloc(s->game.team_names, (s->game.team_count + 1) * sizeof(char*));
         s->game.team_names[s->game.team_count] = argv[i];
         s->game.team_count++;
         i++;
@@ -87,12 +85,4 @@ int parse_arguments(int argc, char** argv, server_data_t* s)
     debug_program_args(s);
 
     return SUCCESS;
-}
-
-void free_teams_names(server_data_t* s)
-{
-    if (!s->game.team_names)
-        return;
-
-    free(s->game.team_names);
 }

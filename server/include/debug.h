@@ -33,9 +33,11 @@ void debug_program_args(server_data_t* s);
  * @param tile Pointer to the tile structure that contains the
  * quantity of each item.
  *
+ * @param pos The position of the tile in the map.
+ *
  * @note This is a debug function, meant to be used during the development phase
  *       and not meant for use in production code.
  */
-void debug_tile_content(tile_t* tile);
+void debug_tile_content(tile_t* tile, coord_t pos);
 
 #endif /* !DEBUG_H */

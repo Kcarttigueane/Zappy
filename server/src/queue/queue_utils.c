@@ -35,7 +35,7 @@ clock_t get_last_command_completion_time(client_t* client)
     }
 
     command_queue_t* queue = &client->player->command_queue;
-    return queue->completion_time[queue->rear];
+    return queue->completion_time[queue->front];
 }
 
 char* peek_command(client_t* client)

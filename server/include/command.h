@@ -6,18 +6,38 @@
 */
 
 #ifndef COMMANDS_H_
-    #define COMMANDS_H_
+#define COMMANDS_H_
 
-    #include <stddef.h>
+#include <stddef.h>
 
-    typedef void (*command_func_t)(game_t* game, client_t* client);
+typedef void (*command_func_t)(game_t* game, client_t* client);
 
-    typedef struct command_s {
-        char* name;
-        command_func_t function;
-        char* description;
-        int action_time;
-    } command_t;
+typedef struct command_s {
+    char* name;
+    command_func_t function;
+    char* description;
+    int action_time;
+} command_t;
+
+typedef struct incantation_requirements_s {
+    size_t num_players;
+    size_t linemate;
+    size_t deraumere;
+    size_t sibur;
+    size_t mendiane;
+    size_t phiras;
+    size_t thystame;
+} incantation_requirements_t;
+
+static const incantation_requirements_t INCANTATION_REQUIREMENTS[] = {
+    {1, 1, 0, 0, 0, 0, 0},  // ! Level 1->2
+    {2, 1, 1, 1, 0, 0, 0},  // ! Level 2->3
+    {2, 2, 0, 1, 0, 2, 0},  // ! Level 3->4
+    {4, 1, 1, 2, 0, 1, 0},  // ! Level 4->5
+    {4, 1, 2, 1, 3, 0, 0},  // ! Level 5->6
+    {6, 1, 2, 3, 0, 1, 0},  // ! Level 6->7
+    {6, 2, 2, 2, 2, 2, 1},  // ! Level 7->8
+};
 
 // ! Function Prototypes (GUI):
 
@@ -109,6 +129,7 @@ void set_time_unit(game_t* game, client_t* client);
  */
 void get_all_player_positions(game_t* game);
 
+
 // ! Function Prototypes (Player):
 
 /**
@@ -176,6 +197,14 @@ void connect_nbr(game_t* game, client_t* client);
 void fork_player(game_t* game, client_t* client);
 
 /**
+ * @brief Call at the end of the fork command.
+ *
+ * @param game Pointer to the game structure containing the player data.
+ * @param client Pointer to the client structure representing the player to be duplicated.
+ */
+void end_fork(game_t* game, client_t* client);
+
+    /**
  * @brief Eject the player from the game map.
  *
  * @param game Pointer to the game structure containing the player data.
@@ -200,12 +229,20 @@ void take(game_t* game, client_t* client);
 void set(game_t* game, client_t* client);
 
 /**
- * @brief Perform an incantation by the player in the game.
+ * @brief Perform the Start of incantation by the player in the game.
  *
  * @param game Pointer to the game structure containing the player data.
  * @param client Pointer to the client structure representing the player performing the incantation.
  */
-void incantation(game_t* game, client_t* client);
+void start_incantation(game_t* game, client_t* client);
+
+/**
+ * @brief Perform the End of incantation by the player in the game.
+ *
+ * @param game Pointer to the game structure containing the player data.
+ * @param client Pointer to the client structure representing the player performing the incantation.
+ */
+void end_incantation(game_t* game, client_t* client);
 
 /**
  * @brief Hatch a new player in the game.
@@ -214,6 +251,7 @@ void incantation(game_t* game, client_t* client);
  * @param client Pointer to the client structure representing the new player.
  */
 void hatch(game_t* game, client_t* client);
+
 
 // ! Function Prototypes (Utils):
 

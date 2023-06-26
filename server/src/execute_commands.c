@@ -10,7 +10,8 @@
 
 static void execute_graphical_command(game_t* game, client_t* client, char* command)
 {
-    char* command_name = split_str(command, " ")[0];
+    char** split_command = split_str(command, " ");
+    char* command_name = split_command[0];
 
     int index = find_graphical_command_index(command_name);
 
@@ -21,6 +22,8 @@ static void execute_graphical_command(game_t* game, client_t* client, char* comm
     }
 
     dequeue_command(client);
+
+    free_word_array(split_command);
 }
 
 static void execute_player_command(game_t* game, client_t* client, char* command,
@@ -30,7 +33,8 @@ static void execute_player_command(game_t* game, client_t* client, char* command
 
     if (current_time >= completion_time) {
 
-        char* command_name = split_str(command, " ")[0];
+        char** split_command = split_str(command, " ");
+        char* command_name = split_command[0];
 
         int index = find_player_command_index(command_name);
 
@@ -40,6 +44,8 @@ static void execute_player_command(game_t* game, client_t* client, char* command
             PLAYER_COMMANDS[index].function(game, client);
         }
         dequeue_command(client);
+
+        free_word_array(split_command);
     }
 }
 
@@ -50,10 +56,12 @@ void execute_commands(server_data_t* s)
 
     LIST_FOREACH_SAFE(client, &s->game.client_list, entries, temp)
     {
+        if (client->player->state == NONE)
+            continue;
         if (!is_command_queue_empty(client)) {
             char* command = peek_command(client);
 
-            if (client->player->is_graphical)
+            if (client->player->state == GRAPHICAL)
                 execute_graphical_command(&s->game, client, command);
             else
                 execute_player_command(&s->game, client, command, current_time);

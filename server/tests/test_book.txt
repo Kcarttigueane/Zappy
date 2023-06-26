@@ -1,0 +1,144 @@
+Forward : [Kevin: ✅]
+    -> Normal usage: Player moves forward in their current direction.
+    -> Edge case: Player is at the edge of the world, moves forward, and wraps around to the opposite edge.
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> 'ppo'
+
+
+Right : [Kevin: ✅]
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> 'ppo'
+
+
+Left : [Kevin: ✅]
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> 'ppo'
+
+
+Look : ❌
+    -> Normal usage: Player looks around, reports correct terrain details.
+    -> Edge case: Player is at the edge of the world, should still report correct terrain details.
+    -> [P] -> [ player , object - on - tile1 , ... , object - on - tileP ,...]
+    -> [GUI] -> nothing
+
+    -> Level 1 -> [Kevin: ✅]
+    -> Level 2 -> [Kevin: ✅]
+    -> Level 3 -> [Kevin: ✅]
+    -> Level 4 -> [Kevin: ✅]
+    -> Level 5 -> [Kevin: ✅]
+    -> Level 6 -> ❌
+    -> Level 7 -> ❌
+    -> Level 8 -> ❌
+
+
+Inventory : [Kevin: ✅]
+    -> Normal usage: Reports correct number of each object in inventory.
+    -> Empty inventory: Reports zero for each object.
+    -> [P] -> [ food n , linemate n , deraumere n , sibur n , mendiane n , phiras n , thystame n ]
+    -> [GUI] -> nothing
+
+
+Broadcast : ❌
+    -> Normal usage: Other players should receive the broadcasted message.
+    -> No players in range: Nothing should happen.
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> 'pbc'
+
+
+Connect_nbr : [Kevin: ✅]
+    - Normal usage: Reports correct number of free slots.
+    - No free slots: Reports zero.
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> nothing
+
+
+Fork : [Kevin: ✅]
+    -> Normal usage: Creates a new player.
+    -> Max players reached: Should fail gracefully.
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> 'pfk' && 'enw'
+
+
+Eject : [Kevin: ✅]
+    -> Normal usage: Ejects player in facing direction.
+    -> Edge case: Ejects player at the edge of the world, player wraps around to the opposite edge.
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> 'pex'
+
+    Death of an Egg : [Kevin: ✅]
+        -> [P] -> 'dead'
+        -> [GUI] -> 'edi'
+
+
+Take object : [Kevin: ✅]
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> 'pgt' && 'pin' && 'bct'
+
+
+Set object : [Kevin: ✅]
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> 'pdr' && 'pin' && 'bct'
+
+
+Incantation : ❌ (not tested)
+    -> Normal usage: Performs incantation correctly, upgrades player level and removes stones.
+    -> Not enough players of the same level: Should fail gracefully.
+    -> Not enough stones on the terrain: Should fail gracefully.
+    -> Checks before and after incantation: Make sure the requirements are met both times.
+    -> [P] -> 'Elevation underway' | 'ko' | 'Current level: n'
+    -> [GUI] -> 'pic' && 'pie' && 'bct' && 'plv'
+
+
+Death of a player : [Kevin: ✅]
+    -> [P] -> 'dead'
+    -> [GUI] -> 'pdi'
+
+
+Connection to an Egg : [Kevin: ✅]
+    -> [P] -> 'ok' | 'ko'
+    -> [GUI] -> 'ebo'
+
+
+End of the game : [Kevin: ✅]
+    -> [P] -> 'seg'
+    -> [GUI] -> 'seg'
+
+
+Time unit modification -> SST T\n : ✅
+    -> [P] -> nothing
+    -> [GUI] -> 'sgt'
+
+    -> Slider to check the time unit
+
+When a new player can connect to an egg send eht
+
+✅ -> Tested
+❌ -> Not tested
+
+TOTAL NUMBER OF COMMANDS: 14 / 17
+
+/* ----------------------- ISSUES --------------------------- ! */
+
+Kevin:
+
+- When connecting then disconnecting by using Ctrl + C, I don't send pdi so the player is not dead in the graphic, and the teams is full ==> ✅
+- When a client connect it's already display but it did not enter is team yet ==> ✅
+- When a player died because of food send to the corresponding player "dead" but don't kill the terminal ==> ✅
+- Need to fix the spawning_resources of elements in the map ==> ❌
+- Need to fix the Look command ==> ✅
+- Need to fix the Incantation command ==> ❌
+- Need to fix the Broadcast command ==> ❌
+- Test the end of game ==> ✅
+
+Jules:
+
+- Send the right number of player in the team when a player connect ==>  ✅
+- Send the map size when a player connect ==> ✅
+- Fix when program parameter -c is negative -c -12 ==> ✅
+
+Yang:
+
+- Probleme lors de l'ejection lorque le joueur qui ejec ==> ✅
+- For YannL = fix incantion on player lvls ==> ✅
+
+*/ ! ----------------------- ISSUES --------------------------- ! */

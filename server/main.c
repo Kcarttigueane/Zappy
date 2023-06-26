@@ -8,51 +8,67 @@
 #include "./include/server.h"
 #include "colors.h"
 
-const char* colors[] = {RED,  CYAN,   GRAY, GREEN, YELLOW,
-                        BLUE, PURPLE, CYAN, WHITE};
+const char* colors[] = {
+    RED, CYAN, GRAY, GREEN, YELLOW, BLUE, PURPLE, CYAN, WHITE,
+};
 
-const char* inventory_names[] = {"food",     "linemate", "deraumere", "sibur",
-                                 "mendiane", "phiras",   "thystame"};
+const char* inventory_names[] = {
+    "food", "linemate", "deraumere", "sibur", "mendiane", "phiras", "thystame",
+};
 
-void init_teams(server_data_t* data)
+void init_teams(server_data_t* s)
 {
-    data->game.team_count = data->game.team_count;
+    s->game.teams = (team_t*)calloc(s->game.team_count, sizeof(team_t));
 
-    data->game.team = (team_t*)calloc(data->game.team_count, sizeof(team_t));
-
-    for (size_t i = 0; i < data->game.team_count; i++) {
-        data->game.team[i].name = strdup(data->game.team_names[i]);
-        data->game.team[i].max_players = data->game.clients_nb;
-        LIST_INIT(&data->game.team[i].egg_list);
+    for (size_t i = 0; i < s->game.team_count; i++) {
+        s->game.teams[i].name = strdup(s->game.team_names[i]);
+        s->game.teams[i].max_players = s->game.clients_nb;
+        LIST_INIT(&s->game.teams[i].egg_list);
     }
+}
+
+void free_teams(server_data_t* s)
+{
+    for (size_t i = 0; i < s->game.team_count; i++) {
+        free(s->game.teams[i].name);
+    }
+    free(s->game.teams);
+}
+
+void free_game(server_data_t* s)
+{
+    free_egg_lists(&s->game);
+    free_client_list(&s->game);
+    free_teams(s);
+    free_tiles_map(s->game.map, s->game.width);
+    free(s->game.team_names);
+    free(s);
 }
 
 int main(int argc, char** argv)
 {
     srand(time(NULL));
 
-    server_data_t* data = (server_data_t*)calloc(1, sizeof(server_data_t));
+    server_data_t* server_data = (server_data_t*)calloc(1, sizeof(server_data_t));
 
-    if (parse_arguments(argc, argv, data) == FAILURE)
+    if (parse_arguments(argc, argv, server_data) == FAILURE)
         return handle_error("main() : Invalid arguments\n");
 
     if (setup_signal_handler() == ERROR)
         return handle_error("main() :Signal handler setup failed\n");
 
-    data->game.next_player_id = 15;
-    data->game.map = init_map(data->game.width, data->game.height);
+    server_data->game.next_player_id = 15;
+    server_data->game.next_egg_id = 0;
+    server_data->game.map = init_map(server_data->game.width, server_data->game.height);
 
-    init_teams(data);
+    init_teams(server_data);
 
-    LIST_INIT(&data->game.client_list);
+    LIST_INIT(&server_data->game.client_list);
 
-    if (initialize_server(data) == ERROR)
+    if (initialize_server(server_data) == ERROR)
         return handle_error("Server initialization failed");
 
-    server_loop(data);
-
-    free_teams_names(data);
-    free_map(data->game.map, data->game.width);
-    free(data);
+    server_loop(server_data);
+    free_game(server_data);
     return SUCCESS;
 }
