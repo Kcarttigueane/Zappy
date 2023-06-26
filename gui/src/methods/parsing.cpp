@@ -135,6 +135,7 @@ void Display::parseServerInfo(std::string response)
                         _entities[i]._objX = float(x);
                         _entities[i]._objY = float(_mapHeight) - float(y) - 1.0;
                         _entities[i]._direction = dir;
+                        _entities[i]._incantation = 0;
                     }
                 }
                 if (!found) {
