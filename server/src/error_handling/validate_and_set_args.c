@@ -23,7 +23,7 @@ int validate_and_set_port(char* arg, server_data_t* s)
 
 int validate_and_set_width(char* arg, server_data_t* s)
 {
-    size_t width = 0;
+    int width = 0;
     char* endptr;
 
     errno = 0;
@@ -47,7 +47,7 @@ int validate_and_set_width(char* arg, server_data_t* s)
 
 int validate_and_set_height(char* arg, server_data_t* s)
 {
-    size_t height = 0;
+    int height = 0;
     char* endptr;
 
     errno = 0;
@@ -71,19 +71,21 @@ int validate_and_set_height(char* arg, server_data_t* s)
 
 int validate_and_set_clients_nb(char* arg, server_data_t* s)
 {
-    size_t clients_nb = 0;
+    int clients_nb = 0;
     char* endptr;
 
     errno = 0;
     clients_nb = strtoul(arg, &endptr, 10);
 
     if (errno != 0 || *endptr != '\0') {
+        printf("Wrong clients_nb1\n");
         fprintf(stderr, WRONG_CLIENTS_NB);
         fprintf(stdout, SERVER_USAGE);
         return FAILURE;
     }
 
     if (clients_nb < 1) {
+        printf("Wrong clients_nb\n");
         fprintf(stderr, WRONG_CLIENTS_NB);
         fprintf(stdout, SERVER_USAGE);
         return FAILURE;
@@ -95,7 +97,7 @@ int validate_and_set_clients_nb(char* arg, server_data_t* s)
 
 int validate_and_set_freq(char* arg, server_data_t* s)
 {
-    size_t freq = 0;
+    int freq = 0;
     char* endptr;
 
     errno = 0;

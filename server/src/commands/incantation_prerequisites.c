@@ -15,7 +15,7 @@ int check_nb_players_same_level(game_t* game, coord_t* pos, size_t plv_to_match)
 
     LIST_FOREACH_SAFE(client, &game->client_list, entries, temp)
     {
-        if (client->player->is_graphical)
+        if (client->player->state == GRAPHICAL)
             continue;
         if (client->player->pos.x == pos->x && client->player->pos.y == pos->y) {
             if (client->player->level == plv_to_match) {
@@ -47,7 +47,7 @@ bool check_incantation_requirements(game_t* game, int index, coord_t* pos, size_
 
     size_t total_qty[MAX_NB_RESOURCES] = {0};
 
-    debug_tile_content(tile);
+    debug_tile_content(tile, *pos);
 
     for (size_t i; i < MAX_NB_RESOURCES; i++) {
         total_qty[i] = tile->quantity[i];

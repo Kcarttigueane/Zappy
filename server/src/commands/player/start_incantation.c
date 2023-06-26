@@ -27,7 +27,7 @@ void start_incantation(game_t* game, client_t* client)
 
     LIST_FOREACH_SAFE(curr_client, &game->client_list, entries, temp)
     {
-        if (curr_client->player->is_graphical)
+        if (curr_client->player->state == GRAPHICAL)
             continue;
         if (curr_client->player->pos.x == p_pos->x && curr_client->player->pos.y == p_pos->y) {
             curr_client->player->is_frozen = true;

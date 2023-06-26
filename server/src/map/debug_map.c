@@ -16,8 +16,7 @@ void print_resources_location(tile_t** map, size_t height, size_t width)
             printf(WHITE "%zu, %zu" RESET, i, j);
             printf("]  ");
             for (int k = 0; k < MAX_NB_RESOURCES; k++) {
-                printf("%sq%d: %s%zu%s  ", colors[k], k, colors[k],
-                       map[i][j].quantity[k], RESET);
+                printf("%sq%d: %s%zu%s  ", colors[k], k, colors[k], map[i][j].quantity[k], RESET);
             }
             printf("\n");
         }

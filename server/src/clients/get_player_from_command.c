@@ -18,7 +18,6 @@ player_t* get_player_from_command(game_t* game, char* command)
     }
 
     int id = atoi(splits[1]);
-    printf("id: %d\n", id);
 
     player_t* player = find_player_by_id(game, id);
 

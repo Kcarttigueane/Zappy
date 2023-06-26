@@ -129,6 +129,7 @@ void set_time_unit(game_t* game, client_t* client);
  */
 void get_all_player_positions(game_t* game);
 
+
 // ! Function Prototypes (Player):
 
 /**
@@ -196,6 +197,14 @@ void connect_nbr(game_t* game, client_t* client);
 void fork_player(game_t* game, client_t* client);
 
 /**
+ * @brief Call at the end of the fork command.
+ *
+ * @param game Pointer to the game structure containing the player data.
+ * @param client Pointer to the client structure representing the player to be duplicated.
+ */
+void end_fork(game_t* game, client_t* client);
+
+    /**
  * @brief Eject the player from the game map.
  *
  * @param game Pointer to the game structure containing the player data.
@@ -242,6 +251,7 @@ void end_incantation(game_t* game, client_t* client);
  * @param client Pointer to the client structure representing the new player.
  */
 void hatch(game_t* game, client_t* client);
+
 
 // ! Function Prototypes (Utils):
 

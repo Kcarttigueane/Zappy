@@ -15,6 +15,7 @@ void gameLoop(Display* display)
         std::string serverData = display->getData();
         if (serverData != old_data) {
             old_data = serverData;
+            std::cout << RED << serverData << RESET << std::endl;
             display->parseServerInfo(serverData);
         }
         display->_deltaTime = display->_clock.restart();

@@ -12,13 +12,13 @@ static bool is_valid_tile(int x, int y, size_t height, size_t width)
     return x >= 0 && (size_t)x < width && y >= 0 && (size_t)y < height;
 }
 
-static void send_resp(game_t* game, int x, int y)
+static void send_resp(game_t* game, int x, int y_pos)
 {
     char response[MAX_BUFFER] = {0};
 
-    tile_t* tile = &game->map[y][x];
+    tile_t* tile = &game->map[y_pos][x];
 
-    sprintf(response, BCT_FORMAT, x, y, tile->quantity[FOOD], tile->quantity[LINEMATE],
+    sprintf(response, BCT_FORMAT, y_pos, x, tile->quantity[FOOD], tile->quantity[LINEMATE],
             tile->quantity[DERAUMERE], tile->quantity[SIBUR], tile->quantity[MENDIANE],
             tile->quantity[PHIRAS], tile->quantity[THYSTAME]);
 
@@ -32,13 +32,15 @@ void get_tile_content(game_t* game, client_t* client)
 
     sscanf(command, "bct %i %i", &x, &y);
 
+    int y_pos = game->height - x - 1;
+
     size_t height = game->height;
     size_t width = game->width;
 
-    if (!is_valid_tile(x, y, height, width)) {
+    if (!is_valid_tile(x, y_pos, height, width)) {
         append_to_gui_write_buffer(game, SBP_FORMAT);
         return;
     }
 
-    send_resp(game, x, y);
+    send_resp(game, x, y_pos);
 }

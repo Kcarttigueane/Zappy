@@ -14,7 +14,7 @@ void update_player_level_and_inventory(game_t* game, coord_t* pos)
 
     LIST_FOREACH_SAFE(client, &game->client_list, entries, temp)
     {
-        if (client->player->is_graphical)
+        if (client->player->state == GRAPHICAL)
             continue;
         if (client->player->pos.x == pos->x && client->player->pos.y == pos->y) {
             client->player->level++;
