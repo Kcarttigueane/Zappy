@@ -73,6 +73,7 @@ void destroy_eggs_on_tile(game_t* game, coord_t tile_pos)
                 memset(gui_message, 0, sizeof(gui_message));
                 LIST_REMOVE(e, entries);
                 free(e);
+                team->max_players--;
             }
         }
     }
