@@ -15,7 +15,7 @@ static void execute_graphical_command(game_t* game, client_t* client, char* comm
 
     int index = find_graphical_command_index(command_name);
 
-    if (index == FAILURE) {
+    if (index == FAILURE || index == 9) {
         append_to_gui_write_buffer(game, SUC_FORMAT);
     } else {
         GRAPHICAL_COMMANDS[index].function(game, client);

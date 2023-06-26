@@ -83,11 +83,13 @@ class Entity {
         int _inverseScale = 1;
         float _x;
         float _y;
+        int _incantationX = -1;
+        int _incantationY = -1;
         float _objX;
         float _objY;
         int _playerNumber;
         int _lvl = 1;
-        size_t _teamNumb = 0;
+        size_t _teamNumb = 0; 
         int _dead = 0;
         int _move = 0;
         int _inv = 255;
