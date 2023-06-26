@@ -64,7 +64,7 @@ Eject : [Kevin: ✅]
     -> [P] -> 'ok' | 'ko'
     -> [GUI] -> 'pex'
 
-    Death of an Egg ❌
+    Death of an Egg : [Kevin: ✅]
         -> [P] -> 'dead'
         -> [GUI] -> 'edi'
 
@@ -114,7 +114,7 @@ When a new player can connect to an egg send eht
 ✅ -> Tested
 ❌ -> Not tested
 
-TOTAL NUMBER OF COMMANDS: 12u / 17
+TOTAL NUMBER OF COMMANDS: 13 / 17
 
 /* ----------------------- ISSUES --------------------------- ! */
 
