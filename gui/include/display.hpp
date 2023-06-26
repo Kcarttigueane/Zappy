@@ -49,6 +49,7 @@ class Display {
         _titleSprite = new sf::Sprite;
         _font = new sf::Font;
         _event = new sf::Event;
+        _music = new sf::Music;
         _playerTexture->loadFromFile("./assets/players_scaled.png");
         _eggTexture->loadFromFile("./assets/egg_scaled.png");
         _sideUITexture->loadFromFile("./assets/side_ui.png");
@@ -56,6 +57,7 @@ class Display {
         _uiTexture->loadFromFile("./assets/custompanel.png");
         _speechTexture->loadFromFile("./assets/speech.png");
         _titleTexture->loadFromFile("./assets/ZAPPY.png");
+        _music->openFromFile("./assets/music.wav");
         _cubeSprite->setTexture(*_cubeTexture);
         _eggSprite->setTexture(*_eggTexture);
         _uiSprite->setTexture(*_uiTexture);
@@ -76,6 +78,9 @@ class Display {
         _titleSprite->setPosition(sf::Vector2f(750, 60));
         _titleSprite->setTextureRect(sf::IntRect(0, 0, 415, 146));
         _titleSprite->setScale(sf::Vector2f(1.0, 1.0));
+        _music->setLoop(true); // Set the music to loop
+        _music->setVolume(50);
+        _music->play();
     }
 
     ~Display()
@@ -94,6 +99,7 @@ class Display {
         delete _titleSprite;
         delete _speechSprite;
         delete _sideUISprite;
+        delete _music;
         delete _sprite;
         delete _font;
     }
@@ -160,6 +166,9 @@ class Display {
     sf::Sprite* _sideUISprite;
     sf::Sprite* _titleSprite;
     sf::Font* _font;
+    sf::Music *_music;
+    int _mute = 0;
+    // sf::Sound *_sound;
     sf::Vector2f _mouseGridCoords;
     bool _tileClicked = false;
     sf::Vector2f _lastClickedCoords;
