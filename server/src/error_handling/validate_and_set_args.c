@@ -76,7 +76,6 @@ int validate_and_set_clients_nb(char* arg, server_data_t* s)
 
     errno = 0;
     clients_nb = strtoul(arg, &endptr, 10);
-    printf("clients_nb: %ld\n", clients_nb);
 
     if (errno != 0 || *endptr != '\0') {
         printf("Wrong clients_nb1\n");

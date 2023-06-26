@@ -77,6 +77,7 @@ void look(game_t* game, client_t* client)
 
     int dx[4] = {0, 1, 0, -1};
     int dy[4] = {-1, 0, 1, 0};
+
     size_t level = player->level;
     int d = player->orientation - 1;
     int x = player->pos.x, y = player->pos.y;

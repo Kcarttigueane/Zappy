@@ -123,9 +123,17 @@ Kevin:
 - When connecting then disconnecting by using Ctrl + C, I don't send pdi so the player is not dead in the graphic, and the teams is full ==> ✅
 - When a client connect it's already display but it did not enter is team yet ==> ✅
 - When a player died because of food send to the corresponding player "dead" but don't kill the terminal ==> ✅
-- Send the right number of player in the team when a player connect ==>  ❌
-- Send the map size when a player connect ==> ❌
-- Fix when program parameter -c is negative -c -12 ==> ❌
+- Need to fix the spawning_resources of elements in the map ==> ❌
+- Need to fix the Look command ==> ❌
+- Need to fix the Incantation command ==> ❌
+- Need to fix the Broadcast command ==> ❌
+- Test the end of game ==> ❌
+
+Jules:
+
+- Send the right number of player in the team when a player connect ==>  ✅
+- Send the map size when a player connect ==> ✅
+- Fix when program parameter -c is negative -c -12 ==> ✅
 
 Yang:
 
