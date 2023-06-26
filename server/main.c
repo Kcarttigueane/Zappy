@@ -58,6 +58,7 @@ int main(int argc, char** argv)
         return handle_error("main() :Signal handler setup failed\n");
 
     server_data->game.next_player_id = 15;
+    server_data->game.next_egg_id = 0;
     server_data->game.map = init_map(server_data->game.width, server_data->game.height);
 
     init_teams(server_data);

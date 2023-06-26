@@ -47,9 +47,10 @@ int is_egg_list_empty(team_t* team);
  *
  * \param team The team to which an egg should be added.
  * \param pos The position where the egg should be placed.
+ * \param new_id The new egg's ID.
  * \return A pointer to the new egg.
  */
-egg_t* create_and_add_egg(team_t* team, coord_t pos);
+egg_t* create_and_add_egg(team_t* team, coord_t pos, size_t new_id);
 
 /**
  * \brief Frees the memory allocated for the team's list of eggs.

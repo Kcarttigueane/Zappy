@@ -38,12 +38,12 @@ static void player_first_command(game_t* game, client_t* client, char** split_co
     if (!is_egg_list_empty(team)) {
         printf("Egg available\n");
         egg_t* egg = random_select_egg(team);
-        update_egg_player(game, client, split_command, egg);
 
         char response[256] = {0};
         sprintf(response, EBO_FORMAT, egg->id);
         append_to_gui_write_buffer(game, response);
-        return;
+
+        update_egg_player(game, client, split_command, egg);
     } else {
         update_normal_player(game, client, split_command);
     }

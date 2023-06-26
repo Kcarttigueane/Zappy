@@ -66,6 +66,7 @@
 
     typedef struct game_s {
         size_t next_player_id;
+        size_t next_egg_id;
         tile_t** map;
         size_t width, height;
         size_t nb_players;

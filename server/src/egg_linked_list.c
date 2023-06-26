@@ -29,7 +29,6 @@ egg_t* random_select_egg(team_t* team)
             i++;
         }
     }
-
     return selected;
 }
 
@@ -38,14 +37,14 @@ int is_egg_list_empty(team_t* team)
     return LIST_EMPTY(&team->egg_list);
 }
 
-egg_t* create_and_add_egg(team_t* team, coord_t pos)
+egg_t* create_and_add_egg(team_t* team, coord_t pos, size_t id)
 {
     egg_t* e = (egg_t*)calloc(1, sizeof(egg_t));
 
     if (!e)
         return NULL;
 
-    e->id = rand();
+    e->id = id;
     e->pos = pos;
 
     LIST_INSERT_HEAD(&team->egg_list, e, entries);

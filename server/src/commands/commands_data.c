@@ -29,7 +29,7 @@ const command_t PLAYER_COMMANDS[] = {
     {"Broadcast", broadcast, "Broadcast message", 7},
     {"Connect_nbr", connect_nbr, "Number of free slots", 0},
     {"Fork", fork_player, "Fork", 0},
-    {"End_fork", end_fork, "End of a fork", .42},
+    {"End_fork", end_fork, "End of a fork", 42},
     {"Eject", eject, "Eject player", 7},
     {"Take", take, "Take object", 7},
     {"Set", set, "Set object", 7},

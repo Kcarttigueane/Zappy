@@ -44,14 +44,14 @@ Broadcast : ❌
     -> [GUI] -> 'pbc'
 
 
-Connect_nbr : ❌
+Connect_nbr : [Kevin: ✅]
     - Normal usage: Reports correct number of free slots.
     - No free slots: Reports zero.
     -> [P] -> 'ok' | 'ko'
     -> [GUI] -> nothing
 
 
-Fork : ❌ (Need to implement the logic when the team is full and so the client should be disconnected)
+Fork : [Kevin: ✅]
     -> Normal usage: Creates a new player.
     -> Max players reached: Should fail gracefully.
     -> [P] -> 'ok' | 'ko'
@@ -93,7 +93,7 @@ Death of a player : [Kevin: ✅]
     -> [GUI] -> 'pdi'
 
 
-Connection to an Egg : ❌
+Connection to an Egg : [Kevin: ✅]
     -> [P] -> 'ok' | 'ko'
     -> [GUI] -> 'ebo'
 
@@ -114,7 +114,7 @@ When a new player can connect to an egg send eht
 ✅ -> Tested
 ❌ -> Not tested
 
-TOTAL NUMBER OF COMMANDS: 7 / 17
+TOTAL NUMBER OF COMMANDS: 12u / 17
 
 /* ----------------------- ISSUES --------------------------- ! */
 
@@ -123,6 +123,9 @@ Kevin:
 - When connecting then disconnecting by using Ctrl + C, I don't send pdi so the player is not dead in the graphic, and the teams is full ==> ✅
 - When a client connect it's already display but it did not enter is team yet ==> ✅
 - When a player died because of food send to the corresponding player "dead" but don't kill the terminal ==> ✅
+- Send the right number of player in the team when a player connect ==>  ❌
+- Send the map size when a player connect ==> ❌
+- Fix when program parameter -c is negative -c -12 ==> ❌
 
 Yang:
 
