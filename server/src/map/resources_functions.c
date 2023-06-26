@@ -37,7 +37,6 @@ void spawning_resources(game_t *game, int total_resources[], size_t height, size
     for (size_t i = 0; i < total_tiles; i++)
         tiles[i] = i;
 
-    srand(time(NULL));
     for (size_t i = 0; i < total_tiles; i++) {
         size_t j = i + rand() % (total_tiles - i);
         int t = tiles[j];
