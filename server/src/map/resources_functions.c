@@ -36,11 +36,18 @@ void spawning_resources(game_t *game, int total_resources[], size_t height, size
 
     for (size_t i = 0; i < total_tiles; i++)
         tiles[i] = i;
+
+    srand(time(NULL));
+    for (size_t i = 0; i < total_tiles; i++) {
+        size_t j = i + rand() % (total_tiles - i);
+        int t = tiles[j];
+        tiles[j] = tiles[i];
+        tiles[i] = t;
+    }
+
     for (int resource = 0; resource < MAX_NB_RESOURCES; resource++) {
         size_t resource_to_spawn = total_resources[resource] - current_resources[resource];
-        if (current_resources[resource] >= total_resources[resource])
-            continue;
-        shuffle(tiles, total_tiles);
+
         for (size_t i = 0; i < resource_to_spawn; i++) {
             int tile_index = tiles[i % total_tiles];
             int x = tile_index / height;
@@ -48,6 +55,8 @@ void spawning_resources(game_t *game, int total_resources[], size_t height, size
             map[x][y].quantity[resource]++;
         }
     }
+
     get_all_tiles_content(game, NULL);
     free(tiles);
 }
+
