@@ -115,6 +115,7 @@ int bind_and_listen_socket(server_data_t* s);
 **         from handle_error function.
 **/
 int initialize_server(server_data_t* s);
+void handle_client_disconnection(server_data_t* s, client_t* client);
 
 // ! Done
 void parse_client_input(server_data_t* s, client_t* client, char* received_buffer);

@@ -88,7 +88,7 @@ Incantation : ❌ (not tested)
     -> [GUI] -> 'pic' && 'pie' && 'bct' && 'plv'
 
 
-Death of a player : ❌
+Death of a player : [Kevin: ✅]
     -> [P] -> 'dead'
     -> [GUI] -> 'pdi'
 
@@ -115,3 +115,18 @@ When a new player can connect to an egg send eht
 ❌ -> Not tested
 
 TOTAL NUMBER OF COMMANDS: 7 / 17
+
+/* ----------------------- ISSUES --------------------------- ! */
+
+Kevin:
+
+- When connecting then disconnecting by using Ctrl + C, I don't send pdi so the player is not dead in the graphic, and the teams is full ==> ✅
+- When a client connect it's already display but it did not enter is team yet ==> ✅
+- When a player died because of food send to the corresponding player "dead" but don't kill the terminal ==> ✅
+
+Yang:
+
+- Probleme lors de l'ejection lorque le joueur qui eject en dehors de la map il ne se teleporte pas mais marche dans la direction de son orientation
+- For YannL = fix incantion on player lvls
+
+*/ ! ----------------------- ISSUES --------------------------- ! */

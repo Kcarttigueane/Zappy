@@ -8,7 +8,7 @@
 #include "colors.h"
 #include "server.h"
 
-static void handle_client_disconnection(server_data_t* s, client_t* client)
+void handle_client_disconnection(server_data_t* s, client_t* client)
 {
     char response[1024] = {0};
 
