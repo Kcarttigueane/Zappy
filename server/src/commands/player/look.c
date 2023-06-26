@@ -136,7 +136,7 @@ void look(game_t* game, client_t* client)
 {
     printf("look\n");
     player_t* player = client->player;
-    int level = 2;
+    int level = player->level;
 
     append_to_string(client->write_buf, "[");
     switch (player->orientation) {
