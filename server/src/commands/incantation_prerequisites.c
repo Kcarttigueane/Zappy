@@ -33,9 +33,7 @@ bool check_incantation_requirements(game_t* game, int index, coord_t* pos, size_
 
     printf("pos: %d %d\n", pos->x, pos->y);
 
-    tile_t* tile = &game->map[pos->y][pos->x];
-
-    printf("tile linemate: %ld\n", tile->quantity[LINEMATE]);
+    tile_t* tile = &game->map[pos->x][pos->y];
 
     size_t num_players_same_level = check_nb_players_same_level(game, pos, plv_to_match);
 
@@ -49,7 +47,7 @@ bool check_incantation_requirements(game_t* game, int index, coord_t* pos, size_
 
     debug_tile_content(tile, *pos);
 
-    for (size_t i; i < MAX_NB_RESOURCES; i++) {
+    for (size_t i = 0; i < MAX_NB_RESOURCES; i++) {
         total_qty[i] = tile->quantity[i];
     }
 
@@ -64,7 +62,7 @@ bool check_incantation_requirements(game_t* game, int index, coord_t* pos, size_
         total_qty[DERAUMERE] < requirements.deraumere || total_qty[SIBUR] < requirements.sibur ||
         total_qty[MENDIANE] < requirements.mendiane || total_qty[PHIRAS] < requirements.phiras ||
         total_qty[THYSTAME] < requirements.thystame) {
-        printf("Not enough linemate for the incantation\n");
+        printf("Not enough resources for the incantation\n");
         return false;
     }
     return true;

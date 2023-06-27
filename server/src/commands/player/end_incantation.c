@@ -27,9 +27,18 @@ void update_player_level_and_inventory(game_t* game, coord_t* pos)
     }
 }
 
-void update_tile_content(game_t* game, coord_t pos, incantation_requirements_t requirements)
+void update_tile_content(game_t* game, coord_t pos, int index)
 {
-    tile_t* tile = &game->map[pos.y][pos.x];
+    incantation_requirements_t requirements = INCANTATION_REQUIREMENTS[index];
+    tile_t* tile = &game->map[pos.x][pos.y];
+
+    printf("incantation requirements: %ld %ld %ld %ld %ld %ld\n", requirements.linemate,
+           requirements.deraumere, requirements.sibur, requirements.mendiane, requirements.phiras,
+           requirements.thystame);
+
+    printf("Tile content before update: %ld %ld %ld %ld %ld %ld %ld\n", tile->quantity[FOOD],
+           tile->quantity[LINEMATE], tile->quantity[DERAUMERE], tile->quantity[SIBUR],
+           tile->quantity[MENDIANE], tile->quantity[PHIRAS], tile->quantity[THYSTAME]);
 
     tile->quantity[LINEMATE] -= requirements.linemate;
     tile->quantity[DERAUMERE] -= requirements.deraumere;
@@ -38,11 +47,17 @@ void update_tile_content(game_t* game, coord_t pos, incantation_requirements_t r
     tile->quantity[PHIRAS] -= requirements.phiras;
     tile->quantity[THYSTAME] -= requirements.thystame;
 
+    printf("Tile content after update: %ld %ld %ld %ld %ld %ld %ld\n", tile->quantity[FOOD],
+           tile->quantity[LINEMATE], tile->quantity[DERAUMERE], tile->quantity[SIBUR],
+           tile->quantity[MENDIANE], tile->quantity[PHIRAS], tile->quantity[THYSTAME]);
+
     char response[MAX_BUFFER] = {0};
 
-    sprintf(response, BCT_FORMAT, pos.x, pos.y, tile->quantity[FOOD], tile->quantity[LINEMATE],
-            tile->quantity[DERAUMERE], tile->quantity[SIBUR], tile->quantity[MENDIANE],
-            tile->quantity[PHIRAS], tile->quantity[THYSTAME]);
+    int y_cartesian = game->height - pos.y - 1;
+
+    sprintf(response, BCT_FORMAT, pos.x, y_cartesian, tile->quantity[FOOD],
+            tile->quantity[LINEMATE], tile->quantity[DERAUMERE], tile->quantity[SIBUR],
+            tile->quantity[MENDIANE], tile->quantity[PHIRAS], tile->quantity[THYSTAME]);
 
     append_to_gui_write_buffer(game, response);
 }
@@ -56,15 +71,19 @@ void end_incantation(game_t* game, client_t* client)
     printf("Ending incantation\n");
     coord_t* p_pos = &client->player->pos;
 
-    if (!check_incantation_requirements(game, player->level - 1, p_pos, player->level)) {
-        sprintf(gui_response, PIE_FORMAT, p_pos->x, p_pos->y, 0);
+    int index = player->level - 1;
+
+    if (!check_incantation_requirements(game, index, p_pos, player->level)) {
+        int y_cartesian = game->height - p_pos->y - 1;
+        sprintf(gui_response, PIE_FORMAT, p_pos->x, y_cartesian, 0);
         append_to_gui_write_buffer(game, gui_response);
         append_to_string(client->write_buf, KO_FORMAT);
     } else {
         update_player_level_and_inventory(game, p_pos);
-        update_tile_content(game, *p_pos, INCANTATION_REQUIREMENTS[player->level - 1]);
-        sprintf(gui_response, PIE_FORMAT, p_pos->x, p_pos->y, 1);
+        update_tile_content(game, *p_pos, index);
+        int y_cartesian = game->height - p_pos->y - 1;
+        sprintf(gui_response, PIE_FORMAT, p_pos->x, y_cartesian, 1);
         append_to_gui_write_buffer(game, gui_response);
-        append_to_string(client->write_buf, KO_FORMAT);
+        append_to_string(client->write_buf, OK_FORMAT);
     }
 }

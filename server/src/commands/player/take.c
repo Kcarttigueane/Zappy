@@ -7,7 +7,8 @@
 
 #include "server.h"
 
-void take_update_gui_with_player_action(game_t* game, player_t* player, int object_index, coord_t pos)
+void take_update_gui_with_player_action(game_t* game, player_t* player, int object_index,
+                                        coord_t pos)
 {
     tile_t* tile = &game->map[pos.x][pos.y];
 
@@ -15,8 +16,10 @@ void take_update_gui_with_player_action(game_t* game, player_t* player, int obje
     sprintf(response, PGT_FORMAT, player->id, object_index);
     append_to_gui_write_buffer(game, response);
 
+    int y_cartesian = game->height - pos.y - 1;
+
     memset(response, 0, 256);
-    sprintf(response, PIN_FORMAT, player->id, player->pos.x, player->pos.y, player->inventory[FOOD],
+    sprintf(response, PIN_FORMAT, player->id, player->pos.x, y_cartesian, player->inventory[FOOD],
             player->inventory[LINEMATE], player->inventory[DERAUMERE], player->inventory[SIBUR],
             player->inventory[MENDIANE], player->inventory[PHIRAS], player->inventory[THYSTAME]);
 
@@ -24,9 +27,9 @@ void take_update_gui_with_player_action(game_t* game, player_t* player, int obje
 
     memset(response, 0, 256);
 
-    sprintf(response, BCT_FORMAT, pos.x, pos.y, tile->quantity[FOOD], tile->quantity[LINEMATE],
-            tile->quantity[DERAUMERE], tile->quantity[SIBUR], tile->quantity[MENDIANE],
-            tile->quantity[PHIRAS], tile->quantity[THYSTAME]);
+    sprintf(response, BCT_FORMAT, pos.x, y_cartesian, tile->quantity[FOOD],
+            tile->quantity[LINEMATE], tile->quantity[DERAUMERE], tile->quantity[SIBUR],
+            tile->quantity[MENDIANE], tile->quantity[PHIRAS], tile->quantity[THYSTAME]);
 
     append_to_gui_write_buffer(game, response);
 }

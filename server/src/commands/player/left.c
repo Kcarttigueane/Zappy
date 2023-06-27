@@ -19,7 +19,9 @@ void left(game_t* game, client_t* client)
 
     char response[24] = {0};
 
-    sprintf(response, PPO_FORMAT, player->id, player->pos.x, player->pos.y, player->orientation);
+    int y_cartesian = game->height - player->pos.y - 1;
+
+    sprintf(response, PPO_FORMAT, player->id, player->pos.x, y_cartesian, player->orientation);
 
     append_to_gui_write_buffer(game, response);
 }

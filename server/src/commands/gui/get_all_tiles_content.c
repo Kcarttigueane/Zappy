@@ -11,13 +11,13 @@ void get_all_tiles_content(game_t* game, __attribute_maybe_unused__ client_t* cl
 {
     char response[MAX_BUFFER] = {0};
 
-    size_t height = game->height;
-    size_t width = game->width;
+    size_t H = game->height;
+    size_t W = game->width;
 
-    for (int y = 0; (size_t)y < height; y++) {
-        for (int x = 0; (size_t)x < width; x++) {
-            tile_t* tile = &game->map[y][x];
-            snprintf(response, sizeof(response), BCT_FORMAT, y, x, tile->quantity[FOOD],
+    for (int x = 0; (size_t)x < W; x++) {
+        for (int y = 0; (size_t)y < H; y++) {
+            tile_t* tile = &game->map[x][(H - 1) - y];
+            snprintf(response, sizeof(response), BCT_FORMAT, x, y, tile->quantity[FOOD],
                      tile->quantity[LINEMATE], tile->quantity[DERAUMERE], tile->quantity[SIBUR],
                      tile->quantity[MENDIANE], tile->quantity[PHIRAS], tile->quantity[THYSTAME]);
 

@@ -1,0 +1,46 @@
+Sure, let's consider the player is facing "upwards",
+or north (This is arbitrary since the direction can be relative based on how
+you decide to map the 2D plane to the screen). The diagram below illustrates this concept:
+
+```
+     North (Player's Forward Direction)
+             |
+             |
+             |
+ West <---- Player ----> East
+             |
+             |
+             |
+          South
+```
+
+When a broadcast is sent, it is classified into eight different directions
+based on the orientation of the sound source in relation to the player.
+Here's an interpretation of these directions in terms of angles:
+
+```
+  \ 1 | 2 /
+  8 \ | / 3
+  ----P----     (P = Player)
+  7 / | \ 4
+  / 6 | 5 \
+```
+
+The numbering is counterclockwise with 1 being directly in front of the player.
+The eight directions are calculated by dividing a 360° space into eight 45° sections.
+These directions can be interpreted as follows:
+
+1. North (0° <= θ < 45°)
+2. North-East (45° <= θ < 90°)
+3. East (90° <= θ < 135°)
+4. South-East (135° <= θ < 180°)
+5. South (180° <= θ < 225°)
+6. South-West (225° <= θ < 270°)
+7. West (270° <= θ < 315°)
+8. North-West (315° <= θ < 360°)
+
+Note: If the sound source is at the same position as the player, the direction is 0.
+
+These directions are defined from the perspective of the player.
+The θ is the angle between the player's forward direction (North in this case)
+and the direction to the sound source, measured counterclockwise.

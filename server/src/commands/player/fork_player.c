@@ -52,7 +52,8 @@ void end_fork(game_t* game, client_t* client)
 
     char response[256] = {0};
 
-    sprintf(response, ENW_FORMAT, egg->id, player->id, player->pos.x, player->pos.y);
+    int y_cartesian = game->height - egg->pos.y - 1;
+    sprintf(response, ENW_FORMAT, egg->id, player->id, player->pos.x, y_cartesian);
     append_to_gui_write_buffer(game, response);
 
     append_to_string(client->write_buf, OK_FORMAT);

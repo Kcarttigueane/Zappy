@@ -16,9 +16,11 @@ static void send_resp(game_t* game, int x, int y_pos)
 {
     char response[MAX_BUFFER] = {0};
 
-    tile_t* tile = &game->map[y_pos][x];
+    tile_t* tile = &game->map[x][y_pos];
 
-    sprintf(response, BCT_FORMAT, y_pos, x, tile->quantity[FOOD], tile->quantity[LINEMATE],
+    int y_carte = game->height - y_pos - 1;
+
+    sprintf(response, BCT_FORMAT, x, y_carte, tile->quantity[FOOD], tile->quantity[LINEMATE],
             tile->quantity[DERAUMERE], tile->quantity[SIBUR], tile->quantity[MENDIANE],
             tile->quantity[PHIRAS], tile->quantity[THYSTAME]);
 
@@ -32,7 +34,7 @@ void get_tile_content(game_t* game, client_t* client)
 
     sscanf(command, "bct %i %i", &x, &y);
 
-    int y_pos = game->height - x - 1;
+    int y_pos = (game->height - 1) - y;
 
     size_t height = game->height;
     size_t width = game->width;

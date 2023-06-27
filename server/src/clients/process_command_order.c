@@ -47,11 +47,13 @@ static void player_first_command(game_t* game, client_t* client, char** split_co
     } else {
         update_normal_player(game, client, split_command);
     }
-    dprintf(client->fd, "%ld\n%ld %ld\n", team->max_players - team->nb_players_connected, game->width,
-            game->height);
+    dprintf(client->fd, "%ld\n%ld %ld\n", team->max_players - team->nb_players_connected,
+            game->width, game->height);
 
     char response[1024] = {0};
-    sprintf(response, PNW_FORMAT, client->player->id, client->player->pos.x, client->player->pos.y,
+
+    int y_cartesian = game->height - client->player->pos.y - 1;
+    sprintf(response, PNW_FORMAT, client->player->id, client->player->pos.x, y_cartesian,
             client->player->orientation, client->player->level, client->player->team_name);
     append_to_gui_write_buffer(game, response);
 }

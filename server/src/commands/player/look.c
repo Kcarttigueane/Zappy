@@ -52,18 +52,18 @@ void get_objects_on_tile(game_t* game, client_t* client, tile_t* tile, coord_t p
     }
 }
 
-static void look_south(game_t* game, client_t* client, int level)
+void look_north(game_t* game, client_t* client, int level)
 {
     player_t* player = client->player;
     for (int i = 0; i <= level; ++i) {
-        for (int j = i; j >= -i; --j) {
+        for (int j = -i; j <= i; ++j) {
             int look_x = player->pos.x + j;
             int look_y = player->pos.y - i;
             // wrap around map if out of bounds
             look_x = (look_x + game->width) % game->width;
             look_y = (look_y + game->height) % game->height;
 
-            tile_t* tile = &game->map[look_y][look_x];
+            tile_t* tile = &game->map[look_x][look_y];
             coord_t pos = {look_x, look_y};
             debug_tile_content(tile, pos);
             get_objects_on_tile(game, client, tile, pos);
@@ -72,18 +72,18 @@ static void look_south(game_t* game, client_t* client, int level)
     }
 }
 
-static void look_east(game_t* game, client_t* client, int level)
+void look_east(game_t* game, client_t* client, int level)
 {
     player_t* player = client->player;
     for (int i = 0; i <= level; ++i) {
-        for (int j = i; j >= -i; --j) {
+        for (int j = -i; j <= i; ++j) {
             int look_x = player->pos.x + i;
             int look_y = player->pos.y + j;
             // wrap around map if out of bounds
             look_x = (look_x + game->width) % game->width;
             look_y = (look_y + game->height) % game->height;
 
-            tile_t* tile = &game->map[look_y][look_x];
+            tile_t* tile = &game->map[look_x][look_y];
             coord_t pos = {look_x, look_y};
             debug_tile_content(tile, pos);
             get_objects_on_tile(game, client, tile, pos);
@@ -92,18 +92,18 @@ static void look_east(game_t* game, client_t* client, int level)
     }
 }
 
-static void look_north(game_t* game, client_t* client, int level)
+void look_south(game_t* game, client_t* client, int level)
 {
     player_t* player = client->player;
     for (int i = 0; i <= level; ++i) {
-        for (int j = -i; j <= i; ++j) {
+        for (int j = i; j >= -i; --j) {
             int look_x = player->pos.x + j;
             int look_y = player->pos.y + i;
             // wrap around map if out of bounds
             look_x = (look_x + game->width) % game->width;
             look_y = (look_y + game->height) % game->height;
 
-            tile_t* tile = &game->map[look_y][look_x];
+            tile_t* tile = &game->map[look_x][look_y];
             coord_t pos = {look_x, look_y};
             debug_tile_content(tile, pos);
             get_objects_on_tile(game, client, tile, pos);
@@ -112,18 +112,18 @@ static void look_north(game_t* game, client_t* client, int level)
     }
 }
 
-static void look_west(game_t* game, client_t* client, int level)
+void look_west(game_t* game, client_t* client, int level)
 {
     player_t* player = client->player;
     for (int i = 0; i <= level; ++i) {
-        for (int j = -i; j <= i; ++j) {
+        for (int j = i; j >= -i; --j) {
             int look_x = player->pos.x - i;
             int look_y = player->pos.y + j;
             // wrap around map if out of bounds
             look_x = (look_x + game->width) % game->width;
             look_y = (look_y + game->height) % game->height;
 
-            tile_t* tile = &game->map[look_y][look_x];
+            tile_t* tile = &game->map[look_x][look_y];
             coord_t pos = {look_x, look_y};
             debug_tile_content(tile, pos);
             get_objects_on_tile(game, client, tile, pos);
@@ -134,7 +134,6 @@ static void look_west(game_t* game, client_t* client, int level)
 
 void look(game_t* game, client_t* client)
 {
-    printf("look\n");
     player_t* player = client->player;
     int level = player->level;
 
