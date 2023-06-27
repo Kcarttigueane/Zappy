@@ -7,4 +7,11 @@
 
 #include "server.h"
 
-void hatch(__attribute_maybe_unused__ game_t* game, __attribute_maybe_unused__ client_t* client) {}
+void hatch(game_t* game, client_t* client)
+{
+    char response[36] = {0};
+
+    sprintf(response, "eht %ld\n", client->player->id);
+
+    append_to_gui_write_buffer(game, response);
+}
