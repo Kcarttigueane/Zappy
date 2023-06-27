@@ -62,7 +62,7 @@ void broadcast(game_t* game, client_t* client)
 
     char response[1024] = {0};
 
-    sprintf(response, PBC_FORMAT, client->player->id, message);
+    sprintf(response, PBC_FORMAT, client->player->id, command);
 
     append_to_gui_write_buffer(game, response);
 
