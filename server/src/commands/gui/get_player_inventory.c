@@ -18,7 +18,9 @@ void get_player_inventory(game_t* game, client_t* client)
 
     char response[MAX_BUFFER] = {0};
 
-    sprintf(response, PIN_FORMAT, player->id, player->pos.x, player->pos.y, player->inventory[FOOD],
+    int y_carte = game->height - player->pos.y - 1;
+
+    sprintf(response, PIN_FORMAT, player->id, player->pos.x, y_carte, player->inventory[FOOD],
             player->inventory[LINEMATE], player->inventory[DERAUMERE], player->inventory[SIBUR],
             player->inventory[MENDIANE], player->inventory[PHIRAS], player->inventory[THYSTAME]);
 

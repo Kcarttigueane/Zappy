@@ -8,15 +8,15 @@
 #include "colors.h"
 #include "server.h"
 
-void print_resources_location(tile_t** map, size_t height, size_t width)
+void print_resources_location(tile_t** map, size_t width, size_t height)
 {
     for (size_t i = 0; i < width; i++) {
         for (size_t j = 0; j < height; j++) {
-            printf("tile_t pos [");
             printf(WHITE "%zu, %zu" RESET, i, j);
             printf("]  ");
             for (int k = 0; k < MAX_NB_RESOURCES; k++) {
-                printf("%sq%d: %s%zu%s  ", colors[k], k, colors[k], map[i][j].quantity[k], RESET);
+                printf("%sq%d: %s%zu%s  ", colors[k], k, colors[k],
+                       map[i][(height - 1) - j].quantity[k], RESET);
             }
             printf("\n");
         }

@@ -15,7 +15,7 @@ SRCS  =	$(shell find . -type f -name "*.c")
 OBJS = $(SRCS:.c=.o)
 DEPS = $(OBJS:.o=.d)
 
-CFLAGS += -Wall -Wextra -I ./include -g3
+CFLAGS +=  -lm -Wall -Wextra -I ./include -g3
 
 # ! Add color to output
 COLOR_RESET   = \033[0m

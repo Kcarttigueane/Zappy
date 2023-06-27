@@ -43,7 +43,7 @@ void get_objects_on_tile(game_t* game, client_t* client, tile_t* tile, coord_t p
 
     for (size_t j = 0; j < MAX_NB_RESOURCES; j++) {
         if (tile->quantity[j] > 0) {
-            printf("inventory_name: %s\n", inventory_names[j]);
+            // printf("inventory_name: %s\n", inventory_names[j]);
             for (size_t k = 0; k < tile->quantity[j]; ++k) {
                 append_to_string(client->write_buf, inventory_names[j]);
                 append_to_string(client->write_buf, " ");
@@ -52,51 +52,109 @@ void get_objects_on_tile(game_t* game, client_t* client, tile_t* tile, coord_t p
     }
 }
 
-void look(game_t* game, client_t* client)
+void look_north(game_t* game, client_t* client, int level)
 {
-    printf("look\n");
     player_t* player = client->player;
-    int level = player->level;
-    int dx = 0, dy = 0;
-    int x = player->pos.x, y = player->pos.y;
-
-    switch (player->orientation) {
-        case NORTH:
-            dy = 1;
-            break;
-        case SOUTH:
-            dy = -1;
-            break;
-        case EAST:
-            dx = 1;
-            break;
-        case WEST:
-            dx = -1;
-            break;
-    }
-
-    append_to_string(client->write_buf, "[");
     for (int i = 0; i <= level; ++i) {
         for (int j = -i; j <= i; ++j) {
-            int look_x, look_y;
-            if (player->orientation == NORTH || player->orientation == SOUTH) {
-                look_x = x + j;
-                look_y = y + i * dy;
-            } else {  // EAST or WEST
-                look_x = x + i * dx;
-                look_y = y + j;
-            }
-
+            int look_x = player->pos.x + j;
+            int look_y = player->pos.y - i;
             // wrap around map if out of bounds
             look_x = (look_x + game->width) % game->width;
             look_y = (look_y + game->height) % game->height;
 
-            tile_t* tile = &game->map[look_y][look_x];
+            tile_t* tile = &game->map[look_x][look_y];
             coord_t pos = {look_x, look_y};
             debug_tile_content(tile, pos);
             get_objects_on_tile(game, client, tile, pos);
             append_to_string(client->write_buf, ", ");
         }
+    }
+}
+
+void look_east(game_t* game, client_t* client, int level)
+{
+    player_t* player = client->player;
+    for (int i = 0; i <= level; ++i) {
+        for (int j = -i; j <= i; ++j) {
+            int look_x = player->pos.x + i;
+            int look_y = player->pos.y + j;
+            // wrap around map if out of bounds
+            look_x = (look_x + game->width) % game->width;
+            look_y = (look_y + game->height) % game->height;
+
+            tile_t* tile = &game->map[look_x][look_y];
+            coord_t pos = {look_x, look_y};
+            debug_tile_content(tile, pos);
+            get_objects_on_tile(game, client, tile, pos);
+            append_to_string(client->write_buf, ", ");
+        }
+    }
+}
+
+void look_south(game_t* game, client_t* client, int level)
+{
+    player_t* player = client->player;
+    for (int i = 0; i <= level; ++i) {
+        for (int j = i; j >= -i; --j) {
+            int look_x = player->pos.x + j;
+            int look_y = player->pos.y + i;
+            // wrap around map if out of bounds
+            look_x = (look_x + game->width) % game->width;
+            look_y = (look_y + game->height) % game->height;
+
+            tile_t* tile = &game->map[look_x][look_y];
+            coord_t pos = {look_x, look_y};
+            debug_tile_content(tile, pos);
+            get_objects_on_tile(game, client, tile, pos);
+            append_to_string(client->write_buf, ", ");
+        }
+    }
+}
+
+void look_west(game_t* game, client_t* client, int level)
+{
+    player_t* player = client->player;
+    for (int i = 0; i <= level; ++i) {
+        for (int j = i; j >= -i; --j) {
+            int look_x = player->pos.x - i;
+            int look_y = player->pos.y + j;
+            // wrap around map if out of bounds
+            look_x = (look_x + game->width) % game->width;
+            look_y = (look_y + game->height) % game->height;
+
+            tile_t* tile = &game->map[look_x][look_y];
+            coord_t pos = {look_x, look_y};
+            debug_tile_content(tile, pos);
+            get_objects_on_tile(game, client, tile, pos);
+            append_to_string(client->write_buf, ", ");
+        }
+    }
+}
+
+void look(game_t* game, client_t* client)
+{
+    player_t* player = client->player;
+    int level = player->level;
+
+    append_to_string(client->write_buf, "[");
+    switch (player->orientation) {
+        case NORTH:
+            printf("look_north\n");
+            look_north(game, client, level);
+            break;
+        case EAST:
+            printf("look_east\n");
+            look_east(game, client, level);
+            break;
+        case SOUTH:
+            printf("look_south\n");
+            look_south(game, client, level);
+            break;
+        case WEST:
+            printf("look_west\n");
+            look_west(game, client, level);
+            break;
     }
     append_to_string(client->write_buf, "]\n");
 }

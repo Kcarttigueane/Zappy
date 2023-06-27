@@ -7,16 +7,19 @@
 
 #include "server.h"
 
-void set_update_gui_with_player_action(game_t* game, player_t* player, int object_index, coord_t *pos)
+void set_update_gui_with_player_action(game_t* game, player_t* player, int object_index,
+                                       coord_t* pos)
 {
     tile_t* tile = &game->map[pos->x][pos->y];
+
+    int y_cartesian = game->height - pos->y - 1;
 
     char response[256] = {0};
     sprintf(response, PDR_FORMAT, player->id, object_index);
     append_to_gui_write_buffer(game, response);
 
     memset(response, 0, 256);
-    sprintf(response, PIN_FORMAT, player->id, player->pos.x, player->pos.y, player->inventory[FOOD],
+    sprintf(response, PIN_FORMAT, player->id, player->pos.x, y_cartesian, player->inventory[FOOD],
             player->inventory[LINEMATE], player->inventory[DERAUMERE], player->inventory[SIBUR],
             player->inventory[MENDIANE], player->inventory[PHIRAS], player->inventory[THYSTAME]);
 
@@ -24,9 +27,9 @@ void set_update_gui_with_player_action(game_t* game, player_t* player, int objec
 
     memset(response, 0, 256);
 
-    sprintf(response, BCT_FORMAT, pos->x, pos->y, tile->quantity[FOOD], tile->quantity[LINEMATE],
-            tile->quantity[DERAUMERE], tile->quantity[SIBUR], tile->quantity[MENDIANE],
-            tile->quantity[PHIRAS], tile->quantity[THYSTAME]);
+    sprintf(response, BCT_FORMAT, pos->x, y_cartesian, tile->quantity[FOOD],
+            tile->quantity[LINEMATE], tile->quantity[DERAUMERE], tile->quantity[SIBUR],
+            tile->quantity[MENDIANE], tile->quantity[PHIRAS], tile->quantity[THYSTAME]);
 
     append_to_gui_write_buffer(game, response);
 }

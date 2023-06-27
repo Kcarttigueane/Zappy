@@ -51,8 +51,9 @@ void send_eject_response_gui(game_t* game, client_t* client)
     sprintf(gui_message, PEX_FORMAT, client->player->id);
     append_to_gui_write_buffer(game, gui_message);
     memset(gui_message, 0, sizeof(gui_message));
-    sprintf(gui_message, PPO_FORMAT, client->player->id, client->player->pos.x,
-            client->player->pos.y, client->player->orientation);
+    int y_cartesian = game->height - client->player->pos.y - 1;
+    sprintf(gui_message, PPO_FORMAT, client->player->id, client->player->pos.x, y_cartesian,
+            client->player->orientation);
     append_to_gui_write_buffer(game, gui_message);
 }
 
@@ -89,7 +90,8 @@ void eject(game_t* game, client_t* client)
             p_to_move->player->pos.x == client->player->pos.x &&
             p_to_move->player->pos.y == client->player->pos.y) {
             move_client_based_on_orientation(p_to_move, game, client->player->orientation);
-            send_eject_message(p_to_move, client->player->orientation);
+            int direction = (client->player->orientation + 2) % 4 + 1;
+            send_eject_message(p_to_move, direction);
             send_eject_response_gui(game, p_to_move);
         }
     }

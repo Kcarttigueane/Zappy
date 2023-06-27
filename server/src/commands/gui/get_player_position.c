@@ -17,7 +17,9 @@ void get_player_position(game_t* game, client_t* client)
 
     char response[MAX_BUFFER] = {0};
 
-    sprintf(response, PPO_FORMAT, player->id, player->pos.x, player->pos.y, player->orientation);
+    int y = game->height - player->pos.y - 1;
+
+    sprintf(response, PPO_FORMAT, player->id, player->pos.x, y, player->orientation);
 
     append_to_gui_write_buffer(game, response);
 }
@@ -32,9 +34,11 @@ void get_all_player_positions(game_t* game)
     {
         if (curr_client->player->state == GRAPHICAL || curr_client->player->state == NONE)
             continue;
-        sprintf(response, PNW_FORMAT, curr_client->player->id, curr_client->player->pos.x,
-                curr_client->player->pos.y, curr_client->player->orientation,
-                curr_client->player->level, curr_client->player->team_name);
+
+        int y = game->height - curr_client->player->pos.y - 1;
+        sprintf(response, PNW_FORMAT, curr_client->player->id, curr_client->player->pos.x, y,
+                curr_client->player->orientation, curr_client->player->level,
+                curr_client->player->team_name);
 
         append_to_gui_write_buffer(game, response);
 

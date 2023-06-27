@@ -21,8 +21,8 @@ void start_incantation(game_t* game, client_t* client)
     client_t *curr_client, *temp;
 
     char gui_response[256] = {0};
-    sprintf(gui_response, "pic %d %d %ld ", p_pos->x, p_pos->y, client->player->level);
-
+    int y_cartesian = game->height - p_pos->y - 1;
+    sprintf(gui_response, "pic %d %d %ld ", p_pos->x, y_cartesian, client->player->level);
     append_to_gui_write_buffer(game, gui_response);
 
     LIST_FOREACH_SAFE(curr_client, &game->client_list, entries, temp)
@@ -38,7 +38,6 @@ void start_incantation(game_t* game, client_t* client)
     }
 
     append_to_gui_write_buffer(game, gui_response);
-
     append_to_gui_write_buffer(game, "\n");
 
     enqueue_command(client, "End_of_incantation", game->freq);

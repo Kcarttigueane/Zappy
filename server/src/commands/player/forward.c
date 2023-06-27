@@ -15,14 +15,14 @@ void forward(game_t* game, client_t* client)
 
     switch (player->orientation) {
         case NORTH:
-            player->pos.y++;
-            if (player->pos.y >= (int)height)
-                player->pos.y = 0;
-            break;
-        case SOUTH:
             player->pos.y--;
             if (player->pos.y < 0)
                 player->pos.y = height - 1;
+            break;
+        case SOUTH:
+            player->pos.y++;
+            if (player->pos.y >= (int)height)
+                player->pos.y = 0;
             break;
         case WEST:
             player->pos.x--;
@@ -40,7 +40,9 @@ void forward(game_t* game, client_t* client)
 
     char response[24] = {0};
 
-    sprintf(response, PPO_FORMAT, player->id, player->pos.x, player->pos.y, player->orientation);
+    int y_carte = (height - 1) - player->pos.y;
+
+    sprintf(response, PPO_FORMAT, player->id, player->pos.x, y_carte, player->orientation);
 
     append_to_gui_write_buffer(game, response);
 }
