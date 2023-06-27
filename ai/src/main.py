@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
-import random
 import sys
 import os
 import time
-import subprocess
 from tools.parsing import parser as p
 from tools.parsing import got_numbers
 from src.ai import AI
@@ -96,12 +94,14 @@ def receive_handler(connected_socket: SocketManager, mask, XF=False, print_data=
             connected_socket.ai.printc(output)
 
         if not ori:
-            connected_socket.ai.loop(data)
+            splits_ = data.split("\n")
+            for p in splits_:
+                connected_socket.ai.loop(p)
         return data
     return 0
 
 
-def input_handler(connected_socket: SocketManager, buffer: list, mask):
+def input_handler(connected_socket: SocketManager, mask):
     connected_socket.query = sys.stdin.readline().strip()
     if "exit" in connected_socket.query or "quit" in connected_socket.query:
         connected_socket.run = False
@@ -133,12 +133,12 @@ def main(connected_socket: SocketManager, ident=0):
     client_name = tn()
     color = get_color(ident)
     connected_socket.ai.color = color
-    connected_socket.ai.printc(f"\nZappy AI client - Version 0.1\nThis client name is {client_name} with ID {ident}\n")
+    connected_socket.ai.printc(f"\nZappy AI client - Version 0.8\nThis client name is {client_name} with ID {ident}\n")
     sel = selectors.DefaultSelector()
     sel.register(connected_socket.socket, selectors.EVENT_READ, receive_handler)
     sel.register(sys.stdin, selectors.EVENT_READ, input_handler)
     receive_handler(connected_socket, None, True, False, True)
-    connected_socket.send(connected_socket.name)
+    connected_socket.socket.send(f"{connected_socket.name}\n".encode())
     time.sleep(0.2)
     receive_handler(connected_socket, None, True, False, True)
     if ident == 0:
@@ -150,8 +150,6 @@ def main(connected_socket: SocketManager, ident=0):
             connected_socket.send("Fork")
             pid = os.fork()
             if pid == 0:
-                # command = f"python3 {call_script} -p {connected_socket.port} -n {connected_socket.name} -h
-                # {connected_socket.host} -i {i}"
                 os.execvp("python3", ["python3", call_script, "-p", str(connected_socket.port), "-n",
                                       connected_socket.name, "-h", connected_socket.host, "-i", str(i)])
             i += 1
