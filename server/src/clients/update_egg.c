@@ -32,4 +32,6 @@ void update_egg_player(game_t* game, client_t* client, char** inputs, egg_t* egg
 
     remove_egg_by_id(&game->teams[team_index], egg->id);
     game->teams[team_index].nb_players_connected++;
+
+    enqueue_command(client, "Hatch", game->freq);
 }
