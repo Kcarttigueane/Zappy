@@ -96,7 +96,8 @@ Launch the server
 - 2️⃣ GUI (zappy_gui):
   - Language: C++
   - Frontend: SFML
-- 3️⃣ AI (zappy_ai): \* Language: Python
+- 3️⃣ AI (zappy_ai):
+  -  Language: Python
 <!--te-->
 
 # Contributors
