@@ -1,8 +1,11 @@
-# Zappy: A Network Game
+# Zappy: An AI-driven Network Game
+<div align="center">
+    <img src="docs/game_screenshot.png" alt="Logo">
+</div>
 
-Project Zappy: An AI-driven Network Game
+Goal:
+-----
 
-Objective:
 To create a strategic network game in which artificial intelligences collaborate as teams, competing to survive, gather resources, perform rituals, reproduce, and level up. The first AI team to reach Level 8 emerges as the victor.
 
 The Zappy Project is segmented into three main components:
